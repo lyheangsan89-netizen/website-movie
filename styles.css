@@ -1,0 +1,69 @@
+/* ─── BASE & RESET ─────────────────────────────────────────── */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a;
+}
+
+/* ─── SCROLLBAR HIDING ─────────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* ─── MOVIE CARD HOVER EFFECTS ─────────────────────────────── */
+.movie-card:hover .movie-overlay {
+    opacity: 1;
+}
+.movie-card:hover img {
+    transform: scale(1.08);
+}
+
+/* ─── HERO GRADIENT ────────────────────────────────────────── */
+.hero-gradient {
+    background: linear-gradient(to top, #0a0a0a 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+/* ─── MODAL BACKDROP ───────────────────────────────────────── */
+.modal-backdrop {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+/* ─── TEXT GLOW EFFECT ─────────────────────────────────────── */
+.text-glow {
+    text-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+}
+
+/* ─── LINE CLAMP ───────────────────────────────────────────── */
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ─── CAST SCROLLBAR ───────────────────────────────────────── */
+.cast-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+.cast-scroll::-webkit-scrollbar-track {
+    background: #1f1f1f;
+    border-radius: 3px;
+}
+.cast-scroll::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 3px;
+}
+
+/* ─── VIDEO PLAYER ─────────────────────────────────────────── */
+.video-player-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.video-player-container video::-webkit-media-controls-panel {
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
