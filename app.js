@@ -72,7 +72,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Action",
-        "video": "https://drive.google.com/file/d/1YNeo6OWd4quqVZibXDWiZo1gv4CxxotE/view?usp=sharing"
+        "video": "https://drive.google.com/file/d/1YNeo6OWd4quqVZibXDWiZo1gv4CxxotE/preview"
     },
     {
         "id": 5,
@@ -80,8 +80,8 @@ const moviesData = [
         "year": 2023,
         "rating": 7.7,
         "genre": "Crime / Drama / History",
-        "backdrop": "https://m.media-amazon.com/images/M/MV5BN2U0YTBhNDgtZTlhYi00N2EzLWIzNDgtZjg4NmI5NmJlNzhjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-        "poster": "https://m.media-amazon.com/images/M/MV5BMjE4ZTZlNDctNWZkZS00NjFlLThhMDAtNjJhNWU1ZTEyODBjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        "backdrop": "https://tse1.mm.bing.net/th/id/OIP.zzyhzNfaQV050H9vXZ2W9AAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "poster": "https://tse1.mm.bing.net/th/id/OIP.zzyhzNfaQV050H9vXZ2W9AAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
         "synopsis": "When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one until the FBI steps in to unravel the conspiracy.",
         "runtime": "206 min",
         "director": "Martin Scorsese",
