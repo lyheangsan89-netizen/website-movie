@@ -163,54 +163,39 @@ const VideoPlayer = ({ movie, onClose }) => {
     const embedSrc = getEmbedUrl(movie.video);
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-4 animate-fadeIn" onClick={onClose}>
-            <div className="relative w-full max-w-5xl flex flex-col" onClick={e => e.stopPropagation()}>
-                <div className="relative w-full aspect-video bg-neutral-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/20 min-h-[200px]">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-4 md:p-8 animate-fadeIn" onClick={onClose}>
+            <div className="relative w-full max-w-[95vw] sm:max-w-4xl lg:max-w-6xl flex flex-col" onClick={e => e.stopPropagation()}>
+                {/* Responsive video container using padding-bottom trick for max compatibility */}
+                <div className="relative w-full bg-neutral-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/20 video-responsive-container">
                     <button
                         onClick={onClose}
-                        className="absolute top-3 right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-neutral-800/80 text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 z-20"
+                        className="absolute top-2 right-2 sm:top-3 sm:right-3 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 z-20"
                     >
-                        <Icon name="x" size={20} />
+                        <Icon name="x" size={18} />
                     </button>
 
                     {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
-                            <Icon name="loader" size={48} className="text-white" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
+                            <Icon name="loader" size={40} className="text-white" />
                         </div>
                     )}
 
-                    <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-black">
-                        <iframe
-                            src={embedSrc}
-                            title={`Player for ${movie.title}`}
-                            frameBorder="0"
-                            scrolling="no"
-                            className={`absolute transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'
-                                }`}
-                            style={{
-                                // ពង្រីកទំហំ iframe ឱ្យធំជាង Container
-                                width: '130%',
-                                height: '140%',
-                                // តម្រៀបឱ្យវានៅចំកណ្ដាល ដើម្បីកាត់គែមជុំវិញ (Top/Bottom/Left/Right)
-                                top: '-20%',
-                                left: '-15%',
-                                border: 'none',
-                            }}
-                            allow="autoplay; encrypted-media; fullscreen"
-                            allowFullScreen={true}
-                            onLoad={() => setIsLoading(false)}
-                            onError={() => setIsLoading(false)}
-                            webkitallowfullscreen="true"
-                            mozallowfullscreen="true"
-                        ></iframe>
-                    </div>
-
+                    <iframe
+                        src={embedSrc}
+                        title={`Player for ${movie.title}`}
+                        frameBorder="0"
+                        scrolling="no"
+                        className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                        allow="autoplay; encrypted-media; fullscreen"
+                        allowFullScreen
+                        onLoad={() => setIsLoading(false)}
+                    ></iframe>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between text-white px-2 sm:px-0">
+                <div className="mt-3 sm:mt-4 flex items-center justify-between text-white px-1">
                     <div>
-                        <h3 className="text-2xl font-bold">{movie.title}</h3>
-                        <p className="text-sm text-gray-400">{movie.year} · {movie.genre} · {movie.runtime}</p>
+                        <h3 className="text-lg sm:text-2xl font-bold truncate max-w-[80vw]">{movie.title}</h3>
+                        <p className="text-xs sm:text-sm text-gray-400">{movie.year} &middot; {movie.genre} &middot; {movie.runtime}</p>
                     </div>
                 </div>
             </div>
@@ -528,7 +513,7 @@ const MovieModal = ({ movie, onClose, onToggleWatchlist, isInWatchlist, onWatchN
     return (
         <div className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto modal-backdrop" onClick={onClose}>
             <div
-                className="relative w-full max-w-4xl mx-auto my-4 lg:my-10 bg-dark-800 rounded-2xl overflow-hidden shadow-2xl animate-scale-in"
+                className="relative w-full max-w-full sm:max-w-lg md:max-w-4xl lg:max-w-6xl mx-auto my-4 lg:my-10 bg-dark-800 rounded-2xl overflow-hidden shadow-2xl animate-scale-in"
                 onClick={e => e.stopPropagation()}
             >
                 <button
