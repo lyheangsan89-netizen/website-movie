@@ -58,12 +58,64 @@ body {
     border-radius: 3px;
 }
 
-/* ─── VIDEO PLAYER ─────────────────────────────────────────── */
-.video-player-container video {
+/* ─── VIDEO PLAYER RESPONSIVE FIX ──────────────────────────── */
+.video-responsive-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio - works on ALL browsers */
+    max-height: 80vh;
+}
+
+/* On landscape phones, limit height so controls stay visible */
+@media (max-height: 500px) and (orientation: landscape) {
+    .video-responsive-container {
+        padding-bottom: 0;
+        height: 75vh;
+    }
+}
+
+/* Smaller phones portrait */
+@media (max-width: 400px) {
+    .video-responsive-container {
+        padding-bottom: 60%; /* Slightly taller for small screens */
+    }
+}
+
+.video-responsive-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    border: 0;
 }
-.video-player-container video::-webkit-media-controls-panel {
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+
+/* ─── CUSTOM SCROLLBAR FOR MODAL ───────────────────────────── */
+.modal-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+.modal-scroll::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 4px;
+}
+.modal-scroll::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 4px;
+}
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #6a6a6a;
+}
+
+/* ─── CUSTOM SCROLLBAR FOR GENRES ──────────────────────────── */
+.genre-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+.genre-scroll::-webkit-scrollbar-track {
+    background: #1f1f1f;
+    border-radius: 3px;
+}
+.genre-scroll::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 3px;
 }
