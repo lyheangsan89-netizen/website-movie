@@ -58,37 +58,32 @@ body {
     border-radius: 3px;
 }
 
-/* ─── VIDEO PLAYER RESPONSIVE FIX ──────────────────────────── */
-.video-responsive-container {
+/* ═════════════════════════════════════════════════════════════
+   VIDEO PLAYER — MOBILE-FIRST RESPONSIVE
+   ═════════════════════════════════════════════════════════════ */
+
+.video-player-wrapper {
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio - works on ALL browsers */
-    max-height: 80vh;
+    /* 16:9 aspect ratio */
+    aspect-ratio: 16 / 9;
 }
 
-/* On landscape phones, limit height so controls stay visible */
-@media (max-height: 500px) and (orientation: landscape) {
-    .video-responsive-container {
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 16 / 9) {
+    .video-player-wrapper {
+        height: 0;
+        padding-bottom: 56.25%;
+    }
+}
+
+/* Mobile landscape: fill the screen height */
+@media (max-height: 450px) and (orientation: landscape) {
+    .video-player-wrapper {
+        aspect-ratio: auto;
+        height: 85vh;
         padding-bottom: 0;
-        height: 75vh;
     }
-}
-
-/* Smaller phones portrait */
-@media (max-width: 400px) {
-    .video-responsive-container {
-        padding-bottom: 60%; /* Slightly taller for small screens */
-    }
-}
-
-.video-responsive-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
 }
 
 /* ─── CUSTOM SCROLLBAR FOR MODAL ───────────────────────────── */
