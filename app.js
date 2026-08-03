@@ -101,10 +101,11 @@ const genres = ["All", "Action", "Sci-Fi", "Drama", "Thriller", "Horror", "Comed
 const getEmbedUrl = (url) => {
     if (!url) return '';
     if (url.includes('drive.google.com')) {
-        if (url.includes('/preview')) return url;
+        // The `?e=view` parameter can sometimes provide a better preview experience
+        if (url.includes('/preview')) return url.includes('?e=view') ? url : `${url}?e=view`;
         const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (match && match[1]) {
-            return `https://drive.google.com/file/d/${match[1]}/preview`;
+            return `https://drive.google.com/file/d/${match[1]}/preview?e=view`;
         }
     }
     return url;
@@ -130,6 +131,7 @@ const Icon = ({ name, size = 20, className = "" }) => {
         menu: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>,
         trending: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>,
         award: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" /></svg>,
+        loader: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`animate-spin ${className}`}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>,
     };
     return icons[name] || null;
 };
@@ -150,6 +152,8 @@ const StarRating = ({ rating }) => {
 
 // ─── VIDEO PLAYER MODAL ─────────────────────────────────────
 const VideoPlayer = ({ movie, onClose }) => {
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => { document.body.style.overflow = 'unset'; };
@@ -159,25 +163,51 @@ const VideoPlayer = ({ movie, onClose }) => {
     const embedSrc = getEmbedUrl(movie.video);
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 animate-fadeIn" onClick={onClose}>
-            <div className="relative w-full max-w-5xl" onClick={e => e.stopPropagation()}>
-                <button
-                    onClick={onClose}
-                    className="absolute -top-12 right-0 w-10 h-10 rounded-full bg-neutral-800/80 text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 z-10"
-                >
-                    <Icon name="x" size={20} />
-                </button>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-4 animate-fadeIn" onClick={onClose}>
+            <div className="relative w-full max-w-5xl flex flex-col" onClick={e => e.stopPropagation()}>
+                <div className="relative w-full aspect-video bg-neutral-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/20 min-h-[200px]">
+                    <button
+                        onClick={onClose}
+                        className="absolute top-3 right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-neutral-800/80 text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 z-20"
+                    >
+                        <Icon name="x" size={20} />
+                    </button>
 
-                <div className="relative w-full aspect-video bg-neutral-900 rounded-2xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/20">
-                    <iframe
-                        src={embedSrc}
-                        className="w-full h-full border-0"
-                        allow="autoplay; encrypted-media; fullscreen"
-                        allowFullScreen
-                    ></iframe>
+                    {isLoading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
+                            <Icon name="loader" size={48} className="text-white" />
+                        </div>
+                    )}
+
+                    <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-black">
+                        <iframe
+                            src={embedSrc}
+                            title={`Player for ${movie.title}`}
+                            frameBorder="0"
+                            scrolling="no"
+                            className={`absolute transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'
+                                }`}
+                            style={{
+                                // ពង្រីកទំហំ iframe ឱ្យធំជាង Container
+                                width: '130%',
+                                height: '140%',
+                                // តម្រៀបឱ្យវានៅចំកណ្ដាល ដើម្បីកាត់គែមជុំវិញ (Top/Bottom/Left/Right)
+                                top: '-20%',
+                                left: '-15%',
+                                border: 'none',
+                            }}
+                            allow="autoplay; encrypted-media; fullscreen"
+                            allowFullScreen={true}
+                            onLoad={() => setIsLoading(false)}
+                            onError={() => setIsLoading(false)}
+                            webkitallowfullscreen="true"
+                            mozallowfullscreen="true"
+                        ></iframe>
+                    </div>
+
                 </div>
 
-                <div className="mt-4 flex items-center justify-between text-white">
+                <div className="mt-4 flex items-center justify-between text-white px-2 sm:px-0">
                     <div>
                         <h3 className="text-2xl font-bold">{movie.title}</h3>
                         <p className="text-sm text-gray-400">{movie.year} · {movie.genre} · {movie.runtime}</p>
