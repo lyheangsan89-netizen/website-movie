@@ -153,30 +153,68 @@ const StarRating = ({ rating }) => {
 // ─── VIDEO PLAYER MODAL ─────────────────────────────────────
 const VideoPlayer = ({ movie, onClose }) => {
     const [isLoading, setIsLoading] = useState(true);
+    const containerRef = useRef(null);
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
-        return () => { document.body.style.overflow = 'unset'; };
+        const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
+        window.addEventListener('keydown', handleEsc);
+        return () => {
+            document.body.style.overflow = 'unset';
+            window.removeEventListener('keydown', handleEsc);
+        };
+    }, [onClose]);
+
+    const toggleFullscreen = useCallback(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        if (!document.fullscreenElement) {
+            el.requestFullscreen?.().catch(() => {});
+        } else {
+            document.exitFullscreen?.().catch(() => {});
+        }
     }, []);
 
     if (!movie) return null;
     const embedSrc = getEmbedUrl(movie.video);
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-2 sm:p-4 md:p-8 animate-fadeIn" onClick={onClose}>
-            <div className="relative w-full max-w-[95vw] sm:max-w-4xl lg:max-w-6xl flex flex-col" onClick={e => e.stopPropagation()}>
-                {/* Responsive video container using padding-bottom trick for max compatibility */}
-                <div className="relative w-full bg-neutral-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10 ring-1 ring-white/20 video-responsive-container">
+        <div
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black animate-fadeIn"
+            onClick={onClose}
+        >
+            {/* Close button */}
+            <button
+                onClick={(e) => { e.stopPropagation(); onClose(); }}
+                className="fixed top-3 right-3 z-[210] w-10 h-10 rounded-full bg-black/70 backdrop-blur text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 shadow-lg"
+                aria-label="Close player"
+            >
+                <Icon name="x" size={20} />
+            </button>
+
+            {/* Wrapper — centered both vertically & horizontally */}
+            <div
+                className="relative w-full sm:max-w-5xl lg:max-w-6xl flex flex-col items-center justify-center px-0 sm:px-4"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Video container */}
+                <div
+                    ref={containerRef}
+                    className="relative w-full bg-neutral-900 overflow-hidden sm:rounded-2xl sm:shadow-2xl sm:border sm:border-white/10 video-player-wrapper"
+                >
+                    {/* Fullscreen button — visible on ALL screens */}
                     <button
-                        onClick={onClose}
-                        className="absolute top-2 right-2 sm:top-3 sm:right-3 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 z-20"
+                        onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
+                        className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition-colors border border-white/10"
+                        aria-label="Toggle fullscreen"
                     >
-                        <Icon name="x" size={18} />
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
                     </button>
 
                     {isLoading && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10 gap-3">
                             <Icon name="loader" size={40} className="text-white" />
+                            <span className="text-xs text-gray-400">Loading video…</span>
                         </div>
                     )}
 
@@ -192,17 +230,19 @@ const VideoPlayer = ({ movie, onClose }) => {
                     ></iframe>
                 </div>
 
-                <div className="mt-3 sm:mt-4 flex items-center justify-between text-white px-1">
-                    <div>
-                        <h3 className="text-lg sm:text-2xl font-bold truncate max-w-[80vw]">{movie.title}</h3>
-                        <p className="text-xs sm:text-sm text-gray-400">{movie.year} &middot; {movie.genre} &middot; {movie.runtime}</p>
+                {/* Movie info */}
+                <div className="mt-3 sm:mt-4 px-4 sm:px-0 pb-4 sm:pb-0 w-full flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                        <h3 className="text-base sm:text-2xl font-bold text-white truncate">{movie.title}</h3>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+                            {movie.year} &middot; {movie.genre} &middot; {movie.runtime}
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     );
-};
-// ─── NAVBAR COMPONENT ───────────────────────────────────────
+};// ─── NAVBAR COMPONENT ───────────────────────────────────────
 const Navbar = ({ searchQuery, setSearchQuery, watchlistCount, activeTab, setActiveTab, scrollY }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -937,3 +977,4 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+            
