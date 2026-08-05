@@ -1,4 +1,4 @@
-const { useState, useEffect, useRef, useCallback } = React;
+const { useState, useEffect, useRef, useCallback, useMemo, memo } = React;
 const moviesData = [
     {
         "id": 1,
@@ -16,7 +16,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Action",
-        "video": "https://drive.google.com/file/d/1morswxZ8a4IecXBSxaPWQnGkDpe6TYtF/preview"
+        "video": "https://ok.ru/video/15646947936821"
     },
     {
 
@@ -72,11 +72,11 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Action",
-        "video": "https://drive.google.com/file/d/1YNeo6OWd4quqVZibXDWiZo1gv4CxxotE/preview"
+        "video": "https://ok.ru/video/15446058404412"
     },
     {
         "id": 5,
-        "title": "Killers of the Flower Moon",
+        "title": "Boonie Bears: The Hidden Protector",
         "year": 2023,
         "rating": 7.7,
         "genre": "Crime / Drama / History",
@@ -90,25 +90,165 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Crime",
-        "video": "https://drive.google.com/file/d/1kQYkGFwa11AvOYYTGxmWYNPG-taTnLvG/preview"
+        "video": "https://ok.ru/video/15647240227381"
+    },
+    {
+        "id": 6,
+        "title": "18×2 Beyond Youthful Days",
+        "year": 2024,
+        "rating": 7.2,
+        "genre": "Romance, Drama",
+        "backdrop": "https://www.acmodasi.in/amdb/images/movie/w360/118/82/18x2-beyond-youthful-days-2024-678635.webp",
+        "poster": "https://www.acmodasi.in/amdb/images/movie/w360/118/82/18x2-beyond-youthful-days-2024-678635.webp",
+        "synopsis": "Jimmy, a 36-year-old Taiwanese video game developer, travels back to Japan after getting fired to find Ami, a Japanese backpacker he fell in love with 18 years ago.",
+        "runtime": "124 min",
+        "director": "Michihito Fujii",
+        "cast": ["Greg Han Hsu", "Kaya Kiyohara", "Joseph Chang", "Kuroki Haru", "Shunsuke Michieda"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Romance",
+        "video": "https://ok.ru/videoembed/15646749887029"
+    },
+    {
+        "id": 7,
+        "title": "League of Gods: Alluring Woman",
+        "year": 2021,
+        "rating": 6.5,
+        "genre": "Action, Fantasy, Romance",
+        "backdrop": "https://tse1.mm.bing.net/th/id/OIP.04k42MeT1mb_A0OIoHimIwHaLC?r=0&w=1041&h=1551&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "poster": "https://tse1.mm.bing.net/th/id/OIP.04k42MeT1mb_A0OIoHimIwHaLC?r=0&w=1041&h=1551&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "synopsis": "During the end of the Shang Dynasty, King Zhou is captivated by Daji, a nine-tailed fox spirit disguised as a beautiful woman, leading the kingdom into chaos as heroes and gods rise to fight.",
+        "runtime": "90 min",
+        "director": "Liu Chun",
+        "cast": ["Qiu Yining", "Xu Feng", "Leanne Liu", "Zhou Haodong"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Action",
+        "video": "https://ok.ru/videoembed/15647375166005"
+    },
+    {
+        "id": 8,
+        "title": "The Spell",
+        "year": 2020,
+        "rating": 5.8,
+        "genre": "Horror, Thriller",
+        "backdrop": "https://i1.wp.com/jaikonmovie.com/wp-content/uploads/2026/01/unnamed-1.jpg",
+        "poster": "https://i1.wp.com/jaikonmovie.com/wp-content/uploads/2026/01/unnamed-1.jpg",
+        "synopsis": "After surviving a plane crash, Marquis is stranded in the rural Appalachia and held captive in the attic of a Hoodoo practitioner who attempts to heal him using dark magic.",
+        "runtime": "91 min",
+        "director": "Mark Tonderai",
+        "cast": ["Omari Hardwick", "Loretta Devine", "John Beasley", "Lorraine Burroughs"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Horror",
+        "video": "https://ok.ru/videoembed/15647375297077"
+    },
+    {
+        "id": 9,
+        "title": "You Are the Apple of My Eye",
+        "year": 2011,
+        "rating": 7.6,
+        "genre": "Comedy, Drama, Romance",
+        "backdrop": "https://i.scdn.co/image/ab67616d0000b2739b5a1932f9fb727cf6d05faa",
+        "poster": "https://i.scdn.co/image/ab67616d0000b2739b5a1932f9fb727cf6d05faa",
+        "synopsis": "A group of close friends who attend the same school all fall in love with the top student in their class, Shen Chia-yi, leading to a nostalgic story of mischief, growing up, and first love.",
+        "runtime": "110 min",
+        "director": "Giddens Ko",
+        "cast": ["Ko Chen-tung", "Michelle Chen", "Steven Shao", "Yen Sheng-yu", "A-Ken"],
+        "trending": true,
+        "popular": true,
+        "topRated": true,
+        "category": "Romance",
+        "video": "https://ok.ru/videoembed/15647728863797"
+    },
+    {
+        "id": 10,
+        "title": "Don't Forget I Love You",
+        "year": 2022,
+        "rating": 6.1,
+        "genre": "Romance, Drama",
+        "backdrop": "https://sino-cinema.com/wp-content/uploads/2022/04/dontforgetiloveyou.jpg",
+        "poster": "https://sino-cinema.com/wp-content/uploads/2022/04/dontforgetiloveyou.jpg",
+        "synopsis": "Lu Yao, a composer suffering from short-term memory loss where his memory resets every single day, falls in love with his psychologist Xu Yue as they navigate the challenges of his condition.",
+        "runtime": "126 min",
+        "director": "Wong Chun-Chun",
+        "cast": ["Gulnazar", "Jasper Liu", "Rayza", "Zhang Yishang"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Romance",
+        "video": "https://ok.ru/video/15647847680565"
+    },
+    {
+        "id": 11,
+        "title": "Eye for an Eye",
+        "year": 2022,
+        "rating": 7.1,
+        "genre": "Action, Drama",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMDZmMTkyNTAtNmU1Yy00ZTVlLWJlZmEtM2RhODA5MWY2MWNlXkEyXkFqcGc@._V1_FMjpg_UY2832_.jpg",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDZmMTkyNTAtNmU1Yy00ZTVlLWJlZmEtM2RhODA5MWY2MWNlXkEyXkFqcGc@._V1_FMjpg_UY2832_.jpg",
+        "synopsis": "A highly skilled blind bounty hunter named Cheng Xiaazi unexpectedly saves a wine house servant who was framed and ruined by a powerful local family, leading him onto a bloody path of vengeance.",
+        "runtime": "74 min",
+        "director": "Yang Bingjia",
+        "cast": ["Xie Miao", "Gao Weiguang", "Zhang Chuhan", "Xiang Hao"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Action",
+        "video": "https://ok.ru/video/15650716518965"
     }
 
 ];
 
 const genres = ["All", "Action", "Sci-Fi", "Drama", "Thriller", "Horror", "Comedy", "Romance", "Crime"];
 
-// ─── HELPER FOR DRIVE LINKS ─────────────────────────────────
-const getEmbedUrl = (url) => {
-    if (!url) return '';
+// ─── HELPER FOR VIDEO URLS ──────────────────────────────────
+const getUrlInfo = (url) => {
+    if (!url) return { type: 'invalid', src: '' };
+
+    // Direct video file (.mp4)
+    if (url.endsWith('.mp4')) {
+        let finalUrl = url;
+        if (url.includes('archive.org/details/')) {
+            // Transform archive.org page URL to a direct download link
+            const transformedUrl = url.replace('/details/', '/download/');
+            // Clean up filename: handle spaces and remove zero-width spaces
+            const parts = transformedUrl.split('/');
+            const filename = parts.pop().replace(/\+/g, '%20').replace(/%E2%80%8B/g, '');
+            finalUrl = [...parts, filename].join('/');
+        }
+        return { type: 'video', src: finalUrl };
+    }
+
+    // Google Drive
     if (url.includes('drive.google.com')) {
-        // The `?e=view` parameter can sometimes provide a better preview experience
-        if (url.includes('/preview')) return url.includes('?e=view') ? url : `${url}?e=view`;
         const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
         if (match && match[1]) {
-            return `https://drive.google.com/file/d/${match[1]}/preview?e=view`;
+            // Use the more reliable /uc endpoint for embedding
+            return { type: 'iframe', src: `https://drive.google.com/uc?export=view&id=${match[1]}` };
         }
+        // Fallback for any other GDrive URL format
+        return { type: 'iframe', src: url };
     }
-    return url;
+
+    // OK.ru
+    if (url.includes('ok.ru/video/')) {
+        return { type: 'iframe', src: url.replace('/video/', '/videoembed/') };
+    }
+    if (url.includes('ok.ru/videoembed/')) {
+        return { type: 'iframe', src: url };
+    }
+
+    // Archive.org (non-mp4 embed pages)
+    if (url.includes('archive.org/details/')) {
+        return { type: 'iframe', src: url.replace('/details/', '/embed/') };
+    }
+
+    // Default to iframe for any other unrecognized URL
+    return { type: 'iframe', src: url };
 };
 
 // ─── ICON COMPONENT ─────────────────────────────────────────
@@ -132,12 +272,14 @@ const Icon = ({ name, size = 20, className = "" }) => {
         trending: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg>,
         award: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="6" /><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" /></svg>,
         loader: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`animate-spin ${className}`}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>,
+        fullscreen: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3" /><path d="M21 8V5a2 2 0 0 0-2-2h-3" /><path d="M3 16v3a2 2 0 0 0 2 2h3" /><path d="M16 21h3a2 2 0 0 0 2-2v-3" /></svg>,
+        fullscreenExit: <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>,
     };
     return icons[name] || null;
 };
 
 // ─── STAR RATING COMPONENT ──────────────────────────────────
-const StarRating = ({ rating }) => {
+const StarRating = memo(({ rating }) => {
     const fullStars = Math.floor(rating / 2);
     const hasHalf = (rating / 2) % 1 >= 0.5;
     return (
@@ -148,42 +290,66 @@ const StarRating = ({ rating }) => {
             <span className="ml-1 text-sm text-gray-400">{rating}</span>
         </div>
     );
-};
+});
 
-// ─── VIDEO PLAYER MODAL ─────────────────────────────────────
+// ─── VIDEO PLAYER MODAL (with Plyr.js) ──────────────────────
 const VideoPlayer = ({ movie, onClose }) => {
     const [isLoading, setIsLoading] = useState(true);
-    const containerRef = useRef(null);
+    const playerElementRef = useRef(null);
+    const videoInfo = useMemo(() => movie ? getUrlInfo(movie.video) : { type: 'invalid', src: '' }, [movie]);
 
+    // Reset loading state and handle body overflow/escape key
     useEffect(() => {
+        setIsLoading(true);
         document.body.style.overflow = 'hidden';
         const handleEsc = (e) => { if (e.key === 'Escape') onClose(); };
         window.addEventListener('keydown', handleEsc);
+
         return () => {
             document.body.style.overflow = 'unset';
             window.removeEventListener('keydown', handleEsc);
         };
-    }, [onClose]);
+    }, [movie, onClose]);
 
-    const toggleFullscreen = useCallback(() => {
-        const el = containerRef.current;
-        if (!el) return;
-        if (!document.fullscreenElement) {
-            el.requestFullscreen?.().catch(() => {});
-        } else {
-            document.exitFullscreen?.().catch(() => {});
+    // Initialize and destroy Plyr instance
+    useEffect(() => {
+        let player = null;
+        // Ensure Plyr is loaded and we have an element and a valid source
+        if (window.Plyr && playerElementRef.current && videoInfo.src) {
+            player = new Plyr(playerElementRef.current, {
+                autoplay: true,
+            });
+
+            // For <video> elements, we use Plyr's events to manage loading state.
+            if (videoInfo.type === 'video') {
+                player.on('ready', () => setIsLoading(false));
+                player.on('error', () => {
+                    console.error("Plyr error: Video could not be loaded.");
+                    setIsLoading(false); // Hide loader even on error
+                });
+            }
         }
-    }, []);
+
+        // Cleanup: destroy the Plyr instance
+        return () => {
+            player?.destroy();
+        };
+    }, [videoInfo]); // Re-run when the video source changes
 
     if (!movie) return null;
-    const embedSrc = getEmbedUrl(movie.video);
+
+    const commonPlayerProps = {
+        ref: playerElementRef,
+        className: `absolute inset-0 w-full h-full border-0 transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`,
+        allow: "autoplay; encrypted-media; fullscreen",
+        allowFullScreen: true,
+    };
 
     return (
         <div
             className="fixed inset-0 z-[200] flex items-center justify-center bg-black animate-fadeIn"
             onClick={onClose}
         >
-            {/* Close button */}
             <button
                 onClick={(e) => { e.stopPropagation(); onClose(); }}
                 className="fixed top-3 right-3 z-[210] w-10 h-10 rounded-full bg-black/70 backdrop-blur text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 shadow-lg"
@@ -192,25 +358,13 @@ const VideoPlayer = ({ movie, onClose }) => {
                 <Icon name="x" size={20} />
             </button>
 
-            {/* Wrapper — centered both vertically & horizontally */}
             <div
                 className="relative w-full sm:max-w-5xl lg:max-w-6xl flex flex-col items-center justify-center px-0 sm:px-4"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Video container */}
                 <div
-                    ref={containerRef}
                     className="relative w-full bg-neutral-900 overflow-hidden sm:rounded-2xl sm:shadow-2xl sm:border sm:border-white/10 video-player-wrapper"
                 >
-                    {/* Fullscreen button — visible on ALL screens */}
-                    <button
-                        onClick={(e) => { e.stopPropagation(); toggleFullscreen(); }}
-                        className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-black/60 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition-colors border border-white/10"
-                        aria-label="Toggle fullscreen"
-                    >
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
-                    </button>
-
                     {isLoading && (
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10 gap-3">
                             <Icon name="loader" size={40} className="text-white" />
@@ -218,19 +372,26 @@ const VideoPlayer = ({ movie, onClose }) => {
                         </div>
                     )}
 
-                    <iframe
-                        src={embedSrc}
-                        title={`Player for ${movie.title}`}
-                        frameBorder="0"
-                        scrolling="no"
-                        className={`absolute inset-0 w-full h-full border-0 transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-                        allow="autoplay; encrypted-media; fullscreen"
-                        allowFullScreen
-                        onLoad={() => setIsLoading(false)}
-                    ></iframe>
+                    {videoInfo.type === 'video' && (
+                        <video {...commonPlayerProps} src={videoInfo.src} playsInline controls />
+                    )}
+
+                    {videoInfo.type === 'iframe' && (
+                        <iframe
+                            {...commonPlayerProps}
+                            src={videoInfo.src}
+                            title={`Player for ${movie.title}`}
+                            frameBorder="0"
+                            scrolling="no"
+                            onLoad={() => setIsLoading(false)}
+                        />
+                    )}
+
+                    {videoInfo.type === 'invalid' && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black text-red-500">Invalid video source.</div>
+                    )}
                 </div>
 
-                {/* Movie info */}
                 <div className="mt-3 sm:mt-4 px-4 sm:px-0 pb-4 sm:pb-0 w-full flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                         <h3 className="text-base sm:text-2xl font-bold text-white truncate">{movie.title}</h3>
@@ -242,7 +403,8 @@ const VideoPlayer = ({ movie, onClose }) => {
             </div>
         </div>
     );
-};// ─── NAVBAR COMPONENT ───────────────────────────────────────
+};
+// ─── NAVBAR COMPONENT ───────────────────────────────────────
 const Navbar = ({ searchQuery, setSearchQuery, watchlistCount, activeTab, setActiveTab, scrollY }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -352,7 +514,7 @@ const Navbar = ({ searchQuery, setSearchQuery, watchlistCount, activeTab, setAct
 };
 
 // ─── HERO SECTION ───────────────────────────────────────────
-const Hero = ({ movie, onWatchNow, onMoreInfo, onAddWatchlist, isInWatchlist }) => {
+const Hero = memo(({ movie, onWatchNow, onMoreInfo, onAddWatchlist, isInWatchlist }) => {
     return (
         <div className="relative w-full h-[70vh] lg:h-[85vh] overflow-hidden">
             <div className="absolute inset-0">
@@ -407,10 +569,10 @@ const Hero = ({ movie, onWatchNow, onMoreInfo, onAddWatchlist, isInWatchlist }) 
             </div>
         </div>
     );
-};
+});
 
 // ─── MOVIE CARD ─────────────────────────────────────────────
-const MovieCard = ({ movie, onClick, onToggleWatchlist, isInWatchlist }) => {
+const MovieCard = memo(({ movie, onClick, onToggleWatchlist, isInWatchlist }) => {
     return (
         <div
             className="movie-card relative flex-shrink-0 w-[160px] sm:w-[180px] lg:w-[200px] cursor-pointer group"
@@ -452,10 +614,10 @@ const MovieCard = ({ movie, onClick, onToggleWatchlist, isInWatchlist }) => {
             </div>
         </div>
     );
-};
+});
 
 // ─── MOVIE ROW ──────────────────────────────────────────────
-const MovieRow = ({ title, movies, icon, onMovieClick, onToggleWatchlist, watchlist }) => {
+const MovieRow = memo(({ title, movies, icon, onMovieClick, onToggleWatchlist, watchlist }) => {
     const scrollRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -532,7 +694,7 @@ const MovieRow = ({ title, movies, icon, onMovieClick, onToggleWatchlist, watchl
             </div>
         </div>
     );
-};
+});
 
 // ─── MOVIE DETAIL MODAL ─────────────────────────────────────
 const MovieModal = ({ movie, onClose, onToggleWatchlist, isInWatchlist, onWatchNow, relatedMovies, onMovieClick }) => {
@@ -689,7 +851,7 @@ const MovieModal = ({ movie, onClose, onToggleWatchlist, isInWatchlist, onWatchN
 };
 
 // ─── GENRE FILTER SECTION ───────────────────────────────────
-const GenreFilter = ({ activeGenre, setActiveGenre }) => (
+const GenreFilter = memo(({ activeGenre, setActiveGenre }) => (
     <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide pb-2">
             {genres.map(genre => (
@@ -703,7 +865,7 @@ const GenreFilter = ({ activeGenre, setActiveGenre }) => (
             ))}
         </div>
     </div>
-);
+));
 
 // ─── FOOTER ─────────────────────────────────────────────────
 const Footer = () => (
@@ -789,42 +951,51 @@ const App = () => {
 
     const isInWatchlist = useCallback((id) => watchlist.includes(id), [watchlist]);
 
-    const filteredMovies = moviesData.filter(m => {
-        const matchesSearch = m.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            m.genre.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesGenre = activeGenre === 'All' || m.genre === activeGenre || m.category === activeGenre;
+    // Memoize filtering logic to prevent expensive recalculations on every render
+    const filteredMovies = useMemo(() => {
+        return moviesData.filter(m => {
+            const searchLower = searchQuery.toLowerCase();
+            // Expanded search to include director and cast for a better user experience
+            const matchesSearch =
+                m.title.toLowerCase().includes(searchLower) ||
+                m.genre.toLowerCase().includes(searchLower) ||
+                m.director.toLowerCase().includes(searchLower) ||
+                m.cast.some(actor => actor.toLowerCase().includes(searchLower));
 
-        if (activeTab === 'list') return isInWatchlist(m.id) && matchesSearch;
-        if (activeTab === 'movies') return matchesSearch && matchesGenre;
-        if (activeTab === 'tv') return false;
-        if (activeTab === 'genres') return matchesGenre;
-        return matchesSearch && matchesGenre;
-    });
+            // Improved genre matching to handle multiple genres in one string (e.g., "Action / Drama")
+            const matchesGenre = activeGenre === 'All' || m.genre.includes(activeGenre);
 
-    const trendingMovies = filteredMovies.filter(m => m.trending);
-    const popularMovies = filteredMovies.filter(m => m.popular);
-    const topRatedMovies = filteredMovies.filter(m => m.topRated);
-    const actionMovies = filteredMovies.filter(m => m.category === 'Action' || m.genre === 'Action');
-    const dramaMovies = filteredMovies.filter(m => m.category === 'Drama' || m.genre === 'Drama');
-    const sciFiMovies = filteredMovies.filter(m => m.category === 'Sci-Fi' || m.genre === 'Sci-Fi');
+            // Apply filters based on the active tab's logic
+            if (activeTab === 'list') {
+                return watchlist.includes(m.id) && (searchQuery ? matchesSearch : true);
+            }
+            if (activeTab === 'tv') {
+                return false; // No TV show data available
+            }
+            if (activeTab === 'genres') {
+                // On the 'Genres' tab, filter by genre, and allow search to refine the results.
+                return matchesGenre && (searchQuery ? matchesSearch : true);
+            }
+            // Default for 'home' and 'movies' tabs
+            return matchesSearch && matchesGenre;
+        });
+    }, [searchQuery, activeGenre, activeTab, watchlist]);
+
+    // Memoize derived lists so they only recalculate when filteredMovies changes
+    const trendingMovies = useMemo(() => filteredMovies.filter(m => m.trending), [filteredMovies]);
+    const popularMovies = useMemo(() => filteredMovies.filter(m => m.popular), [filteredMovies]);
+    const topRatedMovies = useMemo(() => filteredMovies.filter(m => m.topRated), [filteredMovies]);
+    const actionMovies = useMemo(() => filteredMovies.filter(m => m.genre.includes('Action')), [filteredMovies]);
+    const dramaMovies = useMemo(() => filteredMovies.filter(m => m.genre.includes('Drama')), [filteredMovies]);
+    const sciFiMovies = useMemo(() => filteredMovies.filter(m => m.genre.includes('Sci-Fi')), [filteredMovies]);
 
     const heroMovie = moviesData[0];
 
-    const handleMovieClick = (movie) => {
-        setSelectedMovie(movie);
-    };
-
-    const handleWatchNow = (movie) => {
-        setPlayingMovie(movie);
-    };
-
-    const handleClosePlayer = () => {
-        setPlayingMovie(null);
-    };
-
-    const handleCloseModal = () => {
-        setSelectedMovie(null);
-    };
+    // Memoize handlers to prevent re-rendering of child components that receive them as props
+    const handleMovieClick = useCallback((movie) => setSelectedMovie(movie), []);
+    const handleWatchNow = useCallback((movie) => setPlayingMovie(movie), []);
+    const handleClosePlayer = useCallback(() => setPlayingMovie(null), []);
+    const handleCloseModal = useCallback(() => setSelectedMovie(null), []);
 
     return (
         <div className="min-h-screen bg-dark-900">
@@ -977,4 +1148,3 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-            
