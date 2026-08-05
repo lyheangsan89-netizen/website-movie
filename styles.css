@@ -1,7 +1,19 @@
+/* ─── CSS VARIABLES ────────────────────────────────────────── */
+:root {
+    --color-bg-primary: #0a0a0a;
+    --color-bg-secondary: #1f1f1f;
+    --color-bg-tertiary: #3a3a3a;
+    --color-bg-modal-track: #1a1a1a;
+    --color-bg-modal-thumb: #4a4a4a;
+    --color-bg-modal-thumb-hover: #6a6a6a;
+    --color-backdrop: rgba(0, 0, 0, 0.85);
+    --color-accent-glow: rgba(229, 9, 20, 0.5);
+}
+
 /* ─── BASE & RESET ─────────────────────────────────────────── */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #0a0a0a;
+    background-color: var(--color-bg-primary);
 }
 
 /* ─── SCROLLBAR HIDING ─────────────────────────────────────── */
@@ -23,18 +35,18 @@ body {
 
 /* ─── HERO GRADIENT ────────────────────────────────────────── */
 .hero-gradient {
-    background: linear-gradient(to top, #0a0a0a 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+    background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 /* ─── MODAL BACKDROP ───────────────────────────────────────── */
 .modal-backdrop {
-    background: rgba(0, 0, 0, 0.85);
+    background: var(--color-backdrop);
     backdrop-filter: blur(8px);
 }
 
 /* ─── TEXT GLOW EFFECT ─────────────────────────────────────── */
 .text-glow {
-    text-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
+    text-shadow: 0 0 20px var(--color-accent-glow);
 }
 
 /* ─── LINE CLAMP ───────────────────────────────────────────── */
@@ -45,23 +57,23 @@ body {
     overflow: hidden;
 }
 
-/* ─── CAST SCROLLBAR ───────────────────────────────────────── */
-.cast-scroll::-webkit-scrollbar {
+/* ─── CUSTOM HORIZONTAL SCROLLBARS (CAST & GENRE) ──────────── */
+.cast-scroll::-webkit-scrollbar,
+.genre-scroll::-webkit-scrollbar {
     height: 6px;
 }
-.cast-scroll::-webkit-scrollbar-track {
-    background: #1f1f1f;
+.cast-scroll::-webkit-scrollbar-track,
+.genre-scroll::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
     border-radius: 3px;
 }
-.cast-scroll::-webkit-scrollbar-thumb {
-    background: #3a3a3a;
+.cast-scroll::-webkit-scrollbar-thumb,
+.genre-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-bg-tertiary);
     border-radius: 3px;
 }
 
-/* ═════════════════════════════════════════════════════════════
-   VIDEO PLAYER — MOBILE-FIRST RESPONSIVE
-   ═════════════════════════════════════════════════════════════ */
-
+/* ─── VIDEO PLAYER ─────────────────────────────────────────── */
 .video-player-wrapper {
     position: relative;
     width: 100%;
@@ -80,9 +92,9 @@ body {
 /* Mobile landscape: fill the screen height */
 @media (max-height: 450px) and (orientation: landscape) {
     .video-player-wrapper {
-        aspect-ratio: auto;
-        height: 85vh;
-        padding-bottom: 0;
+        /* On small-height landscape screens (like phones), make the video taller. */
+        /* The `aspect-ratio` property will automatically adjust the width to match. */
+        max-height: 90vh;
     }
 }
 
@@ -91,26 +103,42 @@ body {
     width: 8px;
 }
 .modal-scroll::-webkit-scrollbar-track {
-    background: #1a1a1a;
+    background: var(--color-bg-modal-track);
     border-radius: 4px;
 }
 .modal-scroll::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
+    background: var(--color-bg-modal-thumb);
     border-radius: 4px;
 }
 .modal-scroll::-webkit-scrollbar-thumb:hover {
-    background: #6a6a6a;
+    background: var(--color-bg-modal-thumb-hover);
 }
 
-/* ─── CUSTOM SCROLLBAR FOR GENRES ──────────────────────────── */
-.genre-scroll::-webkit-scrollbar {
-    height: 6px;
+/* ─── PLYR.JS CUSTOM STYLING ───────────────────────────────── */
+:root {
+    --plyr-color-main: #e50914; /* A red accent to match the site's theme */
+    --plyr-video-background: var(--color-bg-primary);
+    --plyr-control-radius: 6px;
+    --plyr-font-family: 'Inter', sans-serif;
+    --plyr-tooltip-background: rgba(0, 0, 0, 0.8);
+    --plyr-tooltip-color: #ffffff;
+    --plyr-control-icon-size: 18px;
 }
-.genre-scroll::-webkit-scrollbar-track {
-    background: #1f1f1f;
-    border-radius: 3px;
+
+/* Make sure the player fills its container */
+.plyr {
+    width: 100%;
+    height: 100%;
 }
-.genre-scroll::-webkit-scrollbar-thumb {
-    background: #3a3a3a;
-    border-radius: 3px;
+
+/* Adjustments for better dark mode integration */
+.plyr__controls {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+.plyr--video .plyr__control.plyr__tab-focus,
+.plyr--video .plyr__control:hover {
+    background: var(--plyr-color-main);
 }
