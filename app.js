@@ -16,7 +16,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Action",
-        "video": "https://ok.ru/video/15646947936821"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0Njk0NzkzNjgyMQ=="
     },
     {
 
@@ -35,7 +35,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Animation",
-        "video": "https://drive.google.com/file/d/1OoBTXgEEciAWzRMf_r-m3di8rrnZe5iU/preview"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MjE1MTc1NzM2NQ=="
 
     },
     {
@@ -54,7 +54,7 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Horror",
-        "video": "https://drive.google.com/file/d/1LhDzY7XfxfICo1nXTpUWOfG4YE9skDlP/preview"
+        "video": "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xTGhEelk3WGZ4ZklDbzFuWFRwVVdPZkM0WUU5c2tEbFAvcHJldmlldw=="
     },
     {
         "id": 4,
@@ -72,7 +72,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Action",
-        "video": "https://ok.ru/video/15446058404412"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTQ0NjA1ODQwNDQxMg=="
     },
     {
         "id": 5,
@@ -90,7 +90,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Crime",
-        "video": "https://ok.ru/video/15647240227381"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0NzI0MDIyNzM4MQ=="
     },
     {
         "id": 6,
@@ -108,7 +108,7 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Romance",
-        "video": "https://ok.ru/videoembed/15646749887029"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjQ2NzQ5ODg3MDI5"
     },
     {
         "id": 7,
@@ -126,7 +126,7 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Action",
-        "video": "https://ok.ru/videoembed/15647375166005"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjQ3Mzc1MTY2MDA1"
     },
     {
         "id": 8,
@@ -144,7 +144,7 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Horror",
-        "video": "https://ok.ru/videoembed/15647375297077"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjQ3Mzc1Mjk3MDc3"
     },
     {
         "id": 9,
@@ -162,7 +162,7 @@ const moviesData = [
         "popular": true,
         "topRated": true,
         "category": "Romance",
-        "video": "https://ok.ru/videoembed/15647728863797"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjQ3NzI4ODYzNzk3"
     },
     {
         "id": 10,
@@ -180,7 +180,7 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Romance",
-        "video": "https://ok.ru/video/15647847680565"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0Nzg0NzY4MDU2NQ=="
     },
     {
         "id": 11,
@@ -198,16 +198,151 @@ const moviesData = [
         "popular": true,
         "topRated": false,
         "category": "Action",
-        "video": "https://ok.ru/video/15650716518965"
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MDcxNjUxODk2NQ=="
+    },
+    {
+        "id": 12,
+        "title": "If We Were Lucky",
+        "year": 2024,
+        "rating": 7.8,
+        "genre": "Drama, History, War",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMDFkOTBhYjYtOGFjMS00MzYzLTk0OWItYTk3OWEwZTgzOTkwXkEyXkFqcGc@._V1_FMjpg_UY6201_.jpg",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMDFkOTBhYjYtOGFjMS00MzYzLTk0OWItYTk3OWEwZTgzOTkwXkEyXkFqcGc@._V1_FMjpg_UY6201_.jpg",
+        "synopsis": "Based on the true story, a Jewish family is separated at the start of World War II and determined to survive and reunite across continents.",
+        "runtime": "50 min",
+        "director": "Thomas Kail",
+        "cast": ["Joey King", "Logan Lerman", "Hadas Yaron", "Henry Lloyd-Hughes", "Amit Rahav"],
+        "trending": true,
+        "popular": true,
+        "topRated": true,
+        "category": "Drama",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjUyMTUxODIyOTAx"
+    },
+    {
+        "id": 13,
+        "title": "My Love",
+        "year": 2021,
+        "rating": 7.0,
+        "genre": "Romance, Drama",
+        "backdrop": "https://cdn.myportfolio.com/f6b8b225-1629-408a-bc5d-819dbad67b49/3c753192-6654-4034-a8a1-71ea5a0ad47e.jpg?h=3839cf584700b244cc05892a2c36d1a9",
+        "poster": "https://cdn.myportfolio.com/f6b8b225-1629-408a-bc5d-819dbad67b49/3c753192-6654-4034-a8a1-71ea5a0ad47e.jpg?h=3839cf584700b244cc05892a2c36d1a9",
+        "synopsis": "A story following a high school swimmer and a transfer student whose romantic relationship spans fifteen years, filled with first love, regret, and growing up together.",
+        "runtime": "115 min",
+        "director": "Han Tian",
+        "cast": ["Greg Han Hsu", "Zhang Ruonan", "Ding Guansen", "Yan An", "Guo Cheng"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Romance",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlb2VtYmVkLzE1NjUyMTUxODg4NDM3"
+    },
+    {
+        "id": 14,
+        "title": "Eye for an Eye 2",
+        "year": 2024,
+        "rating": 7.2,
+        "genre": "Action, Drama",
+        "backdrop": "https://lh5.googleusercontent.com/proxy/Y2qIt28XKgQctxuLvdBL9TO1wTnngscUjxItvDssgkTM0kOSmdKS40LGivzLX-ZeIfOUQb2mAxq0Idk-QaClIVoPyMiqpQy90guFyStvC0yqCox8U9chAbRDmNjYbmxDKh2IIvA",
+        "poster": "https://m.media-amazon.com/images/M/MV5BZmJlYjE3NTUtZDlkMS00NWQ3LWI2MWYtNTMxM2ZmMmYzYjBlXkEyXkFqcGc@._V1_.jpg",
+        "synopsis": "The blind, highly skilled martial artist Cheng Xiaazi continues his journey through the chaotic world, taking in an orphaned boy, Zhang Xiaoyu, who seeks revenge for his family's brutal tragic murder.",
+        "runtime": "90 min",
+        "director": "Yang Bingjia",
+        "cast": ["Xie Miao", "Yang Enyou", "Huang Tao"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Action",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MDcxNjU4NDUwMQ=="
+    },
+    {
+        "id": 15,
+        "title": "The Odyssey",
+        "year": 2026,
+        "rating": 7.5,
+        "genre": "Adventure, Drama, History",
+        "backdrop": "https://upload.wikimedia.org/wikipedia/tr/b/ba/Odyssey_filmi_afi%C5%9F.jpg?utm_source=tr.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "poster": "https://upload.wikimedia.org/wikipedia/tr/b/ba/Odyssey_filmi_afi%C5%9F.jpg?utm_source=tr.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+        "synopsis": "After twenty years away fighting in the Trojan War and enduring a treacherous journey home, Odysseus finally returns to Ithaca to find his kingdom in chaos and his wife besieged by suitors.",
+        "runtime": "116 min",
+        "director": "Uberto Pasolini",
+        "cast": ["Ralph Fiennes", "Juliette Binoche", "Charlie Plummer", "Marwan Kenzari"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Adventure",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MjMzNTEyNzA5Mw=="
+    },
+    {
+        "id": 16,
+        "title": "Supergirl: Woman of Tomorrow",
+        "year": 2026,
+        "rating": 7.8,
+        "genre": "Action, Adventure, Sci-Fi",
+        "backdrop": "https://m.media-amazon.com/images/M/MV5BMmJkOTE0MWUtY2E5OS00NzEyLWI4NjEtYzQzYzFmMjk5ODE3XkEyXkFqcGc@._V1_FMjpg_UX1012_.jpg",
+        "poster": "https://m.media-amazon.com/images/M/MV5BMmJkOTE0MWUtY2E5OS00NzEyLWI4NjEtYzQzYzFmMjk5ODE3XkEyXkFqcGc@._V1_FMjpg_UX1012_.jpg",
+        "synopsis": "Kara Zor-El, who witnessed the destruction of Krypton and grew up on a remnant of her home planet, embarks on a cosmic journey across the galaxy alongside her loyal companion Krypto the Superdog.",
+        "runtime": "125 min",
+        "director": "Craig Gillespie",
+        "cast": ["Milly Alcock", "Matthias Schoenaerts", "Eve Ridley"],
+        "trending": true,
+        "popular": true,
+        "topRated": false,
+        "category": "Action",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MjMzNTE5MjYyOQ=="
+    },
+    {
+        "id": 17,
+        "title": "John Wick",
+        "year": 2014,
+        "rating": 7.4,
+        "genre": "Action, Crime, Thriller",
+        "backdrop": "https://tse1.mm.bing.net/th/id/OIP.h_u4cwJ33juyJwBPoPo8SAHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "poster": "https://tse3.mm.bing.net/th/id/OIP.n7V6Q0VEPjhrJSqRO_EAUAHaLH?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+        "synopsis": "An ex-hitman comes out of retirement to track down the gangsters that killed his dog and took everything from him.",
+        "runtime": "101 min",
+        "director": "Chad Stahelski",
+        "cast": ["Keanu Reeves", "Michael Nyqvist", "Alfie Allen", "Willem Dafoe", "Ian McShane"],
+        "trending": true,
+        "popular": true,
+        "topRated": true,
+        "category": "Action",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MzMyNTE3OTQ0NQ=="
+    },
+    {
+        "id": 18,
+        "title": "Raya and the Last Dragon",
+        "year": 2021,
+        "rating": 7.3,
+        "genre": "Animation, Action, Adventure",
+        "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRonZsKN0s45xGQVQeZywVJWFeTGNGAIwtyP1vQXMIzmA&s=10",
+        "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJFlIb-YtxTAo0cT6ETO9o2k8Co-ZGh0RyGJiyXIh69A&s=10",
+        "synopsis": "In a realm known as Kumandra, a renegade warrior named Raya tracks down the last dragon to stop the evil monsters known as the Druun from destroying the world.",
+        "runtime": "107 min",
+        "director": "Don Hall, Carlos López Estrada",
+        "cast": ["Kelly Marie Tran", "Awkwafina", "Gemma Chan", "Daniel Dae Kim", "Benedict Wong"],
+        "trending": true,
+        "popular": true,
+        "topRated": true,
+        "category": "Animation",
+        "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MzQ0NjU1MjExNw=="
     }
+
 
 ];
 
 const genres = ["All", "Action", "Sci-Fi", "Drama", "Thriller", "Horror", "Comedy", "Romance", "Crime"];
 
 // ─── HELPER FOR VIDEO URLS ──────────────────────────────────
-const getUrlInfo = (url) => {
-    if (!url) return { type: 'invalid', src: '' };
+const getUrlInfo = (encodedUrl) => {
+    if (!encodedUrl) return { type: 'invalid', src: '' };
+
+    let url;
+    try {
+        url = atob(encodedUrl); // Decode the Base64 string
+    } catch (e) {
+        console.error("Failed to decode video URL:", e);
+        return { type: 'invalid', src: '' };
+    }
 
     // Direct video file (.mp4)
     if (url.endsWith('.mp4')) {
