@@ -2,7 +2,7 @@ const { useState, useEffect, useRef, useCallback, useMemo, memo } = React;
 const moviesData = [
   {
     id: 1,
-    title: "Spider-Man: Brand New Day",
+    title: "Spider-Man: Brand New Day", 
     year: 2026,
     rating: 8.5,
     genre: "Action",
