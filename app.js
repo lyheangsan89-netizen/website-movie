@@ -419,7 +419,7 @@ const moviesData = [
     category: "Action",
     video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MzMyNTE3OTQ0NQ==",
   },
-  {
+{
     id: 18,
     title: "I Am What I Am",
     year: 2021,
@@ -438,7 +438,7 @@ const moviesData = [
     popular: true,
     topRated: true,
     category: "Animation",
-    video: "https://ok.ru/video/15662273858101",
+    video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY2MjI3Mzg1ODEwMQ==",
   },
 ];
 
