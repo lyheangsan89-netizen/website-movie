@@ -50,14 +50,14 @@ const moviesData = [
   },
   {
     id: 3,
-    title: "Thaghut",
+    title: "ញ្ញាណមរណៈ វគ្គ1",
     year: 2024,
     rating: 5.7,
     genre: "Horror",
     backdrop:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ2K8ogJj6wXDRg8WdTm8nkdkvYUhk-xAJ-lMKWRSwBw&s=10",
+      "https://cdn-sg.sf-api.net/images/2oKtJ7W0vJ6X.jpg",
     poster:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ2K8ogJj6wXDRg8WdTm8nkdkvYUhk-xAJ-lMKWRSwBw&s=10",
+      "https://cdn-sg.sf-api.net/images/2oKtJ7W0vJ6X.jpg",
     synopsis:
       "After discovering her biological father is a spiritual healer with a dark legacy, Ainun delves into his mysterious teachings, only to uncover terrifying rituals and dangerous dark magic lurking within.",
     runtime: "102 min",
@@ -74,7 +74,7 @@ const moviesData = [
     topRated: false,
     category: "Horror",
     video:
-      "aHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xTGhEelk3WGZ4ZklDbzFuWFRwVVdPZkM0WUU5c2tEbFAvcHJldmlldw==",
+      "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs1Z0M4QVpQeEljcFBOSEpDcWk=",
   },
   {
     id: 4,
@@ -419,7 +419,7 @@ const moviesData = [
     category: "Action",
     video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MzMyNTE3OTQ0NQ==",
   },
-{
+  {
     id: 18,
     title: "I Am What I Am",
     year: 2021,
@@ -438,7 +438,7 @@ const moviesData = [
     popular: true,
     topRated: true,
     category: "Animation",
-    video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY2MjI3Mzg1ODEwMQ==",
+    video: "https://ok.ru/video/15662273858101",
   },
 ];
 
@@ -503,6 +503,15 @@ const getUrlInfo = (encodedUrl) => {
   }
   if (url.includes("ok.ru/videoembed/")) {
     return { type: "iframe", src: url };
+  }
+
+  // Dailymotion (Geo Player URL & Standard URL)
+  if (url.includes("geo.dailymotion.com") || url.includes("dailymotion.com/embed/")) {
+    return { type: "iframe", src: url };
+  }
+  if (url.includes("dailymotion.com/video/")) {
+    // បំផ្លែង Link ធម្មតាឱ្យទៅជា Embed Link
+    return { type: "iframe", src: url.replace("/video/", "/embed/video/") };
   }
 
   // Archive.org (non-mp4 embed pages)
