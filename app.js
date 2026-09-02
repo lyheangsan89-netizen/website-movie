@@ -74,7 +74,7 @@ const moviesData = [
     topRated: false,
     category: "Horror",
     video:
-      "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs1Z0M4QVpQeEljcFBOSEpDcWk=",
+      "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs3NWdydk9iSWgyUWdjSmpDcWk=",
   },
   {
     id: 4,
