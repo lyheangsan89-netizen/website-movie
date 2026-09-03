@@ -2,7 +2,7 @@ const { useState, useEffect, useRef, useCallback, useMemo, memo } = React;
 const moviesData = [
   {
     id: 1,
-    title: "Spider-Man: Brand New Day", 
+    title: "Spider-Man: Brand New Day",
     year: 2026,
     rating: 8.5,
     genre: "Action",
@@ -420,26 +420,145 @@ const moviesData = [
     video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MzMyNTE3OTQ0NQ==",
   },
   {
-    id: 18,
-    title: "I Am What I Am",
-    year: 2021,
-    rating: 7.8,
-    genre: "Animation, Comedy, Drama",
-    backdrop:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJy9sfyv0NOJYWvfNGQx8Wnm-RgAQhP9S13faRya22Kw&s=10",
-    poster:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJy9sfyv0NOJYWvfNGQx8Wnm-RgAQhP9S13faRya22Kw&s=10",
-    synopsis:
-      "A young Cantonese boy named Gyun must overcome self-doubt and bullying to train in the traditional art of Lion Dance with his friends for a major championship.",
-    runtime: "104 min",
-    director: "Sun Haipeng",
-    cast: ["Li Xin", "Guo Haoran", "Cai Zhuangzhuang", "Li Jiaheng"],
-    trending: true,
-    popular: true,
-    topRated: true,
-    category: "Animation",
-    video: "https://ok.ru/video/15662273858101",
+    "id": 18,
+    "title": "I Am What I Am 1",
+    "year": 2021,
+    "rating": 7.8,
+    "genre": "Animation, Comedy, Drama",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJy9sfyv0NOJYWvfNGQx8Wnm-RgAQhP9S13faRya22Kw&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJy9sfyv0NOJYWvfNGQx8Wnm-RgAQhP9S13faRya22Kw&s=10",
+    "synopsis": "A young Cantonese boy named Gyun must overcome self-doubt and bullying to train in the traditional art of Lion Dance with his friends for a major championship.",
+    "runtime": "104 min",
+    "director": "Sun Haipeng",
+    "cast": [
+      "Li Xin",
+      "Guo Haoran",
+      "Cai Zhuangzhuang",
+      "Li Jiaheng"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": true,
+    "category": "Animation",
+    "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY2MjI3Mzg1ODEwMQ=="
   },
+  {
+    "id": 19,
+    "title": "Sisu 2",
+    "year": 2022,
+    "rating": 6.9,
+    "genre": "Action, War, Thriller",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBleVgPRE5cI1wSvjSkVYZE1yxnd4LfvIBOL1gJARiOA&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBleVgPRE5cI1wSvjSkVYZE1yxnd4LfvIBOL1gJARiOA&s=10",
+    "synopsis": "During the final days of World War II, a solitary prospector strikes gold in Lapland and attempts to deliver it to a bank. When an SS platoon steals his gold, they discover he is a legendary, immortal ex-commando who will kill anyone standing in his way.",
+    "runtime": "91 min",
+    "director": "Jalmari Helander",
+    "cast": [
+      "Jorma Tommila",
+      "Aksel Hennie",
+      "Jack Doolan",
+      "Mimosa Willamo"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs3eHIwZFg5a0daRmJkSm93aFU="
+  },
+  {
+    "id": 20,
+    "title": "Dr. Cheon and the Lost Talisman",
+    "year": 2023,
+    "rating": 6.0,
+    "genre": "Action, Comedy, Fantasy, Horror",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRivMzy4y3rscA_hr6M3OW-_RQZ6nrGxX-h81TE5wlLiA&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRivMzy4y3rscA_hr6M3OW-_RQZ6nrGxX-h81TE5wlLiA&s=10",
+    "synopsis": "Dr. Cheon, a fake exorcist who doesn't believe in ghosts, uses his sharp insights and tech gadgets to solve cases. However, he faces a powerful real demon when a desperate woman requests his help to save her possessed younger sister.",
+    "runtime": "98 min",
+    "director": "Kim Seong-sik",
+    "cast": [
+      "Gang Dong-won",
+      "Huh Joon-ho",
+      "Esom",
+      "Lee Dong-hwi",
+      "Kim Jong-soo"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0Nzc5NDk4OTYyMQ=="
+  },
+  {
+    "id": 21,
+    "title": "Lovesick",
+    "year": 2025,
+    "rating": 8.1,
+    "genre": "Romance, Comedy, Drama",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYxXFikp_0Ekto2PlHieOrtXi8FPsoDuCrIjYOqkdB_A&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYxXFikp_0Ekto2PlHieOrtXi8FPsoDuCrIjYOqkdB_A&s=10",
+    "synopsis": "Class clown Ye Zi Jie pretends to be gravely ill to avoid expulsion, but his teacher assigns the strict class monitor with the same name to monitor him, triggering an unexpected romance.",
+    "runtime": "110 min",
+    "director": "Hsu Fu-Hsiang",
+    "cast": [
+      "Zhan Huai-yun",
+      "Chiang Chi",
+      "Liu Hsiu-fu",
+      "Huang Guan-Zhi"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Romance",
+    "video": "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs3dkJTa2tIQ0tyTFhaSm9JVkk="
+  },
+  {
+    "id": 22,
+    "title": "Terra Willy: Unexplored Planet",
+    "year": 2019,
+    "rating": 6.6,
+    "genre": "Animation, Adventure, Sci-Fi",
+    "backdrop": "https://cdn-sg.sf-api.net/images/eGbIWCV2taoB.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/eGbIWCV2taoB.jpg",
+    "synopsis": "Following the destruction of their ship, young Willy is separated from his parents in space. His rescue capsule lands on a wild, unexplored planet where, with the help of a survival robot named Buck, he must learn to survive until a rescue mission arrives.",
+    "runtime": "89 min",
+    "director": "Éric Tosti",
+    "cast": [
+      "Timothé Vom Dorp",
+      "Édouard Baer",
+      "Marie-Eugénie Maréchal",
+      "Guillaume Lebon"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Animation",
+    "video": "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs2eDFEZDBCckttNDlSSnBQbE0="
+  },
+  {
+    "id": 23,
+    "title": "Godzilla vs. Kong",
+    "year": 2021,
+    "rating": 6.3,
+    "genre": "Action, Sci-Fi, Thriller",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN5Old443mAs9kS2CPox_bNG-TnV3G22C40A86zpYIXA&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN5Old443mAs9kS2CPox_bNG-TnV3G22C40A86zpYIXA&s=10",
+    "synopsis": "Fearsome monsters Godzilla and King Kong square off in an epic battle for the ages, while humanity looks to wipe out both creatures and take back the planet once and for all.",
+    "runtime": "113 min",
+    "director": "Adam Wingard",
+    "cast": [
+      "Alexander Skarsgård",
+      "Millie Bobby Brown",
+      "Rebecca Hall",
+      "Brian Tyree Henry"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs2VGVkaHcyRXJmbnIxSnBQbFE="
+  }
+
 ];
 
 const genres = [
