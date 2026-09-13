@@ -126,7 +126,7 @@ const moviesData = [
     popular: true,
     topRated: true,
     category: "Crime",
-    video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0NzI0MDIyNzM4MQ==",
+    video: "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvOTQ3NTE2NDFhMjJiYjZlNDY5NGFhOWIxY2I2YzYyNWYvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4P3Rva2VuPWV5SjBlWEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJblJwYTJsaGN5STZJbk5sY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3B6UFJLNFhGbExTUnhFaVFaV0w4Um5yU3Vwb1BCUzFWYXhTb1E0N1k0QnJ5NTFEUExaVmtTZk5CanY2LVNUTVNmb1pQdWRXaWgtNHdKQmoySmUydFFmcGxhdGZvcm09d2VibW9iaWxl",
   },
   {
     id: 6,
@@ -390,7 +390,7 @@ const moviesData = [
     popular: true,
     topRated: false,
     category: "Action",
-    video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MjMzNTE5MjYyOQ==",
+    video: "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvZDQzMjI2NGE3MzM0Yjc2N2RmYjM0MDk4YWQ5YWNkMGYvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4P3Rva2VuPWV5SjBlWEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3Bua29XVGNaUGtvdE1WZUU1TWg5NkhrMk1zMWQ2YVEyR05acGlzdVA3NXVfOGJRcDZ3TjdMNVYzVU1KVDB4MjBhUV9ZVW5IVnJGc0VzMjdyNnEzdlEmcGxhdGZvcm09d2VibW9iaWxl",
   },
   {
     id: 17,
@@ -537,6 +537,50 @@ const moviesData = [
   },
   {
     "id": 23,
+    "title": "Sisu",
+    "year": 2022,
+    "rating": 7.9,
+    "genre": "Action, War, Thriller",
+    "backdrop": "https://th.bing.com/th/id/OIP.FxEgvZAvRE9GPtxXW2HQ9gHaLv?w=132&h=187&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
+    "poster": "https://th.bing.com/th/id/OIP.FxEgvZAvRE9GPtxXW2HQ9gHaLv?w=132&h=187&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
+    "synopsis": "Fearsome monsters Godzilla and King Kong square off in an epic battle for the ages, while humanity looks to wipe out both creatures and take back the planet once and for all.",
+    "runtime": "113 min",
+    "director": "Adam Wingard",
+    "cast": [
+      "Alexander Skarsgård",
+      "Millie Bobby Brown",
+      "Rebecca Hall",
+      "Brian Tyree Henry"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvYmExYWRlMDkzZGU2ZjJmNzRlYThiYTEwNjcxZDkzMDAvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4P3Rva2VuPWV5SjBlWEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3BsdGFmbW92dFJuVlMyRll5M0F5RUhfVEo0dG9qLWVYNml3a1k1T1FqV1hyLUljMktlMWhvS1A2cmdBa1FWS2c3TTJjU2xYUzFqRXZMT1FOeUhtTVNRJnBsYXRmb3JtPXdlYm1vYmlsZQ=="
+  },
+  {
+    "id": 24,
+    "title": "Minions & Monsters",
+    "year": 2026,
+    "rating": 7.5,
+    "genre": "Animation, Comedy, Family",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Qq1M7baef59bvxbS6zmRywgZpGS03P7jNPpBDxzREA&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_Qq1M7baef59bvxbS6zmRywgZpGS03P7jNPpBDxzREA&s=10",
+    "synopsis": "The yellow mischief-makers find themselves in hilarious chaos when they accidentally stumble into a hidden world of friendly monsters.",
+    "runtime": "90 min",
+    "director": "Pierre Coffin",
+    "cast": [
+      "Pierre Coffin",
+      "Steve Carell"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Animation",
+    "video": "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWVjYS9zdGF0aW9uLzIwMjYvMDgxMS8xOC8xNzg2NDQwMTY1NDg4Njc2Lm1wNC9tYW5pZmVzdC5tM3U4"
+  },
+  {
+    "id": 25,
     "title": "Godzilla vs. Kong",
     "year": 2021,
     "rating": 6.3,
@@ -556,8 +600,59 @@ const moviesData = [
     "popular": true,
     "topRated": false,
     "category": "Action",
-    "video": "aHR0cHM6Ly9nZW8uZGFpbHltb3Rpb24uY29tL3BsYXllci5odG1sP3ZpZGVvPWs2VGVkaHcyRXJmbnIxSnBQbFE="
-  }
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvYzFlZjk4MjE5OTQ2Y2RhMTc3MDMzMGQ0YmM0NzhlODYvbWFuaWZlc3RfaDI2NF83MjBwLm0zdTg/dG9rZW49ZXlKMGLEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJblJwYTJsaGN5STZJbk5sY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3BMcCBzdUZUOFMycVpITmVZYVdRMW9mY2RMcUJ5SllZTTlPVXhXVk5XSWt5YTAycm5US3F0ajlnM3VCWUZ2ZE1qQW1ydXpBdUtGQ2lWZnRxQlEmcGxhdGZvcm09d2VibW9iaWxl"
+  },
+  {
+    id: 26,
+    title: "ញ្ញាណមរណៈ វគ្គ2",
+    year: 2024,
+    rating: 5.7,
+    genre: "Horror",
+    backdrop:
+      "https://cdn-sg.sf-api.net/images/2oKtJ7W0vJ6X.jpg",
+    poster:
+      "https://cdn-sg.sf-api.net/images/2oKtJ7W0vJ6X.jpg",
+    synopsis:
+      "After discovering her biological father is a spiritual healer with a dark legacy, Ainun delves into his mysterious teachings, only to uncover terrifying rituals and dangerous dark magic lurking within.",
+    runtime: "102 min",
+    director: "Bobby Prasetyo",
+    cast: [
+      "Yasmin Napper",
+      "Arbani Yasiz",
+      "Ria Ricis",
+      "Whani Darmawan",
+      "Hana Saraswati",
+    ],
+    trending: true,
+    popular: true,
+    topRated: false,
+    category: "Horror",
+    video:
+      "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvZTQ4YzkxYTEyMmE4ZjI5MWFiODYyMzk4NTdjNDRiNDIvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4P3Rva2VuPWV5SjBlWEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJblJwYTJsaGN5STZJbk5sY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3BVTkt1bU52RUJnNzd1N09zWXFHRlB6TXVGOE11blBzU2xSaVpkbDdoOEFlM1N6S2ZkSkw4OWFucFl1TkhIeHZlLUxPQXQ2RjRJSDZLVFJCb2lPVlZIZyZwcmF0Zm9ybT13ZWJtb2JpbGU=",
+  },
+  {
+  "id": 27,
+  "title": "How to Train Your Dragon",
+  "year": 2025,
+  "rating": 8.1,
+  "genre": "Action, Adventure, Fantasy",
+  "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLjydWjP-PmczOkmj2k5EsvAxfT_i-7U0RdnWDaEBKTg&s=10",
+  "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLjydWjP-PmczOkmj2k5EsvAxfT_i-7U0RdnWDaEBKTg&s=10",
+  "synopsis": "On the rugged isle of Berk, Hiccup, an inventive Viking teen, defies generations of tradition when he befriends Toothless, a feared Night Fury dragon. Together, they must overcome prejudice to unite their worlds.",
+  "runtime": "125 min",
+  "director": "Dean DeBlois",
+  "cast": [
+    "Mason Thames",
+    "Nico Parker",
+    "Gerard Butler",
+    "Nick Frost"
+  ],
+  "trending": true,
+  "popular": true,
+  "topRated": false,
+  "category": "Action",
+  "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvMmNkY2ViNGNkODJhZDgwMjVjMDNjOTA3ZGE2ZWJkNmMvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4P3Rva2VuPWV5SjBlWEJsZVpJNkltSkhhVzFwZEhVaU9pSTZJakl3TXpFd05TSXNJbUZ1WkNJNkltVjRlWEJsY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJblJwYTJsaGN5STZJbk5sY25WdVpYTWlPaUpvZFhObGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc0luQjBhRzluWVhSbGNpSTZJbnRsYzNSbGRGOHZaMlZ5WlhKZmNtVnlaWE5vYnlJc0ltTnZaV1JsYm1OcGJtY2lPaUpuZFhKbGMzUWlPaUpwZFhSbGMzTnBiMjV2Y3lJc0ltTnZZWEowYVc1bkxtRnlaQ0lzSW5OMFlXUmxiblJwYm1jaU9pSk1VekUwTmpZMk1URTBNekl4TlRNMU5USTBOelUzTURjME56STFNekExTmkwdk1qb3hNakF1TWpFMU1USXlNekV6TmpZc3BMYzFrcTZmM3VrOExYSlZpWEloMU1kN3AzTk5SNjl1QlY4eWVTTkdBdXlOR1FZcWt2ODY4R1Y0N1dpdzlnSTRLU01oNEpQOTRxQzVlcUNoUm91c3cmcGxhdGZvcm09d2VibW9iaWxl"
+}
 
 ];
 
@@ -986,7 +1081,7 @@ const StarRating = memo(({ rating }) => {
   );
 });
 
-// ─── VIDEO PLAYER MODAL (with Plyr.js) ──────────────────────
+// ─── VIDEO PLAYER MODAL (Netflix-style Plyr.js) ─────────────
 const VideoPlayer = ({ movie, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const playerElementRef = useRef(null);
@@ -995,7 +1090,6 @@ const VideoPlayer = ({ movie, onClose }) => {
     [movie],
   );
 
-  // Reset loading state and handle body overflow/escape key
   useEffect(() => {
     setIsLoading(true);
     document.body.style.overflow = "hidden";
@@ -1003,37 +1097,93 @@ const VideoPlayer = ({ movie, onClose }) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleEsc);
-
     return () => {
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleEsc);
     };
   }, [movie, onClose]);
 
-  // Initialize and destroy Plyr instance
   useEffect(() => {
     let player = null;
-    // Ensure Plyr is loaded and we have an element and a valid source
     if (window.Plyr && playerElementRef.current && videoInfo.src) {
       player = new Plyr(playerElementRef.current, {
         autoplay: true,
+        seekTime: 10,
+        ratio: "16:9",
+        poster: movie.backdrop,
+        keyboard: { focused: true, global: true },
+        tooltips: { controls: true, seek: true },
+        settings: ["captions", "quality", "speed"],
+        invertTime: false,
+        toggleInvert: true,
+        controls: [
+          "play-large",
+          "rewind",
+          "play",
+          "fast-forward",
+          "progress",
+          "current-time",
+          "duration",
+          "mute",
+          "volume",
+          "captions",
+          "settings",
+          "pip",
+          "airplay",
+          "fullscreen",
+        ],
+        speed: {
+          selected: 1,
+          options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+        },
+        i18n: {
+          restart: "Restart",
+          rewind: "Rewind 10s",
+          play: "Play",
+          pause: "Pause",
+          fastForward: "Forward 10s",
+          seek: "Seek",
+          played: "Played",
+          buffered: "Buffered",
+          currentTime: "Current time",
+          duration: "Duration",
+          volume: "Volume",
+          mute: "Mute",
+          unmute: "Unmute",
+          enableCaptions: "Enable captions",
+          disableCaptions: "Disable captions",
+          enterFullscreen: "Enter fullscreen",
+          exitFullscreen: "Exit fullscreen",
+          frameTitle: "Player for {title}",
+          captions: "Subtitles",
+          settings: "Settings",
+          pip: "PIP",
+          menuBack: "Go back to previous menu",
+          speed: "Speed",
+          normal: "Normal",
+          quality: "Quality",
+          loop: "Loop",
+          start: "Start",
+          end: "End",
+          all: "All",
+          reset: "Reset",
+          disabled: "Disabled",
+        },
       });
 
-      // For <video> elements, we use Plyr's events to manage loading state.
       if (videoInfo.type === "video") {
         player.on("ready", () => setIsLoading(false));
         player.on("error", () => {
           console.error("Plyr error: Video could not be loaded.");
-          setIsLoading(false); // Hide loader even on error
+          setIsLoading(false);
         });
+        player.on("playing", () => setIsLoading(false));
       }
     }
-
-    // Cleanup: destroy the Plyr instance
     return () => {
       player?.destroy();
     };
-  }, [videoInfo]); // Re-run when the video source changes
+  }, [videoInfo, movie]);
 
   if (!movie) return null;
 
@@ -1046,7 +1196,7 @@ const VideoPlayer = ({ movie, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-black animate-fadeIn"
+      className="video-modal fixed inset-0 z-[200] flex items-center justify-center bg-black"
       onClick={onClose}
     >
       <button
@@ -1054,23 +1204,40 @@ const VideoPlayer = ({ movie, onClose }) => {
           e.stopPropagation();
           onClose();
         }}
-        className="fixed top-3 right-3 z-[210] w-10 h-10 rounded-full bg-black/70 backdrop-blur text-white flex items-center justify-center hover:bg-red-600 transition-colors border border-white/10 shadow-lg"
+        className="video-close fixed top-5 right-5 z-[210] w-12 h-12 rounded-full bg-white/10 backdrop-blur-md text-white flex items-center justify-center hover:bg-white/20 transition-all border border-white/10 shadow-lg"
         aria-label="Close player"
+        title="Close player (Esc)"
       >
-        <Icon name="x" size={20} />
+        <Icon name="x" size={22} />
       </button>
 
       <div
-        className="relative w-full sm:max-w-5xl lg:max-w-6xl flex flex-col items-center justify-center px-0 sm:px-4"
+        className="relative w-full max-w-[100vw] lg:max-w-6xl flex flex-col items-center justify-center px-0 lg:px-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="relative w-full bg-neutral-900 overflow-hidden sm:rounded-2xl sm:shadow-2xl sm:border sm:border-white/10 video-player-wrapper">
+        <div className="relative w-full bg-neutral-900 overflow-hidden lg:rounded-xl lg:shadow-2xl lg:border lg:border-white/10 video-player-wrapper group">
           {isLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-10 gap-3">
-              <Icon name="loader" size={40} className="text-white" />
-              <span className="text-xs text-gray-400">Loading video…</span>
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-10 gap-4">
+              <div className="w-12 h-12 border-4 border-white/10 border-t-[#e50914] rounded-full animate-spin" />
+              <span className="text-sm text-gray-400 font-medium tracking-wide">Loading video…</span>
             </div>
           )}
+
+          {/* Netflix-style top title overlay */}
+          <div className="absolute top-0 left-0 right-0 z-20 p-6 bg-gradient-to-b from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <div className="flex items-center gap-3 pointer-events-auto">
+              <button 
+                onClick={onClose}
+                className="text-white/70 hover:text-white transition-colors"
+              >
+                <Icon name="chevronLeft" size={28} />
+              </button>
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-gray-400 font-semibold mb-0.5">Now Playing</div>
+                <h3 className="text-lg font-bold text-white truncate max-w-md">{movie.title}</h3>
+              </div>
+            </div>
+          </div>
 
           {videoInfo.type === "video" && (
             <video
@@ -1078,6 +1245,7 @@ const VideoPlayer = ({ movie, onClose }) => {
               src={videoInfo.src}
               playsInline
               controls
+              onLoadedData={() => setIsLoading(false)}
             />
           )}
 
@@ -1088,6 +1256,8 @@ const VideoPlayer = ({ movie, onClose }) => {
               title={`Player for ${movie.title}`}
               frameBorder="0"
               scrolling="no"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
               onLoad={() => setIsLoading(false)}
             />
           )}
@@ -1099,9 +1269,14 @@ const VideoPlayer = ({ movie, onClose }) => {
           )}
         </div>
 
-        <div className="mt-3 sm:mt-4 px-4 sm:px-0 pb-4 sm:pb-0 w-full flex items-start justify-between gap-3">
+        <div className="mt-4 px-1 sm:px-0 pb-4 sm:pb-0 w-full flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <h3 className="text-base sm:text-2xl font-bold text-white truncate">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-red-500 font-bold">Now playing</span>
+              <span className="h-1 w-1 rounded-full bg-gray-600" />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">StreamVault</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-bold text-white truncate">
               {movie.title}
             </h3>
             <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
@@ -1113,6 +1288,7 @@ const VideoPlayer = ({ movie, onClose }) => {
     </div>
   );
 };
+
 // ─── NAVBAR COMPONENT ───────────────────────────────────────
 const Navbar = ({
   searchQuery,
