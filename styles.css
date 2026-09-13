@@ -8,6 +8,36 @@
     --color-bg-modal-thumb-hover: #6a6a6a;
     --color-backdrop: rgba(0, 0, 0, 0.85);
     --color-accent-glow: rgba(229, 9, 20, 0.5);
+
+    /* Netflix-style Plyr overrides */
+    --plyr-color-main: #e50914;
+    --plyr-video-background: #000000;
+    --plyr-control-radius: 4px;
+    --plyr-control-spacing: 10px;
+    --plyr-control-padding: 6px;
+    --plyr-control-icon-size: 22px;
+    --plyr-font-size-time: 13px;
+    --plyr-font-size-menu: 13px;
+    --plyr-font-size-badge: 9px;
+    --plyr-tooltip-background: rgba(0,0,0,0.95);
+    --plyr-tooltip-color: #ffffff;
+    --plyr-tooltip-padding: 6px 10px;
+    --plyr-tooltip-arrow-size: 4px;
+    --plyr-tooltip-radius: 2px;
+    --plyr-menu-background: rgba(20,20,20,0.98);
+    --plyr-menu-color: #e5e5e5;
+    --plyr-menu-radius: 4px;
+    --plyr-menu-item-padding: 10px 16px;
+    --plyr-menu-item-radius: 0;
+    --plyr-menu-arrow-size: 6px;
+    --plyr-progress-loading-size: 2px;
+    --plyr-range-track-height: 4px;
+    --plyr-range-thumb-height: 16px;
+    --plyr-range-thumb-width: 16px;
+    --plyr-range-thumb-background: #e50914;
+    --plyr-range-thumb-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+    --plyr-range-track-background: rgba(255,255,255,0.25);
+    --plyr-video-controls-background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
 }
 
 /* ─── BASE & RESET ─────────────────────────────────────────── */
@@ -17,25 +47,18 @@ body {
 }
 
 /* ─── SCROLLBAR HIDING ─────────────────────────────────────── */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ─── MOVIE CARD HOVER EFFECTS ─────────────────────────────── */
-.movie-card:hover .movie-overlay {
-    opacity: 1;
-}
-.movie-card:hover img {
-    transform: scale(1.08);
-}
+.movie-card:hover .movie-overlay { opacity: 1; }
+.movie-card:hover img { transform: scale(1.08); }
 
 /* ─── HERO GRADIENT ────────────────────────────────────────── */
 .hero-gradient {
-    background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+    background: linear-gradient(to top,
+            var(--color-bg-primary) 0%,
+            transparent 50%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 /* ─── MODAL BACKDROP ───────────────────────────────────────── */
@@ -53,32 +76,49 @@ body {
 .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 /* ─── CUSTOM HORIZONTAL SCROLLBARS (CAST & GENRE) ──────────── */
 .cast-scroll::-webkit-scrollbar,
-.genre-scroll::-webkit-scrollbar {
-    height: 6px;
-}
+.genre-scroll::-webkit-scrollbar { height: 6px; }
+
 .cast-scroll::-webkit-scrollbar-track,
 .genre-scroll::-webkit-scrollbar-track {
     background: var(--color-bg-secondary);
     border-radius: 3px;
 }
+
 .cast-scroll::-webkit-scrollbar-thumb,
 .genre-scroll::-webkit-scrollbar-thumb {
     background: var(--color-bg-tertiary);
     border-radius: 3px;
 }
 
-/* ─── VIDEO PLAYER ─────────────────────────────────────────── */
+/* ─── VIDEO PLAYER CONTAINER ───────────────────────────────── */
 .video-player-wrapper {
     position: relative;
     width: 100%;
-    /* 16:9 aspect ratio */
     aspect-ratio: 16 / 9;
+    background-color: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.video-modal {
+    background: #000000;
+}
+
+.video-modal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.8) 100%);
+    z-index: 5;
 }
 
 /* Fallback for browsers without aspect-ratio support */
@@ -89,19 +129,25 @@ body {
     }
 }
 
+/* Video element core structure */
+.video-player-wrapper video,
+.video-player-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    object-fit: contain;
+}
+
 /* Mobile landscape: fill the screen height */
 @media (max-height: 450px) and (orientation: landscape) {
-    .video-player-wrapper {
-        /* On small-height landscape screens (like phones), make the video taller. */
-        /* The `aspect-ratio` property will automatically adjust the width to match. */
-        max-height: 90vh;
-    }
+    .video-player-wrapper { max-height: 90vh; }
 }
 
 /* ─── CUSTOM SCROLLBAR FOR MODAL ───────────────────────────── */
-.modal-scroll::-webkit-scrollbar {
-    width: 8px;
-}
+.modal-scroll::-webkit-scrollbar { width: 8px; }
 .modal-scroll::-webkit-scrollbar-track {
     background: var(--color-bg-modal-track);
     border-radius: 4px;
@@ -114,31 +160,292 @@ body {
     background: var(--color-bg-modal-thumb-hover);
 }
 
-/* ─── PLYR.JS CUSTOM STYLING ───────────────────────────────── */
-:root {
-    --plyr-color-main: #e50914; /* A red accent to match the site's theme */
-    --plyr-video-background: var(--color-bg-primary);
-    --plyr-control-radius: 6px;
-    --plyr-font-family: 'Inter', sans-serif;
-    --plyr-tooltip-background: rgba(0, 0, 0, 0.8);
-    --plyr-tooltip-color: #ffffff;
-    --plyr-control-icon-size: 18px;
-}
+/* ─── NETFLIX-STYLE PLYR.JS ENHANCEMENTS ───────────────────── */
 
-/* Make sure the player fills its container */
+/* General Plyr container */
 .plyr {
     width: 100%;
     height: 100%;
+    font-family: 'Inter', sans-serif;
+    border-radius: inherit;
 }
 
-/* Adjustments for better dark mode integration */
+/* Control bar - Netflix style gradient */
 .plyr__controls {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+    background: var(--plyr-video-controls-background) !important;
+    padding: 50px 24px 16px !important;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
+    align-items: center;
+    transition: opacity 300ms ease, transform 300ms ease;
 }
 
-.plyr--video .plyr__control.plyr__tab-focus,
-.plyr--video .plyr__control:hover {
+/* Control buttons */
+.plyr__controls .plyr__control {
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: var(--plyr-control-radius);
+    transition: all 150ms ease;
+    margin: 0 2px;
+}
+
+.plyr__controls .plyr__control:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(1.1);
+}
+
+.plyr__controls .plyr__control:active {
+    transform: scale(0.95);
+}
+
+/* Specific icon sizing */
+.plyr__controls .plyr__control[data-plyr="play"],
+.plyr__controls .plyr__control[data-plyr="pause"] {
+    padding: 8px;
+}
+
+.plyr__controls .plyr__control[data-plyr="rewind"],
+.plyr__controls .plyr__control[data-plyr="fast-forward"] {
+    padding: 6px;
+}
+
+/* Time display */
+.plyr__time {
+    font-size: var(--plyr-font-size-time);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Progress bar container */
+.plyr__progress {
+    flex: 1;
+    margin: 0 16px;
+    position: relative;
+}
+
+/* Progress track */
+.plyr__progress input[type='range'],
+.plyr__progress__buffer {
+    height: var(--plyr-range-track-height);
+    border-radius: 2px;
+}
+
+.plyr__progress input[type='range'] {
+    cursor: pointer;
+    color: var(--plyr-color-main);
+}
+
+/* Buffer bar */
+.plyr__progress__buffer {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Hover effect on progress - expand height */
+.plyr__progress:hover input[type='range'],
+.plyr__progress:hover .plyr__progress__buffer {
+    height: 6px;
+}
+
+/* Scrubber thumb - Netflix red dot (hidden until hover) */
+.plyr--full-ui input[type='range']::-webkit-slider-thumb {
     background: var(--plyr-color-main);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+    height: var(--plyr-range-thumb-height);
+    width: var(--plyr-range-thumb-width);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 150ms ease;
+}
+
+.plyr--full-ui input[type='range']::-moz-range-thumb {
+    background: var(--plyr-color-main);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+    height: var(--plyr-range-thumb-height);
+    width: var(--plyr-range-thumb-width);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 150ms ease;
+}
+
+/* Show thumb on hover or when dragging */
+.plyr__progress:hover input[type='range']::-webkit-slider-thumb,
+.plyr--is-touch .plyr__progress input[type='range']::-webkit-slider-thumb,
+.plyr__progress input[type='range']:active::-webkit-slider-thumb {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.plyr__progress:hover input[type='range']::-moz-range-thumb,
+.plyr--is-touch .plyr__progress input[type='range']::-moz-range-thumb,
+.plyr__progress input[type='range']:active::-moz-range-thumb {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Tooltip on seek - Netflix style time preview */
+.plyr__tooltip {
+    background: var(--plyr-tooltip-background);
+    color: var(--plyr-tooltip-color);
+    font-size: 12px;
+    font-weight: 600;
+    padding: var(--plyr-tooltip-padding);
+    border-radius: var(--plyr-tooltip-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Volume control - vertical slider on hover */
+.plyr__volume {
+    min-width: unset;
+    width: auto;
+    align-items: center;
+}
+
+.plyr__volume input[type='range'] {
+    min-width: 80px;
+    max-width: 100px;
+    color: var(--plyr-color-main);
+}
+
+@media (min-width: 480px) {
+    .plyr__volume { position: relative; }
+    
+    .plyr__volume input[type='range'] {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) rotate(-90deg);
+        transform-origin: center bottom;
+        width: 100px;
+        height: 4px;
+        margin-bottom: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 200ms ease;
+        background: rgba(255,255,255,0.2);
+    }
+    
+    .plyr__volume:hover input[type='range'],
+    .plyr__volume input[type='range']:focus {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .plyr__volume:hover input[type='range']::-webkit-slider-thumb,
+    .plyr__volume input[type='range']:focus::-webkit-slider-thumb {
+        opacity: 1;
+    }
+}
+
+/* Center Large Play Button - Netflix red */
+.plyr__control--overlaid {
+    background: rgba(229, 9, 20, 0.9) !important;
+    border-radius: 50% !important;
+    padding: 22px !important;
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.4);
+    transition: all 200ms ease !important;
+    backdrop-filter: blur(4px);
+}
+
+.plyr__control--overlaid svg {
+    width: 24px;
+    height: 24px;
+    margin-left: 3px;
+}
+
+.plyr__control--overlaid:hover {
+    transform: scale(1.15) !important;
+    background: #e50914 !important;
+    box-shadow: 0 0 40px rgba(229, 9, 20, 0.6);
+}
+
+.plyr__control--overlaid:active {
+    transform: scale(0.95) !important;
+}
+
+/* Settings / Captions / Quality menu - Netflix dropdown */
+.plyr__menu__container {
+    background: var(--plyr-menu-background);
+    border-radius: var(--plyr-menu-radius);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    min-width: 220px;
+}
+
+.plyr__menu__container .plyr__control {
+    color: var(--plyr-menu-color);
+    font-size: var(--plyr-font-size-menu);
+    padding: var(--plyr-menu-item-padding);
+    border-radius: var(--plyr-menu-item-radius);
+    transition: background 150ms ease;
+}
+
+.plyr__menu__container .plyr__control:hover {
+    background: rgba(255,255,255,0.08);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.plyr__menu__container .plyr__control[aria-checked="true"]::before {
+    background: var(--plyr-color-main);
+}
+
+.plyr__menu__container .plyr__menu__value {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+}
+
+/* Menu back button */
+.plyr__menu__container [data-plyr="menu-back"] {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* Captions text */
+.plyr__captions {
+    font-size: 18px;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* Auto-hide controls (Netflix style) */
+.plyr--hide-controls .plyr__controls {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}
+
+/* Loading spinner */
+.plyr__control--overlaid.plyr__control--pressed {
+    opacity: 0;
+}
+
+/* Ensure video fills properly */
+.plyr__video-wrapper {
+    background: #000;
+    height: 100%;
+}
+
+.plyr__video-embed,
+.plyr__video-wrapper--fixed-ratio {
+    height: 100%;
+}
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+    .video-player-wrapper { border-radius: 0; }
+    
+    .plyr__controls {
+        padding: 36px 12px 12px !important;
+        --plyr-control-spacing: 6px;
+    }
+    
+    .plyr__controls .plyr__control { padding: 4px; }
+    .plyr__control--overlaid { padding: 18px !important; }
+    .plyr__time { font-size: 11px; }
+    .plyr__progress { margin: 0 8px; }
 }
