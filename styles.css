@@ -19,12 +19,12 @@
     --plyr-font-size-time: 13px;
     --plyr-font-size-menu: 13px;
     --plyr-font-size-badge: 9px;
-    --plyr-tooltip-background: rgba(0,0,0,0.95);
+    --plyr-tooltip-background: rgba(0, 0, 0, 0.95);
     --plyr-tooltip-color: #ffffff;
     --plyr-tooltip-padding: 6px 10px;
     --plyr-tooltip-arrow-size: 4px;
     --plyr-tooltip-radius: 2px;
-    --plyr-menu-background: rgba(20,20,20,0.98);
+    --plyr-menu-background: rgba(20, 20, 20, 0.98);
     --plyr-menu-color: #e5e5e5;
     --plyr-menu-radius: 4px;
     --plyr-menu-item-padding: 10px 16px;
@@ -35,9 +35,9 @@
     --plyr-range-thumb-height: 16px;
     --plyr-range-thumb-width: 16px;
     --plyr-range-thumb-background: #e50914;
-    --plyr-range-thumb-shadow: 0 0 0 2px rgba(255,255,255,0.9);
-    --plyr-range-track-background: rgba(255,255,255,0.25);
-    --plyr-video-controls-background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 40%, transparent 100%);
+    --plyr-range-thumb-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+    --plyr-range-track-background: rgba(255, 255, 255, 0.25);
+    --plyr-video-controls-background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 100%);
 }
 
 /* ─── BASE & RESET ─────────────────────────────────────────── */
@@ -47,12 +47,23 @@ body {
 }
 
 /* ─── SCROLLBAR HIDING ─────────────────────────────────────── */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
 
 /* ─── MOVIE CARD HOVER EFFECTS ─────────────────────────────── */
-.movie-card:hover .movie-overlay { opacity: 1; }
-.movie-card:hover img { transform: scale(1.08); }
+.movie-card:hover .movie-overlay {
+    opacity: 1;
+}
+
+.movie-card:hover img {
+    transform: scale(1.08);
+}
 
 /* ─── HERO GRADIENT ────────────────────────────────────────── */
 .hero-gradient {
@@ -83,7 +94,9 @@ body {
 
 /* ─── CUSTOM HORIZONTAL SCROLLBARS (CAST & GENRE) ──────────── */
 .cast-scroll::-webkit-scrollbar,
-.genre-scroll::-webkit-scrollbar { height: 6px; }
+.genre-scroll::-webkit-scrollbar {
+    height: 6px;
+}
 
 .cast-scroll::-webkit-scrollbar-track,
 .genre-scroll::-webkit-scrollbar-track {
@@ -117,7 +130,7 @@ body {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.8) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, transparent 15%, transparent 85%, rgba(0, 0, 0, 0.8) 100%);
     z-index: 5;
 }
 
@@ -143,19 +156,26 @@ body {
 
 /* Mobile landscape: fill the screen height */
 @media (max-height: 450px) and (orientation: landscape) {
-    .video-player-wrapper { max-height: 90vh; }
+    .video-player-wrapper {
+        max-height: 90vh;
+    }
 }
 
 /* ─── CUSTOM SCROLLBAR FOR MODAL ───────────────────────────── */
-.modal-scroll::-webkit-scrollbar { width: 8px; }
+.modal-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
 .modal-scroll::-webkit-scrollbar-track {
     background: var(--color-bg-modal-track);
     border-radius: 4px;
 }
+
 .modal-scroll::-webkit-scrollbar-thumb {
     background: var(--color-bg-modal-thumb);
     border-radius: 4px;
 }
+
 .modal-scroll::-webkit-scrollbar-thumb:hover {
     background: var(--color-bg-modal-thumb-hover);
 }
@@ -250,7 +270,7 @@ body {
 /* Scrubber thumb - Netflix red dot (hidden until hover) */
 .plyr--full-ui input[type='range']::-webkit-slider-thumb {
     background: var(--plyr-color-main);
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
     height: var(--plyr-range-thumb-height);
     width: var(--plyr-range-thumb-width);
     border-radius: 50%;
@@ -261,7 +281,7 @@ body {
 
 .plyr--full-ui input[type='range']::-moz-range-thumb {
     background: var(--plyr-color-main);
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
     height: var(--plyr-range-thumb-height);
     width: var(--plyr-range-thumb-width);
     border-radius: 50%;
@@ -293,7 +313,7 @@ body {
     font-weight: 600;
     padding: var(--plyr-tooltip-padding);
     border-radius: var(--plyr-tooltip-radius);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Volume control - vertical slider on hover */
@@ -310,8 +330,10 @@ body {
 }
 
 @media (min-width: 480px) {
-    .plyr__volume { position: relative; }
-    
+    .plyr__volume {
+        position: relative;
+    }
+
     .plyr__volume input[type='range'] {
         position: absolute;
         bottom: 100%;
@@ -324,15 +346,15 @@ body {
         opacity: 0;
         visibility: hidden;
         transition: all 200ms ease;
-        background: rgba(255,255,255,0.2);
+        background: rgba(255, 255, 255, 0.2);
     }
-    
+
     .plyr__volume:hover input[type='range'],
     .plyr__volume input[type='range']:focus {
         opacity: 1;
         visibility: visible;
     }
-    
+
     .plyr__volume:hover input[type='range']::-webkit-slider-thumb,
     .plyr__volume input[type='range']:focus::-webkit-slider-thumb {
         opacity: 1;
@@ -369,8 +391,8 @@ body {
 .plyr__menu__container {
     background: var(--plyr-menu-background);
     border-radius: var(--plyr-menu-radius);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(20px);
     min-width: 220px;
 }
@@ -384,7 +406,7 @@ body {
 }
 
 .plyr__menu__container .plyr__control:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     color: #ffffff;
     text-decoration: none;
 }
@@ -394,13 +416,13 @@ body {
 }
 
 .plyr__menu__container .plyr__menu__value {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 12px;
 }
 
 /* Menu back button */
 .plyr__menu__container [data-plyr="menu-back"] {
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     margin-bottom: 4px;
     font-weight: 600;
 }
@@ -409,7 +431,7 @@ body {
 .plyr__captions {
     font-size: 18px;
     font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* Auto-hide controls (Netflix style) */
@@ -437,15 +459,245 @@ body {
 
 /* Mobile adjustments */
 @media (max-width: 640px) {
-    .video-player-wrapper { border-radius: 0; }
-    
+    .video-player-wrapper {
+        border-radius: 0;
+    }
+
     .plyr__controls {
         padding: 36px 12px 12px !important;
         --plyr-control-spacing: 6px;
     }
-    
-    .plyr__controls .plyr__control { padding: 4px; }
-    .plyr__control--overlaid { padding: 18px !important; }
-    .plyr__time { font-size: 11px; }
-    .plyr__progress { margin: 0 8px; }
+
+    .plyr__controls .plyr__control {
+        padding: 4px;
+    }
+
+    .plyr__control--overlaid {
+        padding: 18px !important;
+    }
+
+    .plyr__time {
+        font-size: 11px;
+    }
+
+    .plyr__progress {
+        margin: 0 8px;
+    }
+}
+
+/* ═════════════════════════════════════════════════════════════
+   NETFLIX MODAL VIDEO PLAYER CONTROLS
+   ═════════════════════════════════════════════════════════════ */
+
+/* ── 16:9 Video Box Container ── */
+.nflx-modal-box {
+    position: relative;
+    user-select: none;
+    background-color: #000000;
+}
+
+/* Hide cursor when user is idle during playback */
+.nflx-modal-box.hide-cursor,
+.nflx-modal-box.hide-cursor * {
+    cursor: none !important;
+}
+
+/* ── Bottom Controls Bar with Upward Vignette ── */
+.nflx-bottom-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    padding: 50px 24px 16px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.65) 50%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: opacity 250ms ease;
+}
+
+/* ── Row 1: Full-Width Scrubber / Timeline ── */
+.nflx-timeline-wrap {
+    position: relative;
+    width: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.nflx-timeline-rail {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 2px;
+    transition: height 150ms ease;
+}
+
+/* Timeline expands on hover */
+.nflx-timeline-wrap:hover .nflx-timeline-rail {
+    height: 7px;
+}
+
+/* Buffer Bar */
+.nflx-timeline-buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: inherit;
+}
+
+/* Red Played Bar */
+.nflx-timeline-played {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #e50914;
+    /* Netflix Red */
+    border-radius: inherit;
+}
+
+/* Red Scrubber Dot (Appears on hover) */
+.nflx-timeline-thumb {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #e50914;
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.8), 0 0 0 2px #ffffff;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 150ms ease;
+}
+
+.nflx-timeline-wrap:hover .nflx-timeline-thumb {
+    transform: translate(-50%, -50%) scale(1.15);
+}
+
+/* Prevents child elements from blocking click/drag timeline seeking */
+.nflx-timeline-rail,
+.nflx-timeline-buffered,
+.nflx-timeline-played,
+.nflx-timeline-thumb {
+    pointer-events: none !important;
+}
+
+/* Seek Hover Timestamp Tooltip */
+.nflx-scrub-tooltip {
+    position: absolute;
+    bottom: 24px;
+    transform: translateX(-50%);
+    background: rgba(18, 18, 18, 0.95);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    pointer-events: none;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Row 2: Action Buttons ── */
+.nflx-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.85);
+    background: transparent;
+    transition: all 180ms ease;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.nflx-btn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.12);
+}
+
+.nflx-btn:active {
+    transform: scale(0.92);
+}
+
+/* 10-Second Badges inside arrows */
+.nflx-btn-badge {
+    position: relative;
+}
+
+.nflx-badge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    font-size: 8.5px;
+    font-weight: 800;
+    color: #ffffff;
+    pointer-events: none;
+    letter-spacing: -0.5px;
+}
+
+/* ── Slide-Out Volume Slider ── */
+.nflx-volume-group {
+    display: flex;
+    align-items: center;
+}
+
+.nflx-slider-container {
+    width: 0;
+    overflow: hidden;
+    transition: width 240ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+}
+
+/* Expand smoothly on hover */
+.nflx-volume-group:hover .nflx-slider-container,
+.nflx-volume-group:focus-within .nflx-slider-container {
+    width: 75px;
+    margin-left: 6px;
+}
+
+.nflx-volume-range {
+    width: 70px;
+    height: 4px;
+    accent-color: #e50914;
+    cursor: pointer;
+}
+
+/* ── Live Duration Time Text ── */
+.nflx-time-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    font-variant-numeric: tabular-nums;
+    margin-left: 6px;
+    letter-spacing: 0.3px;
+}
+
+/* ── Mobile Responsive Adjustments ── */
+@media (max-width: 640px) {
+    .nflx-bottom-controls {
+        padding: 30px 14px 12px;
+    }
+
+    .nflx-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .nflx-time-text {
+        font-size: 11px;
+    }
 }
