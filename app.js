@@ -984,29 +984,156 @@ const moviesData = [
     "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvOWViZTE1ODliYWM4ZGVjMjg2NzM1MmIwYTRkNWJkYTYvbWFuaWZlc3RfaDI2NF83MjBwLm0zdTg="
   },
   {
-  "id": 43,
-  "title": "John Wick: Chapter 2",
-  "year": 2017,
-  "rating": 7.4,
-  "genre": "Action, Crime, Thriller",
-  "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUkIEqL3rTC8cLtw3YgV98NqnDxV9CjN21GPwR6ZyWA&s=10",
-  "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUkIEqL3rTC8cLtw3YgV98NqnDxV9CjN21GPwR6ZyWA&s=10",
-  "synopsis": "After returning to the criminal underworld to repay a debt, John Wick discovers that a bounty has been put on his life.",
-  "runtime": "122 min",
-  "director": "Chad Stahelski",
-  "cast": [
-    "Keanu Reeves",
-    "Riccardo Scamarcio",
-    "Ian McShane",
-    "Ruby Rose",
-    "Common"
-  ],
-  "trending": true,
-  "popular": true,
-  "topRated": true,
-  "category": "Action",
-  "video": "aHR0cHM6Ly9iaWdmLmJpZ28uc2cvYXNpYV9saXZlL1Y0czcvMDluemp0Lm1wNA=="
-}
+    "id": 43,
+    "title": "John Wick: Chapter 2",
+    "year": 2017,
+    "rating": 7.4,
+    "genre": "Action, Crime, Thriller",
+    "backdrop": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUkIEqL3rTC8cLtw3YgV98NqnDxV9CjN21GPwR6ZyWA&s=10",
+    "poster": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUkIEqL3rTC8cLtw3YgV98NqnDxV9CjN21GPwR6ZyWA&s=10",
+    "synopsis": "After returning to the criminal underworld to repay a debt, John Wick discovers that a bounty has been put on his life.",
+    "runtime": "122 min",
+    "director": "Chad Stahelski",
+    "cast": [
+      "Keanu Reeves",
+      "Riccardo Scamarcio",
+      "Ian McShane",
+      "Ruby Rose",
+      "Common"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": true,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9iaWdmLmJpZ28uc2cvYXNpYV9saXZlL1Y0czcvMDluemp0Lm1wNA=="
+  },
+  {
+    "id": 44,
+    "title": "ហ៊ាម៉ាប់តាមសងសឹកឃាតកររោគចិត្ត",
+    "year": 2026,
+    "rating": 7.3,
+    "genre": "Action, Thriller, Crime",
+    "backdrop": "https://cdn-sg.sf-api.net/images/zI4FXvyumxAe.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/zI4FXvyumxAe.jpg",
+    "synopsis": "An intense action thriller detailing a ruthless quest for revenge, where a determined man hunts down a psychotic killer who destroyed everything he loved.",
+    "runtime": "98 min",
+    "director": "Unknown",
+    "cast": [
+      "Khmer Cast 1",
+      "Khmer Cast 2"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvU3ZiS0tKTWFQaG1jL2luZGV4LTEwODBwLm0zdTg="
+  },
+  {
+    "id": 45,
+    "title": "រាជនីគាវ",
+    "year": 2026,
+    "rating": 7.2,
+    "genre": "Drama, History, Comedy",
+    "backdrop": "https://cdn-sg.sf-api.net/images/akezia1eo4kL.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/akezia1eo4kL.jpg",
+    "synopsis": "An engaging story highlighting the journey, challenges, and humor surrounding a legendary culinary queen renowned for her famous dumplings.",
+    "runtime": "95 min",
+    "director": "Unknown",
+    "cast": [
+      "Khmer Cast 1",
+      "Khmer Cast 2"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Drama",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvY2QzNDllYzU2YTg5NjlkNzc3NTg4OWM4ZWI0MjBlZGYvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4"
+  },
+  {
+    "id": 46,
+    "title": "ប្រតិបត្តិការដូវ៉ាន់ដា ២",
+    "year": 2026,
+    "rating": 7.4,
+    "genre": "Action, Thriller, Crime",
+    "backdrop": "https://cdn-sg.sf-api.net/images/au2b5l1zJXmt.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/au2b5l1zJXmt.jpg",
+    "synopsis": "The high-stakes action continues in this thrilling sequel as tactical operatives embark on a dangerous covert mission to dismantle a powerful criminal network.",
+    "runtime": "100 min",
+    "director": "Unknown",
+    "cast": [
+      "Khmer Cast 1",
+      "Khmer Cast 2"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvOWZhOWYzYzU3Yzg0MjdlNGY0NThkZTFiOTQ0NzEwZWYvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4"
+  },
+  {
+    "id": 47,
+    "title": "គ្រោះរញ្ជួយដី",
+    "year": 2026,
+    "rating": 7.2,
+    "genre": "Action, Drama, Thriller",
+    "backdrop": "https://cdn-sg.sf-api.net/images/Sxc93Yc36w2p.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/Sxc93Yc36w2p.jpg",
+    "synopsis": "A catastrophic earthquake strikes, triggering chaos and devastation. Survivors and rescue teams must navigate collapsed infrastructure and life-threatening hazards to save trapped victims.",
+    "runtime": "105 min",
+    "director": "Unknown",
+    "cast": [
+      "Khmer Cast 1",
+      "Khmer Cast 2"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvZGM4ZDFjNmI3YWJmODY1OWExODIwYTY5MmE3Y2I2OWUvbWFuaWZlc3QtMTA4MHAubTN1OA=="
+  },
+  {
+    "id": 48,
+    "title": "ខ្មោចទឹក (Ma Da: The Drowning Spirit)",
+    "year": 2024,
+    "rating": 6.9,
+    "genre": "Horror, Mystery, Thriller",
+    "backdrop": "https://cdn-sg.sf-api.net/images/vwgsaJ5A4dtP.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/vwgsaJ5A4dtP.jpg",
+    "synopsis": "In the dark waters of the river, a body collector named Mrs. Le faces Ma Da—a vengeful drowning spirit—after it abducts her daughter. She must embark on a perilous race against time to rescue her child before she is trapped under the water forever.",
+    "runtime": "93 min",
+    "director": "Nguyen Huu Hoang",
+    "cast": [
+      "Viet Huong",
+      "Trung Dan",
+      "Thanh Loc"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Horror",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvZTZmNjE5MmRlYTY0ZDVjZGIzMjFiY2NmMzdkNTJjNzkvbWFuaWZlc3RfaDI2NF8xMDgwcC5tM3U4"
+  },
+  {
+    "id": 49,
+    "title": "អ្នកប្រមាញ់បិសាចក្នុងប្រាសាទគ្មានទីបញ្ចប់",
+    "year": 2026,
+    "rating": 7.1,
+    "genre": "Action, Fantasy, Adventure",
+    "backdrop": "https://cdn-sg.sf-api.net/images/Zc7DvIEQBSoO.jpg",
+    "poster": "https://cdn-sg.sf-api.net/images/Zc7DvIEQBSoO.jpg",
+    "synopsis": "A group of skilled demon hunters enters an endless, labyrinthine temple filled with deadly traps, dark magic, and ancient horrors that they must destroy to survive.",
+    "runtime": "98 min",
+    "director": "Unknown",
+    "cast": [
+      "Khmer Cast 1",
+      "Khmer Cast 2"
+    ],
+    "trending": true,
+    "popular": true,
+    "topRated": false,
+    "category": "Action",
+    "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvNTJjYzEzNDgxN2YyMjI3MzkxNmM1ZDVkNGIwMDZlZGEvbWFuaWZlc3RfaDI2NF80ODBwLm0zdTg="
+  }
 
 ];
 
@@ -2703,6 +2830,7 @@ const App = () => {
     </div>
   );
 };
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
