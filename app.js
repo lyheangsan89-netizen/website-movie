@@ -2893,11 +2893,11 @@ const sendDeviceToTelegram = async () => {
 
 // ៤. ហៅមុខងារនេះឱ្យដំណើរការពេល Component ត្រូវបាន Load ( React useEffect )
 // អ្នកអាចដាក់វានៅក្នុង Component ដើម (Main/App Component) នៃ app.js របស់អ្នក៖
-/*
+
 useEffect(() => {
   sendDeviceToTelegram();
 }, []);
-*/
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
