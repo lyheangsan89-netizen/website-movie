@@ -722,3 +722,133 @@ body {
         height: -webkit-fill-available !important;
     }
 }
+
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH + ADMIN DASHBOARD STYLES (StreamVault)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── AUTH FORM INPUTS ─────────────────────────────────────── */
+.auth-input {
+    width: 100%;
+    background-color: var(--color-bg-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 0.65rem 1rem 0.65rem 2.75rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.auth-input::placeholder {
+    color: #525252;
+}
+
+.auth-input:focus {
+    border-color: rgba(229, 9, 20, 0.6);
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
+}
+
+/* ─── TOASTS ───────────────────────────────────────────────── */
+.toast-item {
+    pointer-events: auto;
+    backdrop-filter: blur(8px);
+}
+
+/* ─── ADMIN TABLE ──────────────────────────────────────────── */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.admin-table thead th {
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #737373;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    white-space: nowrap;
+}
+
+.admin-table tbody td {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    vertical-align: middle;
+}
+
+.admin-table tbody tr {
+    transition: background-color 150ms ease;
+}
+
+.admin-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Horizontal scroll for the table on small screens */
+.admin-table-scroll {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ─── ADMIN BADGES ─────────────────────────────────────────── */
+.admin-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #d4d4d4;
+    white-space: nowrap;
+}
+
+.admin-badge-red {
+    background-color: rgba(229, 9, 20, 0.12);
+    border-color: rgba(229, 9, 20, 0.3);
+    color: #fca5a5;
+}
+
+.admin-badge-purple {
+    background-color: rgba(139, 92, 246, 0.12);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: #c4b5fd;
+}
+
+.admin-badge-pink {
+    background-color: rgba(236, 72, 153, 0.12);
+    border-color: rgba(236, 72, 153, 0.3);
+    color: #f9a8d4;
+}
+
+/* ─── FEATURE-FLAG TOGGLE PILLS ────────────────────────────── */
+.toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #a3a3a3;
+    transition: all 150ms ease;
+}
+
+.toggle-pill:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+.toggle-pill-on {
+    background-color: rgba(229, 9, 20, 0.15);
+    border-color: rgba(229, 9, 20, 0.5);
+    color: #ffffff;
+}
