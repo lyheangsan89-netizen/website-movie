@@ -29,7 +29,7 @@
     <!-- HLS.js for .m3u8 streaming -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts -->   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
@@ -91,6 +91,10 @@
 
 <body class="bg-dark-900 text-white min-h-screen">
     <div id="root"></div>
+    <!-- Auth service & modal — must load BEFORE app.js (app.js uses its globals) -->
+    <script type="text/babel" src="auth.js"></script>
+    <!-- Admin dashboard components -->
+    <script type="text/babel" src="admin.js"></script>
     <script type="text/babel" src="app.js"></script>
 </body>
 
