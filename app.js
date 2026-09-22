@@ -1838,9 +1838,6 @@ const Navbar = ({
   activeTab,
   setActiveTab,
   scrollY,
-  user,
-  onShowAuth,
-  onLogout,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -1851,8 +1848,6 @@ const Navbar = ({
     { id: "tv", label: "TV Shows" },
     { id: "genres", label: "Genres" },
     { id: "list", label: "My List" },
-    // The Admin section only exists in the nav for administrators.
-    ...(user && user.role === "admin" ? [{ id: "admin", label: "Admin" }] : []),
   ];
 
   return (
@@ -1922,51 +1917,9 @@ const Navbar = ({
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-red rounded-full"></span>
             </button>
 
-            {user ? (
-              /* LOGGED IN: avatar + name + logout */
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setActiveTab(user.role === "admin" ? "admin" : "list")}
-                  title={`${user.name} (${user.role})`}
-                  className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-dark-800 hover:bg-dark-700 border border-white/10 transition-colors"
-                >
-                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-sm font-bold">
-                    {user.name.charAt(0).toUpperCase()}
-                  </span>
-                  <span className="hidden sm:block text-sm text-gray-300 max-w-[90px] truncate">
-                    {user.name}
-                  </span>
-                  {user.role === "admin" && (
-                    <span className="hidden sm:block text-[10px] font-bold uppercase text-accent-red">
-                      Admin
-                    </span>
-                  )}
-                </button>
-                <button
-                  onClick={onLogout}
-                  title="Logout"
-                  className="p-2 rounded-full hover:bg-white/10 transition-colors text-gray-300 hover:text-white"
-                >
-                  <AuthIcon name="logout" size={18} />
-                </button>
-              </div>
-            ) : (
-              /* LOGGED OUT: login / register buttons */
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => onShowAuth("login")}
-                  className="px-4 py-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors"
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => onShowAuth("register")}
-                  className="px-4 py-2 text-sm font-bold bg-accent-red rounded-lg hover:bg-red-600 transition-colors"
-                >
-                  Register
-                </button>
-              </div>
-            )}
+            <button className="w-9 h-9 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-sm font-bold hover:ring-2 hover:ring-white/30 transition-all">
+              <Icon name="user" size={18} />
+            </button>
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -2623,80 +2576,6 @@ const App = () => {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);
 
-  // ─── MOVIE CATALOG STATE (persisted; Admin CRUD survives reloads) ──
-  const [movies, setMovies] = useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEYS.MOVIES));
-      if (Array.isArray(saved) && saved.length > 0) return saved;
-    } catch (e) {
-      /* corrupted storage — fall back to seed data */
-    }
-    return moviesData; // first run: seed from the built-in catalog
-  });
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.MOVIES, JSON.stringify(movies));
-  }, [movies]);
-
-  // ─── AUTH STATE ───────────────────────────────────────────
-  const [currentUser, setCurrentUser] = useState(() => AuthService.getSession());
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authModalMode, setAuthModalMode] = useState("login"); // "login" | "register"
-  const [toasts, setToasts] = useState([]);
-
-  // ─── TOASTS ───────────────────────────────────────────────
-  const showToast = useCallback((message, type = "success") => {
-    const id = Date.now() + Math.random();
-    setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(
-      () => setToasts((prev) => prev.filter((t) => t.id !== id)),
-      3500,
-    );
-  }, []);
-
-  const handleAuthSuccess = useCallback(
-    (user) => {
-      setCurrentUser(user);
-      setShowAuthModal(false);
-      showToast(`Welcome${user.role === "admin" ? " back, Admin" : ""}, ${user.name}!`);
-    },
-    [showToast],
-  );
-
-  const handleLogout = useCallback(() => {
-    AuthService.logout();
-    setCurrentUser(null);
-    setActiveTab((tab) => (tab === "admin" ? "home" : tab));
-    showToast("You have been logged out.", "info");
-  }, [showToast]);
-
-  // ─── MOVIE CRUD (wired to the Admin Dashboard) ────────────
-  const addMovie = useCallback(
-    (data) => {
-      setMovies((prev) => [...prev, { ...data, id: Date.now() }]);
-      showToast(`"${data.title}" was added to the catalog.`);
-    },
-    [showToast],
-  );
-
-  const updateMovie = useCallback(
-    (id, data) => {
-      setMovies((prev) => prev.map((m) => (m.id === id ? { ...m, ...data } : m)));
-      showToast(`"${data.title}" was updated.`);
-    },
-    [showToast],
-  );
-
-  const deleteMovie = useCallback(
-    (id) => {
-      const target = movies.find((m) => m.id === id);
-      setMovies((prev) => prev.filter((m) => m.id !== id));
-      setWatchlist((prev) => prev.filter((mId) => mId !== id));
-      if (target) showToast(`"${target.title}" was deleted.`, "info");
-    },
-    [movies, showToast],
-  );
-
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -2716,7 +2595,7 @@ const App = () => {
 
   // Memoize filtering logic to prevent expensive recalculations on every render
   const filteredMovies = useMemo(() => {
-    return movies.filter((m) => {
+    return moviesData.filter((m) => {
       const searchLower = searchQuery.toLowerCase();
       // Expanded search to include director and cast for a better user experience
       const matchesSearch =
@@ -2743,7 +2622,7 @@ const App = () => {
       // Default for 'home' and 'movies' tabs
       return matchesSearch && matchesGenre;
     });
-  }, [movies, searchQuery, activeGenre, activeTab, watchlist]);
+  }, [searchQuery, activeGenre, activeTab, watchlist]);
 
   // Memoize derived lists so they only recalculate when filteredMovies changes
   const trendingMovies = useMemo(
@@ -2775,7 +2654,7 @@ const App = () => {
     [filteredMovies],
   );
 
-  const heroMovie = movies[0];
+  const heroMovie = moviesData[0];
 
   // Memoize handlers to prevent re-rendering of child components that receive them as props
   const handleMovieClick = useCallback((movie) => setSelectedMovie(movie), []);
@@ -2792,15 +2671,9 @@ const App = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         scrollY={scrollY}
-        user={currentUser}
-        onShowAuth={(mode) => {
-          setAuthModalMode(mode);
-          setShowAuthModal(true);
-        }}
-        onLogout={handleLogout}
       />
 
-      {activeTab === "home" && !searchQuery && heroMovie && (
+      {activeTab === "home" && !searchQuery && (
         <>
           <Hero
             movie={heroMovie}
@@ -2823,7 +2696,7 @@ const App = () => {
         </>
       )}
 
-      {(activeTab !== "home" && activeTab !== "admin" || searchQuery) && (
+      {(activeTab !== "home" || searchQuery) && (
         <div className="pt-24 pb-8">
           <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-black text-white mb-2">
@@ -2870,7 +2743,7 @@ const App = () => {
         </div>
       )}
 
-      {(activeTab !== "home" && activeTab !== "admin" || searchQuery) && filteredMovies.length > 0 && (
+      {(activeTab !== "home" || searchQuery) && filteredMovies.length > 0 && (
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pb-8">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 lg:gap-6">
             {filteredMovies.map((movie) => (
@@ -2886,7 +2759,7 @@ const App = () => {
         </div>
       )}
 
-      {activeTab === "home" && !searchQuery && heroMovie && (
+      {activeTab === "home" && !searchQuery && (
         <>
           <MovieRow
             title="Popular on StreamVault"
@@ -2935,38 +2808,6 @@ const App = () => {
         </>
       )}
 
-      {/* ─── ADMIN SECTION (role-gated) ─────────────────────── */}
-      {activeTab === "admin" &&
-        (currentUser && currentUser.role === "admin" ? (
-          <AdminDashboard
-            movies={movies}
-            userCount={AuthService.getUsers().length}
-            onAdd={addMovie}
-            onUpdate={updateMovie}
-            onDelete={deleteMovie}
-          />
-        ) : (
-          <AccessDenied
-            isLoggedIn={!!currentUser}
-            onLogin={() => {
-              setAuthModalMode("login");
-              setShowAuthModal(true);
-            }}
-            onGoHome={() => setActiveTab("home")}
-          />
-        ))}
-
-      {/* ─── AUTH MODAL & TOASTS ────────────────────────────── */}
-      {showAuthModal && (
-        <AuthModal
-          initialMode={authModalMode}
-          onClose={() => setShowAuthModal(false)}
-          onSuccess={handleAuthSuccess}
-        />
-      )}
-
-      <ToastStack toasts={toasts} />
-
       <Footer />
 
       {selectedMovie && (
@@ -2976,7 +2817,7 @@ const App = () => {
           onToggleWatchlist={toggleWatchlist}
           isInWatchlist={isInWatchlist(selectedMovie.id)}
           onWatchNow={handleWatchNow}
-          relatedMovies={movies.filter(
+          relatedMovies={moviesData.filter(
             (m) =>
               m.genre === selectedMovie.genre ||
               m.category === selectedMovie.category,
