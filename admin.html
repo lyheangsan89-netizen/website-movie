@@ -7,11 +7,10 @@
     <title>Admin Dashboard - StreamVault</title>
     <link rel="icon" href="logo (2).png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="tailwind.css">
 
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +20,8 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <script src="auth.js"></script>
+    <script src="polyfills.js"></script>
+    <script src="build/auth.js"></script>
 
     <script>
         if (!window.SV_AUTH || !SV_AUTH.isAdmin()) {
@@ -29,50 +29,6 @@
         }
     </script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#141414',
-                            700: '#1f1f1f',
-                            600: '#2a2a2a',
-                            500: '#3a3a3a',
-                        },
-                        accent: {
-                            red: '#e50914',
-                            purple: '#8b5cf6',
-                            pink: '#ec4899',
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.3s ease-out',
-                        'slide-up': 'slideUp 0.3s ease-out',
-                        'scale-in': 'scaleIn 0.2s ease-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(12px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        scaleIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.96)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #141414; }
@@ -83,7 +39,7 @@
 
 <body class="bg-dark-900 text-white font-sans min-h-screen">
     <div id="root"></div>
-    <script type="text/babel" src="admin.js"></script>
+    <script src="build/admin.js"></script>
 </body>
 
 </html>

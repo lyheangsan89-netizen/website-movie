@@ -17,17 +17,15 @@
         gtag('config', 'G-W9P33H2NDM');
     </script>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Compiled CSS — no runtime Tailwind compiler, works on older browsers -->
+    <link rel="stylesheet" href="tailwind.css">
 
+    <!-- React 18 (UMD) -->
+    <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" crossorigin></script>
 
-    <!-- React 18 & Babel -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- HLS.js for .m3u8 streaming -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- HLS.js for .m3u8 streaming (pinned ES5-compatible build for older TVs) -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.12/dist/hls.min.js"></script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,58 +40,36 @@
 
     <link rel="stylesheet" href="styles.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif ', 'Roboto', 'Kantumruy Pro', 'Dangrek'],
-                    },
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#141414',
-                            700: '#1f1f1f',
-                            600: '#2a2a2a',
-                            500: '#3a3a3a',
-                        },
-                        accent: {
-                            red: '#e50914',
-                            purple: '#8b5cf6',
-                            pink: '#ec4899',
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.4s ease-out',
-                        'slide-up': 'slideUp 0.4s ease-out',
-                        'scale-in': 'scaleIn 0.25s ease-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        scaleIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.95)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <base target="_blank">
 </head>
 
 <body class="bg-dark-900 text-white min-h-screen">
-    <div id="root"></div>
-    <!-- Shared auth service — must load BEFORE app.js (app.js uses SV_AUTH) -->
-    <script src="auth.js"></script>
-    <script type="text/babel" src="app.js"></script>
+    <div id="root">
+        <div class="sv-fallback">
+            <div>
+                <h1>Stream<span>Vault</span></h1>
+                <p>Loading movies…</p>
+                <p>If this message does not go away, this browser or device may not be supported.</p>
+                <p><a href="login.html">Admin login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <noscript>
+        <div class="sv-fallback">
+            <div>
+                <h1>Stream<span>Vault</span></h1>
+                <p>JavaScript is disabled. Please enable JavaScript to use StreamVault.</p>
+            </div>
+        </div>
+    </noscript>
+
+    <!-- ES5 polyfills for old smart TVs (must load first) -->
+    <script src="polyfills.js"></script>
+    <!-- Shared auth service — compiled for older browsers -->
+    <script src="build/auth.js"></script>
+    <!-- Main app — pre-compiled JSX (no Babel needed in the browser) -->
+    <script src="build/app.js"></script>
 </body>
 
 </html>

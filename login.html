@@ -7,7 +7,7 @@
     <title>Admin Login - StreamVault</title>
     <link rel="icon" href="logo (2).png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="tailwind.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,54 +16,6 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: {
-                            900: '#0a0a0a',
-                            800: '#141414',
-                            700: '#1f1f1f',
-                            600: '#2a2a2a',
-                            500: '#3a3a3a',
-                        },
-                        accent: {
-                            red: '#e50914',
-                            purple: '#8b5cf6',
-                            pink: '#ec4899',
-                        }
-                    },
-                    animation: {
-                        'fade-in': 'fadeIn 0.4s ease-out',
-                        'slide-up': 'slideUp 0.4s ease-out',
-                        'shake': 'shake 0.4s ease-in-out',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        shake: {
-                            '0%, 100%': { transform: 'translateX(0)' },
-                            '20%': { transform: 'translateX(-8px)' },
-                            '40%': { transform: 'translateX(8px)' },
-                            '60%': { transform: 'translateX(-5px)' },
-                            '80%': { transform: 'translateX(5px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 
 <body class="bg-dark-900 text-white font-sans min-h-screen flex items-center justify-center p-4"
@@ -125,7 +77,8 @@
     </div>
 
     <!-- Shared auth service (same one used by the app and admin dashboard) -->
-    <script src="auth.js"></script>
+    <script src="polyfills.js"></script>
+    <script src="build/auth.js"></script>
 
     <script>
         const form = document.getElementById("login-form");

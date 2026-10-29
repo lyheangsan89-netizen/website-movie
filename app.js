@@ -1591,9 +1591,20 @@ const VideoPlayer = ({ movie, onClose }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hoverTime, setHoverTime] = useState(null);
   const [hoverPos, setHoverPos] = useState(0);
+  const [isPseudoFullscreen, setIsPseudoFullscreen] = useState(false);
+  const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
+  const [playbackError, setPlaybackError] = useState("");
+
+  const isIOS = useMemo(() => {
+    if (typeof navigator === "undefined") return false;
+    return (
+      /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+    );
+  }, []);
 
   const videoInfo = useMemo(() => (movie ? getUrlInfo(movie.video) : { type: "invalid", src: "" }), [movie]);
-  const isVideo = videoInfo.type === "video" || videoInfo.src?.includes(".m3u8");
+  const isVideo = videoInfo.type === "video" || /\.m3u8(\?|#|$)/i.test(videoInfo.src || "");
 
   const wakeControls = useCallback(() => {
     setShowControls(true);
@@ -1608,10 +1619,95 @@ const VideoPlayer = ({ movie, onClose }) => {
     return () => clearTimeout(idleTimerRef.current);
   }, [wakeControls]);
 
+  // Keep the fullscreen icon in sync with the browser's fullscreen state.
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setIsNativeFullscreen(
+        !!(
+          document.fullscreenElement ||
+          document.webkitFullscreenElement ||
+          document.mozFullScreenElement ||
+          document.msFullscreenElement
+        ),
+      );
+    };
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    document.addEventListener("webkitfullscreenchange", syncFullscreen);
+    return () => {
+      document.removeEventListener("fullscreenchange", syncFullscreen);
+      document.removeEventListener("webkitfullscreenchange", syncFullscreen);
+    };
+  }, []);
+
+  // Load the stream. iOS/Safari can play HLS natively; other browsers use hls.js
+  // when it is available, and show a clear error instead of a black screen.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !isVideo) return;
+
+    const src = videoInfo.src || "";
+    const isHls = /\.m3u8(\?|#|$)/i.test(src);
+    const nativeHls =
+      video.canPlayType("application/vnd.apple.mpegurl") ||
+      video.canPlayType("application/x-mpegURL");
+    let hls = null;
+    let recoveries = 0;
+
+    setPlaybackError("");
+    setIsLoading(true);
+
+    if (isHls && !nativeHls) {
+      if (window.Hls && window.Hls.isSupported()) {
+        hls = new window.Hls({ enableWorker: true });
+        hls.loadSource(src);
+        hls.attachMedia(video);
+        hls.on(window.Hls.Events.ERROR, (_event, data) => {
+          if (!data || !data.fatal) return;
+          if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR && recoveries < 2) {
+            recoveries += 1;
+            hls.startLoad();
+          } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR && recoveries < 2) {
+            recoveries += 1;
+            hls.recoverMediaError();
+          } else {
+            setPlaybackError("This video could not be played on this device.");
+            setIsLoading(false);
+          }
+        });
+      } else {
+        setPlaybackError("This video format is not supported by this browser or device.");
+        setIsLoading(false);
+        return;
+      }
+    } else {
+      video.src = src;
+      video.load();
+    }
+
+    return () => {
+      if (hls) hls.destroy();
+      video.removeAttribute("src");
+      try {
+        video.load();
+      } catch (e) {}
+    };
+  }, [videoInfo, isVideo]);
+
   useEffect(() => {
     const handleKey = (e) => {
       wakeControls();
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        if (isPseudoFullscreen) {
+          setIsPseudoFullscreen(false);
+        } else if (
+          document.fullscreenElement ||
+          document.webkitFullscreenElement
+        ) {
+          toggleFullscreen();
+        } else {
+          onClose();
+        }
+      }
       if (e.code === "Space") { e.preventDefault(); togglePlay(); }
       if (e.key === "f") toggleFullscreen();
       if (e.key === "m") toggleMute();
@@ -1620,7 +1716,7 @@ const VideoPlayer = ({ movie, onClose }) => {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [isPlaying, isMuted, volume]);
+  }, [isPlaying, isMuted, isPseudoFullscreen]);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -1645,11 +1741,65 @@ const VideoPlayer = ({ movie, onClose }) => {
   };
 
   const toggleFullscreen = () => {
-    if (!playerBoxRef.current) return;
-    if (!document.fullscreenElement) {
-      playerBoxRef.current.requestFullscreen().catch(() => { });
+    const video = videoRef.current;
+    const box = playerBoxRef.current;
+
+    // iPhone/iPad Safari only supports fullscreen on the native <video>.
+    if (isIOS && video && typeof video.webkitEnterFullscreen === "function") {
+      video.webkitEnterFullscreen();
+      return;
+    }
+
+    const fullscreenElement =
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement;
+
+    if (fullscreenElement) {
+      const exit =
+        document.exitFullscreen ||
+        document.webkitExitFullscreen ||
+        document.mozCancelFullScreen ||
+        document.msExitFullscreen;
+      if (exit) {
+        const result = exit.call(document);
+        if (result && typeof result.catch === "function") result.catch(() => {});
+      }
+      return;
+    }
+
+    if (isPseudoFullscreen) {
+      setIsPseudoFullscreen(false);
+      return;
+    }
+
+    const request =
+      box &&
+      (box.requestFullscreen ||
+        box.webkitRequestFullscreen ||
+        box.mozRequestFullScreen ||
+        box.msRequestFullscreen);
+
+    if (request) {
+      const result = request.call(box);
+      if (result && typeof result.catch === "function") {
+        result.catch(() => {
+          if (video && typeof video.webkitEnterFullscreen === "function") {
+            video.webkitEnterFullscreen();
+          } else {
+            setIsPseudoFullscreen(true);
+          }
+        });
+      }
+      return;
+    }
+
+    // Old smart TVs often have no Fullscreen API at all — use a CSS fallback.
+    if (video && typeof video.webkitEnterFullscreen === "function") {
+      video.webkitEnterFullscreen();
     } else {
-      document.exitFullscreen().catch(() => { });
+      setIsPseudoFullscreen(true);
     }
   };
 
@@ -1688,7 +1838,7 @@ const VideoPlayer = ({ movie, onClose }) => {
         {/* 16:9 Video Box */}
         <div
           ref={playerBoxRef}
-          className={`nflx-modal-box relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl ${!showControls && isPlaying ? "hide-cursor" : ""}`}
+          className={`nflx-modal-box relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl ${!showControls && isPlaying ? "hide-cursor" : ""} ${isPseudoFullscreen ? "nflx-pseudo-fullscreen" : ""}`}
           onMouseMove={wakeControls}
         >
           {/* Loading Spinner */}
@@ -1699,14 +1849,28 @@ const VideoPlayer = ({ movie, onClose }) => {
             </div>
           )}
 
+          {playbackError && (
+            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/95 px-6 text-center">
+              <p className="text-sm text-gray-300 max-w-md">{playbackError}</p>
+              <a
+                href={videoInfo.src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-semibold text-white transition-colors"
+              >
+                Open video directly
+              </a>
+            </div>
+          )}
+
           {/* Media Video / Iframe */}
           <div className="w-full h-full flex items-center justify-center" onClick={togglePlay}>
             {isVideo && (
               <video
                 ref={videoRef}
-                src={videoInfo.src}
                 playsInline
                 autoPlay
+                preload="metadata"
                 className="w-full h-full object-contain"
                 onTimeUpdate={() => {
                   if (videoRef.current) {
@@ -1720,8 +1884,19 @@ const VideoPlayer = ({ movie, onClose }) => {
                   if (videoRef.current) setDuration(videoRef.current.duration);
                   setIsLoading(false);
                 }}
+                onCanPlay={() => setIsLoading(false)}
                 onWaiting={() => setIsLoading(true)}
                 onPlaying={() => setIsLoading(false)}
+                onEnded={() => {
+                  setIsPlaying(false);
+                  setShowControls(true);
+                }}
+                onError={() => {
+                  setPlaybackError(
+                    "This video could not be loaded. Check your connection or open it directly.",
+                  );
+                  setIsLoading(false);
+                }}
               />
             )}
             {!isVideo && (
@@ -1815,8 +1990,12 @@ const VideoPlayer = ({ movie, onClose }) => {
                   <span className="nflx-time-text">{formatTime(currentTime)} / {formatTime(duration)}</span>
                 </div>
 
-                <button onClick={toggleFullscreen} className="nflx-btn" title="Fullscreen">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
+                <button
+                  onClick={toggleFullscreen}
+                  className="nflx-btn"
+                  title={isNativeFullscreen || isPseudoFullscreen ? "Exit fullscreen" : "Fullscreen"}
+                >
+                  <Icon name={isNativeFullscreen || isPseudoFullscreen ? "fullscreenExit" : "fullscreen"} size={22} />
                 </button>
               </div>
             </div>
@@ -1824,17 +2003,19 @@ const VideoPlayer = ({ movie, onClose }) => {
         </div>
 
         {/* Picture 1 Bottom Info Text */}
-        <div className="mt-4 px-1 w-full">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-red-500 font-bold">Now playing</span>
-            <span className="h-1 w-1 rounded-full bg-gray-600" />
-            <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">StreamVault</span>
+        {!isPseudoFullscreen && (
+          <div className="mt-4 px-1 w-full">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-red-500 font-bold">Now playing</span>
+              <span className="h-1 w-1 rounded-full bg-gray-600" />
+              <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">StreamVault</span>
+            </div>
+            <h3 className="text-lg sm:text-2xl font-bold text-white truncate">{movie.title}</h3>
+            <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+              {movie.year} &middot; {movie.genre} &middot; {movie.runtime}
+            </p>
           </div>
-          <h3 className="text-lg sm:text-2xl font-bold text-white truncate">{movie.title}</h3>
-          <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
-            {movie.year} &middot; {movie.genre} &middot; {movie.runtime}
-          </p>
-        </div>
+        )}
       </div>
     </div>
   );
