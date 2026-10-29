@@ -2834,13 +2834,6 @@ const AuthModal = ({ onClose, onSuccess }) => {
             {isSignIn ? "Sign In" : "Create Account"}
           </button>
         </form>
-
-        {isSignIn && (
-          <p className="mt-4 text-center text-xs text-gray-600">
-            Admin demo — <span className="text-gray-400">admin</span> /{" "}
-            <span className="text-gray-400">streamvault123</span>
-          </p>
-        )}
       </div>
     </div>
   );
