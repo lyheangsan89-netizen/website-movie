@@ -79,61 +79,7 @@
     <!-- Shared auth service (same one used by the app and admin dashboard) -->
     <script src="polyfills.js"></script>
     <script src="build/auth.js"></script>
-
-    <script>
-        const form = document.getElementById("login-form");
-        const errorMsg = document.getElementById("error-msg");
-        const errorText = document.getElementById("error-text");
-        const card = document.getElementById("login-card");
-        const passInput = document.getElementById("password");
-        const toggleBtn = document.getElementById("toggle-pass");
-
-        const showError = (message) => {
-            errorText.textContent = message || "Invalid username or password";
-            errorMsg.classList.remove("hidden");
-            card.classList.remove("animate-shake");
-            void card.offsetWidth;
-            card.classList.add("animate-shake");
-        };
-
-        // Already signed in as an admin? Go straight to the dashboard.
-        if (!window.SV_AUTH) {
-            showError("Auth service failed to load. Refresh the page.");
-        } else {
-            const current = SV_AUTH.getUser();
-            if (current && current.role === "admin") {
-                window.location.replace("admin.html");
-            }
-        }
-
-        toggleBtn.addEventListener("click", () => {
-            passInput.type = passInput.type === "password" ? "text" : "password";
-        });
-
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!window.SV_AUTH) {
-                showError("Auth service failed to load. Refresh the page.");
-                return;
-            }
-
-            const username = document.getElementById("username").value.trim();
-            const result = SV_AUTH.login(username, passInput.value);
-
-            if (!result.ok) {
-                showError(result.error);
-                return;
-            }
-
-            if (result.user.role !== "admin") {
-                showError("This account does not have admin access.");
-                return;
-            }
-
-            errorMsg.classList.add("hidden");
-            window.location.replace("admin.html");
-        });
-    </script>
+    <script src="build/login.js"></script>
 </body>
 
 </html>

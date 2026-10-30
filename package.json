@@ -4,15 +4,17 @@
   "private": true,
   "description": "StreamVault static movie site",
   "scripts": {
-    "build:js": "babel app.js admin.js auth.js --out-dir build",
+    "build:js": "babel app.js admin.js auth.js login.js --out-dir build",
+    "build:obfuscate": "node scripts/obfuscate.js",
     "build:css": "tailwindcss -c tailwind.config.js -i tailwind.input.css -o tailwind.css --minify",
-    "build": "npm run build:js && npm run build:css"
+    "build": "npm run build:js && npm run build:obfuscate && npm run build:css"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.25.9",
+    "javascript-obfuscator": "^5.9.0",
     "tailwindcss": "^3.4.17"
   }
 }
