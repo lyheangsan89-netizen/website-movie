@@ -42,8 +42,9 @@
 
 /* ─── BASE & RESET ─────────────────────────────────────────── */
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif, 'dangrek';
     background-color: var(--color-bg-primary);
+    font-family: var('dangrek');
 }
 
 /* ─── SCROLLBAR HIDING ─────────────────────────────────────── */

@@ -37,7 +37,7 @@ var _baseMoviesData = [{
   popular: true,
   topRated: true,
   category: "Action",
-  video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY0Njk0NzkzNjgyMQ=="
+  video: "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWNjYS9zdGF0aW9uLzIwMjYvMTAwNi8xMi8xNzkxMjU4NDg1OTM5MTg1Lm1wNC9tYW5pZmVzdC5tM3U4"
 }, {
   id: 2,
   title: "Blades of the Guardians",
@@ -95,8 +95,8 @@ var _baseMoviesData = [{
   year: 2023,
   rating: 7.7,
   genre: "Crime / Drama / History",
-  backdrop: "https://tse1.mm.bing.net/th/id/OIP.zzyhzNfaQV050H9vXZ2W9AAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
-  poster: "https://tse1.mm.bing.net/th/id/OIP.zzyhzNfaQV050H9vXZ2W9AAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
+  backdrop: "https://imgs.search.brave.com/JjUza4JzL-AcuTFkU5dyp16bWU96Ke173fcmiPIc058/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qk1ETTFNell4/WldJdFlUbGlOUzAw/TnpZeExUZzVaV0l0/TldSaE5UTmlZbVJs/TUdRNFhrRXlYa0Zx/Y0djQC5qcGc",
+  poster: "https://imgs.search.brave.com/JjUza4JzL-AcuTFkU5dyp16bWU96Ke173fcmiPIc058/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1Qk1ETTFNell4/WldJdFlUbGlOUzAw/TnpZeExUZzVaV0l0/TldSaE5UTmlZbVJs/TUdRNFhrRXlYa0Zx/Y0djQC5qcGc",
   synopsis: "When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one until the FBI steps in to unravel the conspiracy.",
   runtime: "206 min",
   director: "Martin Scorsese",
@@ -275,7 +275,7 @@ var _baseMoviesData = [{
   popular: true,
   topRated: false,
   category: "Adventure",
-  video: "aHR0cHM6Ly9vay5ydS92aWRlby8xNTY1MjMzNTEyNzA5Mw=="
+  video: "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWVjYS9zdGF0aW9uLzIwMjYvMTEwOC8wOS8xNzk0MDk3OTE3NDkzNTAwLm1wNC9tYW5pZmVzdC5tM3U4"
 }, {
   id: 16,
   title: "Supergirl: Woman of Tomorrow",
@@ -854,6 +854,108 @@ var _baseMoviesData = [{
   "topRated": false,
   "category": "Action",
   "video": "aHR0cHM6Ly9zYWJheWZsaXgtbW9iaWxlLXN0cmVhbS1kM2x2cXU0LnNmLWFwaS5uZXQvNTJjYzEzNDgxN2YyMjI3MzkxNmM1ZDVkNGIwMDZlZGEvbWFuaWZlc3RfaDI2NF80ODBwLm0zdTg="
+}, {
+  "id": 50,
+  "title": "LOOT: A Story of Crime and Redemption",
+  "year": 2026,
+  "rating": 7.3,
+  "genre": "Crime, Drama, Thriller",
+  "backdrop": "https://i1.wp.com/jaikonmovie.com/wp-content/uploads/2026/10/1793453894-2790-xU7dPM144JTluqeuELZyHjcWElo.jpg",
+  "poster": "https://i1.wp.com/jaikonmovie.com/wp-content/uploads/2026/10/1793453894-2790-xU7dPM144JTluqeuELZyHjcWElo.jpg",
+  "synopsis": "A gripping crime drama following a high-stakes heist gone wrong, forcing a desperate criminal to confront their past choices and seek redemption before the law and former associates close in.",
+  "runtime": "104 min",
+  "director": "Unknown",
+  "cast": ["Cast Member 1", "Cast Member 2"],
+  "trending": true,
+  "popular": true,
+  "topRated": false,
+  "category": "Drama",
+  "video": "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWVjYS9zdGF0aW9uLzIwMjYvMTAzMS8yMS8xNzkzNDQ4NTQxMzY4NTQ2Lm1wNC9tYW5pZmVzdC5tM3U4"
+}, {
+  "id": 51,
+  "title": "All Wishes Come True",
+  "year": 2026,
+  "rating": 7.5,
+  "genre": "Fantasy, Romance, Comedy",
+  "backdrop": "https://jaikonmovie.com/wp-content/uploads/2026/10/All-Wishes-Come-True-2026.webp",
+  "poster": "https://jaikonmovie.com/wp-content/uploads/2026/10/All-Wishes-Come-True-2026.webp",
+  "synopsis": "A magical and heartwarming tale where an ordinary person suddenly finds every single wish they utter turning into reality, leading to hilarious complications and unexpected life lessons.",
+  "runtime": "108 min",
+  "director": "Unknown",
+  "cast": ["Lead Actor", "Supporting Actor"],
+  "trending": true,
+  "popular": true,
+  "topRated": false,
+  "category": "Fantasy",
+  "video": "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWNjYS9zdGF0aW9uLzIwMjYvMTAxOS8xMy8xNzkyMzg0OTg4NDQzMzQ1Lm1wNC9tYW5pZmVzdC5tM3U4"
+}, {
+  "id": 52,
+  "title": "Hope",
+  "year": 2026,
+  "rating": 7.8,
+  "genre": "Drama, Family, Emotional",
+  "backdrop": "https://jaikonmovie.com/wp-content/uploads/2026/10/Hope.webp",
+  "poster": "https://jaikonmovie.com/wp-content/uploads/2026/10/Hope.webp",
+  "synopsis": "A deeply touching and inspiring drama that follows a family through harrowing adversity, illustrating the resilience of the human spirit and how faith and love can light the darkest paths.",
+  "runtime": "115 min",
+  "director": "Unknown",
+  "cast": ["Lead Actor", "Supporting Actor"],
+  "trending": true,
+  "popular": true,
+  "topRated": false,
+  "category": "Drama",
+  "video": "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWNjYS9zdGF0aW9uLzIwMjYvMTAxNS8xMC8xNzkyMDI4Nzc2Njc4NjY1Lm1wNC9tYW5pZmVzdC5tM3U4"
+}, {
+  "id": 53,
+  "title": "Wings of Dread",
+  "year": 2026,
+  "rating": 7.4,
+  "genre": "Horror, Thriller, Mystery",
+  "backdrop": "https://jaikonmovie.com/wp-content/uploads/2026/07/Wings-of-Dread-2026.webp",
+  "poster": "https://jaikonmovie.com/wp-content/uploads/2026/07/Wings-of-Dread-2026.webp",
+  "synopsis": "A chilling supernatural thriller where dark, winged omens descend upon an isolated town, forcing a group of survivors to uncover an ancient curse before nightfall claims them all.",
+  "runtime": "102 min",
+  "director": "Unknown",
+  "cast": ["Lead Actor", "Supporting Actor"],
+  "trending": true,
+  "popular": true,
+  "topRated": false,
+  "category": "Horror",
+  "video": "aHR0cHM6Ly92b2Qtbm9ybWFsLWdsb2JhbC1jZG4tejAyLnNvb3BsaXZlLmNvbS9zcGt0L3NhdmUvYWZyZWNjYS9zdGF0aW9uLzIwMjYvMDcwNi8yMS8xNzgzMzQwNzI3MjY0MTQ4Lm1wNC9tYW5pZmVzdC5tM3U4"
+}, {
+  "id": 54,
+  "title": "Godzilla Minus Zero",
+  "year": 2026,
+  "rating": 8.4,
+  "genre": "Action, Sci-Fi, Thriller",
+  "backdrop": "https://pic.movies4ufree.vip/pt/01/godzilla-minus-zero-2026.jpg",
+  "poster": "https://pic.movies4ufree.vip/pt/01/godzilla-minus-zero-2026.jpg",
+  "synopsis": "Following the devastation of post-war Japan, a terrifying new incarnation of Godzilla emerges from the depths, pushing humanity to the absolute brink of extinction.",
+  "runtime": "130 min",
+  "director": "Takashi Yamazaki",
+  "cast": ["Ryunosuke Kamiki", "Minami Hamabe", "Yuki Yamada"],
+  "trending": true,
+  "popular": true,
+  "topRated": true,
+  "category": "Sci-Fi",
+  "video": "https://img1.fcxmb.com/hls/47cded92b178528eefaca5493da7f5b603f35613/720/index_266.m3u8?Expires=1794497883&KeyName=Signature&Signature=s8CWjNPFVPfR3xBRH0rVGZHQENhdPu5CnnxHRlwBXlQfk7m7My2e3r9fUx2TP4Nv5UN_B9th4eSuGJuZYQ6nCg=="
+}, {
+  "id": 55,
+  "title": "Ramayana",
+  "year": 2026,
+  "rating": 8.5,
+  "genre": "Action, Adventure, Drama, Fantasy",
+  "backdrop": "https://image.tmdb.org/t/p/w342/dPrtk4iNf6T5w8fWfg4uxDDbJSW.jpg",
+  "poster": "https://image.tmdb.org/t/p/w342/dPrtk4iNf6T5w8fWfg4uxDDbJSW.jpg",
+  "synopsis": "An epic adaptation of the ancient Indian Sanskrit epic, chronicling Prince Rama's quest to rescue his beloved wife Sita from the clutches of the demon king Ravana with the help of an army of monkeys led by Hanuman.",
+  "runtime": "165 min",
+  "director": "Nitesh Tiwari",
+  "cast": ["Ranbir Kapoor", "Sai Pallavi", "Yash", "Sunny Deol"],
+  "trending": true,
+  "popular": true,
+  "topRated": true,
+  "category": "Fantasy",
+  "video": "https://dash-hls-bridge.johndoesdmc.workers.dev/?url=https%3A%2F%2Fsacdn.hakunaymatata.com%2Fdash%2F6935099432833090776_0_0_1080_h265_589%2Fv2.m3u8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zYWNkbi5oYWt1bmF5bWF0YXRhLmNvbS9kYXNoLzY5MzUwOTk0MzI4MzMwOTA3NzZfMF8wXzEwODBfaDI2NV81ODkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NTA5NDIwOX19fV19&Signature=0T37wrsGkoqRJGRFADkP7dQCklqrrMuAz60nZWDBQstzz2e~L9ruPMiogzCWVu5bEE2uVdqSJrREcT0G-9UVP0~3jqWc7PU6c8uXFU3Z0mSpheGs54jVb7ZA-q3Sa55ycuDB-OO3kZ4W7hU1hvwmkWxZjyddc9uR2MKE-kotpCABkz8r2PHeoAJkPRuRnrt~c~7Bdpe3CeZpPYoBjOApp-t7mM0~MIcvU-DrebgRNhkvJL-5hat4cbziDKUJZete6k8f6YEIXSzWY~tU~mukW9AZImffTQzVqzDwxhsxx5rciXiJ1PEIKYHxhvx0U0zlfsiarp~AfWy5nv08PLwWHg__&Key-Pair-Id=KMHN1LQ1HEUPL"
 }];
 var moviesData = _baseMoviesData;
 try {
@@ -867,24 +969,98 @@ try {
 var genres = ["All", "Action", "Sci-Fi", "Drama", "Thriller", "Horror", "Comedy", "Romance", "Crime"];
 
 // ─── HELPER FOR VIDEO URLS ──────────────────────────────────
+// Accepts a plain URL or a Base64-encoded URL (standard or URL-safe, with or
+// without padding). Raw links pasted from anywhere therefore work as well as
+// the older encoded links already saved in localStorage.
+var decodeVideoUrl = function decodeVideoUrl(input) {
+  var value = String(input == null ? "" : input).trim();
+  if (!value) return "";
+
+  // Already a usable URL — no decoding needed.
+  if (/^(https?:)?\/\//i.test(value) || /^(blob:|data:)/i.test(value)) {
+    return value;
+  }
+
+  // Copy/paste can add line breaks inside Base64. A space inside Base64 is
+  // usually a URL-decoded "+", so restore it instead of dropping it.
+  var compact = value.replace(/[\r\n\t]/g, "").trim().replace(/ /g, "+");
+  if (/^[A-Za-z0-9+/_=-]+$/.test(compact)) {
+    try {
+      var normalized = compact.replace(/-/g, "+").replace(/_/g, "/");
+      var padding = (4 - normalized.length % 4) % 4;
+      var decoded = atob(normalized + "===".slice(0, padding)).trim();
+      if (/^(https?:|blob:|data:|\/\/)/i.test(decoded)) return decoded;
+    } catch (e) {
+      console.warn("Could not decode video URL, using it as-is:", e);
+    }
+  }
+
+  // Not Base64 (or decoded to something that is not a URL) — use as-is.
+  return value;
+};
+
+// Turns share links into links that work inside an <iframe> and repairs a few
+// known-bad paths. Also adds a missing scheme so "domain.com/file.m3u8" works.
+var normalizeVideoUrl = function normalizeVideoUrl(rawUrl) {
+  var url = String(rawUrl || "").trim();
+  if (!url) return "";
+  if (/^\/\//.test(url)) url = "https:" + url;else if (!/^[a-z][a-z0-9+.-]*:/i.test(url)) url = "https://" + url;
+
+  // Never allow script URLs to reach an iframe src.
+  if (/^(?:javascript|vbscript):/i.test(url)) return "";
+
+  // Some SOOP (AfreecaTV) links were saved with a typo in the CDN path
+  // ("afrecca" instead of "afreeca"), which makes the CDN return 404.
+  if (/sooplive\.com/i.test(url)) {
+    url = url.replace(/\/afrecca\//i, "/afreeca/");
+  }
+
+  // YouTube: watch, share, shorts, live and embed links → embed player.
+  var youtube = url.match(/(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/i);
+  if (youtube) {
+    return "https://www.youtube.com/embed/" + youtube[1] + "?autoplay=1&rel=0";
+  }
+
+  // Vimeo: public video links → embed player.
+  var vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+  if (vimeo && !/player\.vimeo\.com/i.test(url)) {
+    return "https://player.vimeo.com/video/" + vimeo[1] + "?autoplay=1";
+  }
+
+  // Streamable short links → embed player.
+  var streamable = url.match(/streamable\.com\/([A-Za-z0-9]+)$/i);
+  if (streamable && !/streamable\.com\/e\//i.test(url)) {
+    return "https://streamable.com/e/" + streamable[1];
+  }
+  return url;
+};
+
+// Hosts we know how to embed. They are never probed as direct media.
+var isKnownEmbedHost = function isKnownEmbedHost(url) {
+  return /(?:youtube\.com|youtu\.be|vimeo\.com|dailymotion\.com|ok\.ru|drive\.google\.com|archive\.org|streamable\.com|facebook\.com|fb\.watch|instagram\.com|tiktok\.com|twitch\.tv|rumble\.com|bitchute\.com|odysee\.com)/i.test(url);
+};
 var getUrlInfo = function getUrlInfo(encodedUrl) {
-  if (!encodedUrl) return {
+  var url = normalizeVideoUrl(decodeVideoUrl(encodedUrl));
+  if (!url) return {
     type: "invalid",
     src: ""
   };
-  var url;
-  try {
-    url = atob(encodedUrl); // Decode the Base64 string
-  } catch (e) {
-    console.error("Failed to decode video URL:", e);
+
+  // Ignore query string / fragment when checking the file extension, so
+  // signed links like "video.mp4?token=..." are still detected correctly.
+  var path = url.split("#")[0].split("?")[0].toLowerCase();
+
+  // HLS playlist (.m3u8) — played with hls.js, or natively on iOS/Safari.
+  if (/\.m3u8?$/.test(path) || /[?&](?:format|type|output)=m3u8\b/i.test(url)) {
     return {
-      type: "invalid",
-      src: ""
+      type: "video",
+      src: url,
+      hls: true
     };
   }
 
-  // Direct video file (.mp4)
-  if (url.endsWith(".mp4")) {
+  // Direct media files.
+  if (/\.(mp4|m4v|mkv|webm|ogv|ogg|mov|m4a|mp3)$/.test(path)) {
     var finalUrl = url;
     if (url.includes("archive.org/details/")) {
       // Transform archive.org page URL to a direct download link
@@ -904,10 +1080,10 @@ var getUrlInfo = function getUrlInfo(encodedUrl) {
   if (url.includes("drive.google.com")) {
     var match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
     if (match && match[1]) {
-      // Use the more reliable /uc endpoint for embedding
+      // /preview works for embedding; /uc often redirects to a download.
       return {
         type: "iframe",
-        src: `https://drive.google.com/uc?export=view&id=${match[1]}`
+        src: `https://drive.google.com/file/d/${match[1]}/preview`
       };
     }
     // Fallback for any other GDrive URL format
@@ -954,10 +1130,12 @@ var getUrlInfo = function getUrlInfo(encodedUrl) {
     };
   }
 
-  // Default to iframe for any other unrecognized URL
+  // Unknown URL: start with an iframe, then let the player check the response
+  // type (the "probe" flag) and switch to <video> if the server returns media.
   return {
     type: "iframe",
-    src: url
+    src: url,
+    probe: !isKnownEmbedHost(url)
   };
 };
 
@@ -1395,13 +1573,130 @@ var VideoPlayer = function VideoPlayer(_ref3) {
     if (typeof navigator === "undefined") return false;
     return /iPad|iPhone|iPod/.test(navigator.userAgent) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
   }, []);
-  var videoInfo = useMemo(function () {
-    return movie ? getUrlInfo(movie.video) : {
+  var _useState25 = useState(function () {
+      return movie ? getUrlInfo(movie.video) : {
+        type: "invalid",
+        src: ""
+      };
+    }),
+    _useState26 = _slicedToArray(_useState25, 2),
+    videoInfo = _useState26[0],
+    setVideoInfo = _useState26[1];
+  var isVideo = videoInfo.type === "video";
+
+  // Recompute the source when the movie changes. For unknown links, check the
+  // response Content-Type, then fall back to a silent <video> probe, so direct
+  // media without a file extension is played in <video> instead of an iframe.
+  useEffect(function () {
+    var info = movie ? getUrlInfo(movie.video) : {
       type: "invalid",
       src: ""
     };
+    setVideoInfo(function (prev) {
+      return prev && prev.type === info.type && prev.src === info.src && !!prev.hls === !!info.hls && !!prev.probe === !!info.probe ? prev : info;
+    });
+    if (info.type !== "iframe" || !info.probe) return;
+    var cancelled = false;
+    var controller = null;
+    var stopVideoProbe = null;
+    var probeTimer = null;
+    var useVideo = function useVideo(hls) {
+      if (!cancelled) setVideoInfo({
+        type: "video",
+        src: info.src,
+        hls: !!hls
+      });
+    };
+
+    // Native metadata probe works even when the host sends no CORS headers.
+    var probeWithVideoElement = function probeWithVideoElement() {
+      if (cancelled || typeof document === "undefined") return;
+      var el = document.createElement("video");
+      var settled = false;
+      var cleanup = function cleanup() {
+        clearTimeout(probeTimer);
+        el.onloadedmetadata = null;
+        el.onerror = null;
+        el.removeAttribute("src");
+        try {
+          el.load();
+        } catch (e) {}
+      };
+      var finish = function finish(ok) {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        if (ok) useVideo(false);
+      };
+      el.preload = "metadata";
+      el.muted = true;
+      el.playsInline = true;
+      el.onloadedmetadata = function () {
+        return finish(true);
+      };
+      el.onerror = function () {
+        return finish(false);
+      };
+      probeTimer = setTimeout(function () {
+        return finish(false);
+      }, 8000);
+      stopVideoProbe = function stopVideoProbe() {
+        return finish(false);
+      };
+      el.src = info.src;
+    };
+    var accept = function accept(res) {
+      if (cancelled) return;
+      if (!res || !res.ok) {
+        probeWithVideoElement();
+        return;
+      }
+      var type = (res.headers.get("content-type") || "").toLowerCase();
+      var isMedia = type.indexOf("mpegurl") !== -1 || type.indexOf("video/") === 0 || type.indexOf("audio/") === 0 || type.indexOf("application/octet-stream") !== -1;
+      if (!isMedia) return; // a real web page — keep the iframe
+
+      var hls = type.indexOf("mpegurl") !== -1 || type.indexOf("application/octet-stream") !== -1 && /(?:manifest|playlist|master|index|\.m3u8)/i.test(info.src);
+      useVideo(hls);
+    };
+    if (typeof fetch !== "function") {
+      probeWithVideoElement();
+    } else {
+      var canAbort = typeof AbortController === "function";
+      try {
+        if (canAbort) controller = new AbortController();
+        fetch(info.src, {
+          // GET lets us abort after the headers; without AbortController use
+          // HEAD so old browsers never start downloading the whole file.
+          method: canAbort ? "GET" : "HEAD",
+          mode: "cors",
+          credentials: "omit",
+          signal: controller ? controller.signal : undefined
+        }).then(function (res) {
+          // Only the headers are needed; stop the body download immediately.
+          if (controller) {
+            try {
+              controller.abort();
+            } catch (e) {}
+          }
+          accept(res);
+        }).catch(function () {
+          if (!cancelled) probeWithVideoElement();
+        });
+      } catch (e) {
+        probeWithVideoElement();
+      }
+    }
+    return function () {
+      cancelled = true;
+      clearTimeout(probeTimer);
+      if (stopVideoProbe) stopVideoProbe();
+      if (controller) {
+        try {
+          controller.abort();
+        } catch (e) {}
+      }
+    };
   }, [movie]);
-  var isVideo = videoInfo.type === "video" || /\.m3u8(\?|#|$)/i.test(videoInfo.src || "");
   var wakeControls = useCallback(function () {
     setShowControls(true);
     clearTimeout(idleTimerRef.current);
@@ -1435,39 +1730,54 @@ var VideoPlayer = function VideoPlayer(_ref3) {
   // when it is available, and show a clear error instead of a black screen.
   useEffect(function () {
     var video = videoRef.current;
-    if (!video || !isVideo) return;
+    if (!video || !isVideo) {
+      if (videoInfo.type === "invalid") {
+        setPlaybackError("This movie does not have a playable video link yet.");
+        setIsLoading(false);
+      }
+      return;
+    }
     var src = videoInfo.src || "";
-    var isHls = /\.m3u8(\?|#|$)/i.test(src);
+    var isHls = videoInfo.hls || /\.m3u8?(\?|#|$)/i.test(src);
     var nativeHls = video.canPlayType("application/vnd.apple.mpegurl") || video.canPlayType("application/x-mpegURL");
     var hls = null;
     var recoveries = 0;
     setPlaybackError("");
     setIsLoading(true);
-    if (isHls && !nativeHls) {
-      if (window.Hls && window.Hls.isSupported()) {
-        hls = new window.Hls({
-          enableWorker: true
-        });
-        hls.loadSource(src);
-        hls.attachMedia(video);
-        hls.on(window.Hls.Events.ERROR, function (_event, data) {
-          if (!data || !data.fatal) return;
-          if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR && recoveries < 2) {
-            recoveries += 1;
-            hls.startLoad();
-          } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR && recoveries < 2) {
-            recoveries += 1;
-            hls.recoverMediaError();
-          } else {
-            setPlaybackError("This video could not be played on this device.");
-            setIsLoading(false);
-          }
-        });
-      } else {
-        setPlaybackError("This video format is not supported by this browser or device.");
-        setIsLoading(false);
-        return;
-      }
+
+    // Chrome reports "maybe" for native HLS but its built-in demuxer cannot
+    // actually parse most playlists (DEMUXER_ERROR_COULD_NOT_PARSE). Always
+    // prefer hls.js when it is supported; native HLS is only the fallback for
+    // iOS/Safari, where MediaSource (and therefore hls.js) is unavailable.
+    var canUseHlsJs = !!(window.Hls && window.Hls.isSupported());
+    if (isHls && canUseHlsJs) {
+      hls = new window.Hls({
+        enableWorker: true
+      });
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(window.Hls.Events.MANIFEST_PARSED, function () {
+        var played = video.play();
+        if (played && typeof played.catch === "function") played.catch(function () {});
+      });
+      hls.on(window.Hls.Events.ERROR, function (_event, data) {
+        if (!data || !data.fatal) return;
+        if (data.type === window.Hls.ErrorTypes.NETWORK_ERROR && recoveries < 2) {
+          recoveries += 1;
+          hls.startLoad();
+        } else if (data.type === window.Hls.ErrorTypes.MEDIA_ERROR && recoveries < 2) {
+          recoveries += 1;
+          hls.recoverMediaError();
+        } else {
+          var status = data.response && data.response.code ? ` (HTTP ${data.response.code})` : "";
+          setPlaybackError(`This video could not be played${status}. The link may have expired, or the server may block playback from other websites.`);
+          setIsLoading(false);
+        }
+      });
+    } else if (isHls && !nativeHls) {
+      setPlaybackError("This browser or device cannot play this HLS (.m3u8) stream. Try Chrome, Edge, Firefox or Safari.");
+      setIsLoading(false);
+      return;
     } else {
       video.src = src;
       video.load();
@@ -1654,10 +1964,13 @@ var VideoPlayer = function VideoPlayer(_ref3) {
       setShowControls(true);
     },
     onError: function onError() {
-      setPlaybackError("This video could not be loaded. Check your connection or open it directly.");
+      // Keep a more specific hls.js message if one is already shown.
+      setPlaybackError(function (prev) {
+        return prev || "This video could not be loaded. Check your connection or open it directly.";
+      });
       setIsLoading(false);
     }
-  }), !isVideo && /*#__PURE__*/React.createElement("iframe", {
+  }), !isVideo && videoInfo.src && /*#__PURE__*/React.createElement("iframe", {
     src: videoInfo.src,
     className: "w-full h-full border-0",
     allow: "autoplay; fullscreen",
@@ -1849,18 +2162,18 @@ var Navbar = function Navbar(_ref4) {
     user = _ref4.user,
     onSignIn = _ref4.onSignIn,
     onSignOut = _ref4.onSignOut;
-  var _useState25 = useState(false),
-    _useState26 = _slicedToArray(_useState25, 2),
-    isMenuOpen = _useState26[0],
-    setIsMenuOpen = _useState26[1];
   var _useState27 = useState(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    isSearchFocused = _useState28[0],
-    setIsSearchFocused = _useState28[1];
+    isMenuOpen = _useState28[0],
+    setIsMenuOpen = _useState28[1];
   var _useState29 = useState(false),
     _useState30 = _slicedToArray(_useState29, 2),
-    isAccountOpen = _useState30[0],
-    setIsAccountOpen = _useState30[1];
+    isSearchFocused = _useState30[0],
+    setIsSearchFocused = _useState30[1];
+  var _useState31 = useState(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    isAccountOpen = _useState32[0],
+    setIsAccountOpen = _useState32[1];
   var accountRef = useRef(null);
   useEffect(function () {
     if (!isAccountOpen) return;
@@ -2201,14 +2514,14 @@ var MovieRow = memo(function (_ref7) {
     onToggleWatchlist = _ref7.onToggleWatchlist,
     watchlist = _ref7.watchlist;
   var scrollRef = useRef(null);
-  var _useState31 = useState(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    canScrollLeft = _useState32[0],
-    setCanScrollLeft = _useState32[1];
-  var _useState33 = useState(true),
+  var _useState33 = useState(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    canScrollRight = _useState34[0],
-    setCanScrollRight = _useState34[1];
+    canScrollLeft = _useState34[0],
+    setCanScrollLeft = _useState34[1];
+  var _useState35 = useState(true),
+    _useState36 = _slicedToArray(_useState35, 2),
+    canScrollRight = _useState36[0],
+    setCanScrollRight = _useState36[1];
   var checkScroll = function checkScroll() {
     if (scrollRef.current) {
       var _scrollRef$current = scrollRef.current,
@@ -2293,10 +2606,10 @@ var MovieModal = function MovieModal(_ref8) {
     onWatchNow = _ref8.onWatchNow,
     relatedMovies = _ref8.relatedMovies,
     onMovieClick = _ref8.onMovieClick;
-  var _useState35 = useState("overview"),
-    _useState36 = _slicedToArray(_useState35, 2),
-    activeTab = _useState36[0],
-    setActiveTab = _useState36[1];
+  var _useState37 = useState("overview"),
+    _useState38 = _slicedToArray(_useState37, 2),
+    activeTab = _useState38[0],
+    setActiveTab = _useState38[1];
   useEffect(function () {
     document.body.style.overflow = "hidden";
     var handleEsc = function handleEsc(e) {
@@ -2593,22 +2906,22 @@ var Footer = function Footer() {
 var AuthModal = function AuthModal(_ref0) {
   var onClose = _ref0.onClose,
     onSuccess = _ref0.onSuccess;
-  var _useState37 = useState("signin"),
-    _useState38 = _slicedToArray(_useState37, 2),
-    mode = _useState38[0],
-    setMode = _useState38[1];
-  var _useState39 = useState({
+  var _useState39 = useState("signin"),
+    _useState40 = _slicedToArray(_useState39, 2),
+    mode = _useState40[0],
+    setMode = _useState40[1];
+  var _useState41 = useState({
       username: "",
       password: "",
       name: ""
     }),
-    _useState40 = _slicedToArray(_useState39, 2),
-    form = _useState40[0],
-    setForm = _useState40[1];
-  var _useState41 = useState(""),
     _useState42 = _slicedToArray(_useState41, 2),
-    error = _useState42[0],
-    setError = _useState42[1];
+    form = _useState42[0],
+    setForm = _useState42[1];
+  var _useState43 = useState(""),
+    _useState44 = _slicedToArray(_useState43, 2),
+    error = _useState44[0],
+    setError = _useState44[1];
   var isSignIn = mode === "signin";
   var setField = function setField(key) {
     return function (event) {
@@ -2725,56 +3038,56 @@ var AuthModal = function AuthModal(_ref0) {
 
 // ─── MAIN APP ───────────────────────────────────────────────
 var App = function App() {
-  var _useState43 = useState(0),
-    _useState44 = _slicedToArray(_useState43, 2),
-    scrollY = _useState44[0],
-    setScrollY = _useState44[1];
-  var _useState45 = useState(""),
+  var _useState45 = useState(0),
     _useState46 = _slicedToArray(_useState45, 2),
-    searchQuery = _useState46[0],
-    setSearchQuery = _useState46[1];
-  var _useState47 = useState("home"),
+    scrollY = _useState46[0],
+    setScrollY = _useState46[1];
+  var _useState47 = useState(""),
     _useState48 = _slicedToArray(_useState47, 2),
-    activeTab = _useState48[0],
-    setActiveTab = _useState48[1];
-  var _useState49 = useState("All"),
+    searchQuery = _useState48[0],
+    setSearchQuery = _useState48[1];
+  var _useState49 = useState("home"),
     _useState50 = _slicedToArray(_useState49, 2),
-    activeGenre = _useState50[0],
-    setActiveGenre = _useState50[1];
-  var _useState51 = useState(null),
+    activeTab = _useState50[0],
+    setActiveTab = _useState50[1];
+  var _useState51 = useState("All"),
     _useState52 = _slicedToArray(_useState51, 2),
-    selectedMovie = _useState52[0],
-    setSelectedMovie = _useState52[1];
+    activeGenre = _useState52[0],
+    setActiveGenre = _useState52[1];
   var _useState53 = useState(null),
     _useState54 = _slicedToArray(_useState53, 2),
-    playingMovie = _useState54[0],
-    setPlayingMovie = _useState54[1];
-  var _useState55 = useState(function () {
+    selectedMovie = _useState54[0],
+    setSelectedMovie = _useState54[1];
+  var _useState55 = useState(null),
+    _useState56 = _slicedToArray(_useState55, 2),
+    playingMovie = _useState56[0],
+    setPlayingMovie = _useState56[1];
+  var _useState57 = useState(function () {
       return moviesData;
     }),
-    _useState56 = _slicedToArray(_useState55, 2),
-    movies = _useState56[0],
-    setMovies = _useState56[1];
-  var _useState57 = useState(function () {
+    _useState58 = _slicedToArray(_useState57, 2),
+    movies = _useState58[0],
+    setMovies = _useState58[1];
+  var _useState59 = useState(function () {
       return window.SV_AUTH ? window.SV_AUTH.getUser() : null;
     }),
-    _useState58 = _slicedToArray(_useState57, 2),
-    user = _useState58[0],
-    setUser = _useState58[1];
-  var _useState59 = useState(false),
     _useState60 = _slicedToArray(_useState59, 2),
-    authOpen = _useState60[0],
-    setAuthOpen = _useState60[1];
-  var _useState61 = useState(function () {
+    user = _useState60[0],
+    setUser = _useState60[1];
+  var _useState61 = useState(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    authOpen = _useState62[0],
+    setAuthOpen = _useState62[1];
+  var _useState63 = useState(function () {
       try {
         return JSON.parse(localStorage.getItem("watchlist")) || [];
       } catch (_unused) {
         return [];
       }
     }),
-    _useState62 = _slicedToArray(_useState61, 2),
-    watchlist = _useState62[0],
-    setWatchlist = _useState62[1];
+    _useState64 = _slicedToArray(_useState63, 2),
+    watchlist = _useState64[0],
+    setWatchlist = _useState64[1];
   useEffect(function () {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);

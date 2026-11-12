@@ -15,23 +15,30 @@ const DEFAULT_CATEGORIES = ["Action", "Animation", "Horror", "Romance", "Drama",
 
 const decodeVideo = (encoded) => {
   if (!encoded) return "";
+  const value = String(encoded).trim();
+  if (/^(https?:)?\/\//i.test(value) || /^(blob:|data:)/i.test(value)) return value;
+
+  const compact = value.replace(/[\r\n\t]/g, "").trim().replace(/ /g, "+");
   try {
-    return atob(encoded);
-  } catch (e) {
-    return encoded;
-  }
+    const normalized = compact.replace(/-/g, "+").replace(/_/g, "/");
+    const padding = (4 - (normalized.length % 4)) % 4;
+    const decoded = atob(normalized + "===".slice(0, padding)).trim();
+    if (/^(https?:|blob:|data:|\/\/)/i.test(decoded)) return decoded;
+  } catch (e) { }
+  return value;
 };
 
 const encodeVideo = (url) => {
-  const trimmed = (url || "").trim();
+  const trimmed = (url || "").trim().replace(/\s+/g, "");
   if (!trimmed) return "";
-  if (trimmed.startsWith("http")) {
+  if (/^(?:https?:\/\/|\/\/)/i.test(trimmed)) {
     try {
       return btoa(trimmed);
     } catch (e) {
       return trimmed;
     }
   }
+  // Already Base64 (or another format) — keep it as entered.
   return trimmed;
 };
 

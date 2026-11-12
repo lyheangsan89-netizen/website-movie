@@ -36,22 +36,28 @@ var STORAGE_KEY = "sv_movies";
 var DEFAULT_CATEGORIES = ["Action", "Animation", "Horror", "Romance", "Drama", "Thriller", "Adventure", "Crime"];
 var decodeVideo = function decodeVideo(encoded) {
   if (!encoded) return "";
+  var value = String(encoded).trim();
+  if (/^(https?:)?\/\//i.test(value) || /^(blob:|data:)/i.test(value)) return value;
+  var compact = value.replace(/[\r\n\t]/g, "").trim().replace(/ /g, "+");
   try {
-    return atob(encoded);
-  } catch (e) {
-    return encoded;
-  }
+    var normalized = compact.replace(/-/g, "+").replace(/_/g, "/");
+    var padding = (4 - normalized.length % 4) % 4;
+    var decoded = atob(normalized + "===".slice(0, padding)).trim();
+    if (/^(https?:|blob:|data:|\/\/)/i.test(decoded)) return decoded;
+  } catch (e) {}
+  return value;
 };
 var encodeVideo = function encodeVideo(url) {
-  var trimmed = (url || "").trim();
+  var trimmed = (url || "").trim().replace(/\s+/g, "");
   if (!trimmed) return "";
-  if (trimmed.startsWith("http")) {
+  if (/^(?:https?:\/\/|\/\/)/i.test(trimmed)) {
     try {
       return btoa(trimmed);
     } catch (e) {
       return trimmed;
     }
   }
+  // Already Base64 (or another format) — keep it as entered.
   return trimmed;
 };
 function loadMovies() {
