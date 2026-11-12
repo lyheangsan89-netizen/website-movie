@@ -1,9 +1,3 @@
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, e) { if ("object" != _typeof(t) || !t) return t; var r; if ("undefined" != typeof Symbol && void 0 !== (r = t[Symbol.toPrimitive])) { var i = r.call(t, e || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === e ? String : Number)(t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
@@ -958,10 +952,10 @@ var _baseMoviesData = [{
   "video": "https://dash-hls-bridge.johndoesdmc.workers.dev/?url=https%3A%2F%2Fsacdn.hakunaymatata.com%2Fdash%2F6935099432833090776_0_0_1080_h265_589%2Fv2.m3u8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zYWNkbi5oYWt1bmF5bWF0YXRhLmNvbS9kYXNoLzY5MzUwOTk0MzI4MzMwOTA3NzZfMF8wXzEwODBfaDI2NV81ODkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NTA5NDIwOX19fV19&Signature=0T37wrsGkoqRJGRFADkP7dQCklqrrMuAz60nZWDBQstzz2e~L9ruPMiogzCWVu5bEE2uVdqSJrREcT0G-9UVP0~3jqWc7PU6c8uXFU3Z0mSpheGs54jVb7ZA-q3Sa55ycuDB-OO3kZ4W7hU1hvwmkWxZjyddc9uR2MKE-kotpCABkz8r2PHeoAJkPRuRnrt~c~7Bdpe3CeZpPYoBjOApp-t7mM0~MIcvU-DrebgRNhkvJL-5hat4cbziDKUJZete6k8f6YEIXSzWY~tU~mukW9AZImffTQzVqzDwxhsxx5rciXiJ1PEIKYHxhvx0U0zlfsiarp~AfWy5nv08PLwWHg__&Key-Pair-Id=KMHN1LQ1HEUPL"
 }];
 
-// The list is cached in localStorage so the admin panel can edit it. A browser
-// that visited before a movie was added would otherwise keep the old list
-// forever, so compare a signature of the bundled data and merge in changes
-// (new movies, updated posters/video links) while keeping admin-added movies.
+// The list is cached in localStorage so returning visitors keep their copy. A
+// browser that visited before a movie was added would otherwise keep the old
+// list forever, so compare a signature of the bundled data and merge in changes
+// (new movies, updated posters/video links) while keeping locally saved ones.
 var _baseMoviesSignature = function () {
   var raw = JSON.stringify(_baseMoviesData);
   var hash = 5381;
@@ -994,7 +988,7 @@ try {
       return previous ? Object.assign({}, previous, movie) : movie;
     });
 
-    // Keep movies added through the admin panel that are not in the bundle.
+    // Keep movies saved locally that are not in the bundle.
     stored.forEach(function (movie) {
       if (movie && movie.id != null && !baseIds[String(movie.id)]) {
         merged.push(movie);
@@ -2199,10 +2193,7 @@ var Navbar = function Navbar(_ref4) {
     watchlistCount = _ref4.watchlistCount,
     activeTab = _ref4.activeTab,
     setActiveTab = _ref4.setActiveTab,
-    scrollY = _ref4.scrollY,
-    user = _ref4.user,
-    onSignIn = _ref4.onSignIn,
-    onSignOut = _ref4.onSignOut;
+    scrollY = _ref4.scrollY;
   var _useState27 = useState(false),
     _useState28 = _slicedToArray(_useState27, 2),
     isMenuOpen = _useState28[0],
@@ -2211,23 +2202,6 @@ var Navbar = function Navbar(_ref4) {
     _useState30 = _slicedToArray(_useState29, 2),
     isSearchFocused = _useState30[0],
     setIsSearchFocused = _useState30[1];
-  var _useState31 = useState(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    isAccountOpen = _useState32[0],
-    setIsAccountOpen = _useState32[1];
-  var accountRef = useRef(null);
-  useEffect(function () {
-    if (!isAccountOpen) return;
-    var closeOnOutsideClick = function closeOnOutsideClick(event) {
-      if (accountRef.current && !accountRef.current.contains(event.target)) {
-        setIsAccountOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", closeOnOutsideClick);
-    return function () {
-      return document.removeEventListener("mousedown", closeOnOutsideClick);
-    };
-  }, [isAccountOpen]);
   var navLinks = [{
     id: "home",
     label: "Home"
@@ -2320,48 +2294,7 @@ var Navbar = function Navbar(_ref4) {
     className: "text-gray-300"
   }), /*#__PURE__*/React.createElement("span", {
     className: "absolute top-1.5 right-1.5 w-2 h-2 bg-accent-red rounded-full"
-  })), user ? /*#__PURE__*/React.createElement("div", {
-    className: "relative",
-    ref: accountRef
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      return setIsAccountOpen(function (open) {
-        return !open;
-      });
-    },
-    title: user.name || user.username,
-    className: "w-9 h-9 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-sm font-bold hover:ring-2 hover:ring-white/30 transition-all"
-  }, (user.name || user.username).charAt(0).toUpperCase()), isAccountOpen && /*#__PURE__*/React.createElement("div", {
-    className: "absolute right-0 mt-2 w-60 bg-dark-800 border border-dark-600 rounded-xl shadow-2xl overflow-hidden animate-fade-in"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "px-4 py-3 border-b border-dark-600"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-sm font-semibold text-white truncate"
-  }, user.name || user.username), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs text-gray-500 truncate"
-  }, "@", user.username, user.role === "admin" ? " · Admin" : "")), user.role === "admin" && /*#__PURE__*/React.createElement("a", {
-    href: "admin.html",
-    target: "_self",
-    className: "flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "film",
-    size: 16
-  }), "Admin Dashboard"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setIsAccountOpen(false);
-      onSignOut();
-    },
-    className: "w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-accent-red hover:bg-accent-red/10 transition-colors"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 16
-  }), "Sign Out"))) : /*#__PURE__*/React.createElement("button", {
-    onClick: onSignIn,
-    className: "hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "user",
-    size: 16
-  }), "Sign In"), /*#__PURE__*/React.createElement("button", {
+  })), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return setIsMenuOpen(!isMenuOpen);
     },
@@ -2392,34 +2325,7 @@ var Navbar = function Navbar(_ref4) {
       return setSearchQuery(e.target.value);
     },
     className: "w-full bg-dark-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-accent-red/50"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "mt-3 px-4"
-  }, user ? /*#__PURE__*/React.createElement("div", {
-    className: "flex flex-col gap-2"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-sm text-gray-400"
-  }, "Signed in as", " ", /*#__PURE__*/React.createElement("span", {
-    className: "font-semibold text-white"
-  }, user.name || user.username)), user.role === "admin" && /*#__PURE__*/React.createElement("a", {
-    href: "admin.html",
-    target: "_self",
-    onClick: function onClick() {
-      return setIsMenuOpen(false);
-    },
-    className: "px-4 py-2.5 rounded-lg bg-white/10 text-sm font-semibold text-white text-center hover:bg-white/20 transition-colors"
-  }, "Admin Dashboard"), /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setIsMenuOpen(false);
-      onSignOut();
-    },
-    className: "px-4 py-2.5 rounded-lg bg-accent-red/15 text-sm font-semibold text-accent-red hover:bg-accent-red/25 transition-colors"
-  }, "Sign Out")) : /*#__PURE__*/React.createElement("button", {
-    onClick: function onClick() {
-      setIsMenuOpen(false);
-      onSignIn();
-    },
-    className: "w-full px-4 py-2.5 rounded-lg bg-white/10 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-  }, "Sign In")))));
+  })))));
 };
 
 // ─── HERO SECTION ───────────────────────────────────────────
@@ -2555,14 +2461,14 @@ var MovieRow = memo(function (_ref7) {
     onToggleWatchlist = _ref7.onToggleWatchlist,
     watchlist = _ref7.watchlist;
   var scrollRef = useRef(null);
-  var _useState33 = useState(false),
+  var _useState31 = useState(false),
+    _useState32 = _slicedToArray(_useState31, 2),
+    canScrollLeft = _useState32[0],
+    setCanScrollLeft = _useState32[1];
+  var _useState33 = useState(true),
     _useState34 = _slicedToArray(_useState33, 2),
-    canScrollLeft = _useState34[0],
-    setCanScrollLeft = _useState34[1];
-  var _useState35 = useState(true),
-    _useState36 = _slicedToArray(_useState35, 2),
-    canScrollRight = _useState36[0],
-    setCanScrollRight = _useState36[1];
+    canScrollRight = _useState34[0],
+    setCanScrollRight = _useState34[1];
   var checkScroll = function checkScroll() {
     if (scrollRef.current) {
       var _scrollRef$current = scrollRef.current,
@@ -2647,10 +2553,10 @@ var MovieModal = function MovieModal(_ref8) {
     onWatchNow = _ref8.onWatchNow,
     relatedMovies = _ref8.relatedMovies,
     onMovieClick = _ref8.onMovieClick;
-  var _useState37 = useState("overview"),
-    _useState38 = _slicedToArray(_useState37, 2),
-    activeTab = _useState38[0],
-    setActiveTab = _useState38[1];
+  var _useState35 = useState("overview"),
+    _useState36 = _slicedToArray(_useState35, 2),
+    activeTab = _useState36[0],
+    setActiveTab = _useState36[1];
   useEffect(function () {
     document.body.style.overflow = "hidden";
     var handleEsc = function handleEsc(e) {
@@ -2934,201 +2840,53 @@ var Footer = function Footer() {
     className: "text-sm font-bold text-white"
   }, "StreamVault")), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-4"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "login.html",
-    target: "_self",
-    className: "text-gray-600 hover:text-gray-300 text-xs transition-colors"
-  }, "Admin"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("p", {
     className: "text-gray-600 text-xs"
   }, "\xA9 2024 StreamVault. All rights reserved. This is a demo application.")))));
 };
 
-// ─── AUTH MODAL ─────────────────────────────────────────────
-var AuthModal = function AuthModal(_ref0) {
-  var onClose = _ref0.onClose,
-    onSuccess = _ref0.onSuccess;
-  var _useState39 = useState("signin"),
-    _useState40 = _slicedToArray(_useState39, 2),
-    mode = _useState40[0],
-    setMode = _useState40[1];
-  var _useState41 = useState({
-      username: "",
-      password: "",
-      name: ""
-    }),
-    _useState42 = _slicedToArray(_useState41, 2),
-    form = _useState42[0],
-    setForm = _useState42[1];
-  var _useState43 = useState(""),
-    _useState44 = _slicedToArray(_useState43, 2),
-    error = _useState44[0],
-    setError = _useState44[1];
-  var isSignIn = mode === "signin";
-  var setField = function setField(key) {
-    return function (event) {
-      return setForm(function (prev) {
-        return _objectSpread(_objectSpread({}, prev), {}, {
-          [key]: event.target.value
-        });
-      });
-    };
-  };
-  var switchMode = function switchMode(next) {
-    setMode(next);
-    setError("");
-  };
-  var submit = function submit(event) {
-    event.preventDefault();
-    setError("");
-    if (!window.SV_AUTH) {
-      setError("Auth service failed to load. Refresh the page.");
-      return;
-    }
-    var result = isSignIn ? SV_AUTH.login(form.username, form.password) : SV_AUTH.register(form.username, form.password, form.name);
-    if (!result.ok) {
-      setError(result.error);
-      return;
-    }
-    onSuccess(result.user);
-    onClose();
-  };
-  var fieldClass = "w-full bg-dark-700 border border-dark-500 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition placeholder-gray-600";
-  var labelClass = "block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1.5";
-  return /*#__PURE__*/React.createElement("div", {
-    className: "fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm",
-    onClick: onClose
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "bg-dark-800 border border-dark-600 rounded-2xl w-full max-w-md p-7 animate-scale-in",
-    onClick: function onClick(event) {
-      return event.stopPropagation();
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-start justify-between mb-5"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 mb-1"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "w-8 h-8 bg-gradient-to-br from-accent-red to-accent-pink rounded-lg flex items-center justify-center"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "film",
-    size: 18,
-    className: "text-white"
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "text-lg font-bold"
-  }, "Stream", /*#__PURE__*/React.createElement("span", {
-    className: "text-accent-red"
-  }, "Vault"))), /*#__PURE__*/React.createElement("p", {
-    className: "text-gray-500 text-sm"
-  }, isSignIn ? "Sign in to your account" : "Create an account to get started")), /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    className: "p-1.5 rounded-lg text-gray-500 hover:text-white hover:bg-dark-700 transition-colors",
-    "aria-label": "Close"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 18
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "grid grid-cols-2 gap-1 p-1 bg-dark-700 rounded-xl mb-5"
-  }, [["signin", "Sign In"], ["register", "Create Account"]].map(function (_ref1) {
-    var _ref10 = _slicedToArray(_ref1, 2),
-      key = _ref10[0],
-      label = _ref10[1];
-    return /*#__PURE__*/React.createElement("button", {
-      key: key,
-      type: "button",
-      onClick: function onClick() {
-        return switchMode(key);
-      },
-      className: `py-2 rounded-lg text-sm font-semibold transition-colors ${mode === key ? "bg-dark-800 text-white shadow" : "text-gray-400 hover:text-white"}`
-    }, label);
-  })), /*#__PURE__*/React.createElement("form", {
-    onSubmit: submit,
-    className: "space-y-4"
-  }, !isSignIn && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: labelClass
-  }, "Display name"), /*#__PURE__*/React.createElement("input", {
-    className: fieldClass,
-    placeholder: "Your name",
-    value: form.name,
-    onChange: setField("name"),
-    autoComplete: "name"
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: labelClass
-  }, "Username"), /*#__PURE__*/React.createElement("input", {
-    className: fieldClass,
-    placeholder: "Enter your username",
-    value: form.username,
-    onChange: setField("username"),
-    autoComplete: "username",
-    required: true
-  })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
-    className: labelClass
-  }, "Password"), /*#__PURE__*/React.createElement("input", {
-    type: "password",
-    className: fieldClass,
-    placeholder: isSignIn ? "Enter your password" : "At least 6 characters",
-    value: form.password,
-    onChange: setField("password"),
-    autoComplete: isSignIn ? "current-password" : "new-password",
-    required: true
-  })), error && /*#__PURE__*/React.createElement("p", {
-    className: "bg-accent-red/10 border border-accent-red/30 text-accent-red text-sm rounded-xl px-4 py-2.5"
-  }, error), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    className: "w-full bg-accent-red hover:bg-red-700 active:scale-[0.98] transition rounded-xl py-3 font-semibold text-sm shadow-lg shadow-accent-red/20"
-  }, isSignIn ? "Sign In" : "Create Account"))));
-};
-
 // ─── MAIN APP ───────────────────────────────────────────────
 var App = function App() {
-  var _useState45 = useState(0),
+  var _useState37 = useState(0),
+    _useState38 = _slicedToArray(_useState37, 2),
+    scrollY = _useState38[0],
+    setScrollY = _useState38[1];
+  var _useState39 = useState(""),
+    _useState40 = _slicedToArray(_useState39, 2),
+    searchQuery = _useState40[0],
+    setSearchQuery = _useState40[1];
+  var _useState41 = useState("home"),
+    _useState42 = _slicedToArray(_useState41, 2),
+    activeTab = _useState42[0],
+    setActiveTab = _useState42[1];
+  var _useState43 = useState("All"),
+    _useState44 = _slicedToArray(_useState43, 2),
+    activeGenre = _useState44[0],
+    setActiveGenre = _useState44[1];
+  var _useState45 = useState(null),
     _useState46 = _slicedToArray(_useState45, 2),
-    scrollY = _useState46[0],
-    setScrollY = _useState46[1];
-  var _useState47 = useState(""),
+    selectedMovie = _useState46[0],
+    setSelectedMovie = _useState46[1];
+  var _useState47 = useState(null),
     _useState48 = _slicedToArray(_useState47, 2),
-    searchQuery = _useState48[0],
-    setSearchQuery = _useState48[1];
-  var _useState49 = useState("home"),
-    _useState50 = _slicedToArray(_useState49, 2),
-    activeTab = _useState50[0],
-    setActiveTab = _useState50[1];
-  var _useState51 = useState("All"),
-    _useState52 = _slicedToArray(_useState51, 2),
-    activeGenre = _useState52[0],
-    setActiveGenre = _useState52[1];
-  var _useState53 = useState(null),
-    _useState54 = _slicedToArray(_useState53, 2),
-    selectedMovie = _useState54[0],
-    setSelectedMovie = _useState54[1];
-  var _useState55 = useState(null),
-    _useState56 = _slicedToArray(_useState55, 2),
-    playingMovie = _useState56[0],
-    setPlayingMovie = _useState56[1];
-  var _useState57 = useState(function () {
+    playingMovie = _useState48[0],
+    setPlayingMovie = _useState48[1];
+  var _useState49 = useState(function () {
       return moviesData;
     }),
-    _useState58 = _slicedToArray(_useState57, 2),
-    movies = _useState58[0],
-    setMovies = _useState58[1];
-  var _useState59 = useState(function () {
-      return window.SV_AUTH ? window.SV_AUTH.getUser() : null;
-    }),
-    _useState60 = _slicedToArray(_useState59, 2),
-    user = _useState60[0],
-    setUser = _useState60[1];
-  var _useState61 = useState(false),
-    _useState62 = _slicedToArray(_useState61, 2),
-    authOpen = _useState62[0],
-    setAuthOpen = _useState62[1];
-  var _useState63 = useState(function () {
+    _useState50 = _slicedToArray(_useState49, 2),
+    movies = _useState50[0],
+    setMovies = _useState50[1];
+  var _useState51 = useState(function () {
       try {
         return JSON.parse(localStorage.getItem("watchlist")) || [];
       } catch (_unused) {
         return [];
       }
     }),
-    _useState64 = _slicedToArray(_useState63, 2),
-    watchlist = _useState64[0],
-    setWatchlist = _useState64[1];
+    _useState52 = _slicedToArray(_useState51, 2),
+    watchlist = _useState52[0],
+    setWatchlist = _useState52[1];
   useEffect(function () {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);
@@ -3144,13 +2902,7 @@ var App = function App() {
     };
   }, []);
 
-  // Keep the auth state in sync with login/logout from other tabs.
-  useEffect(function () {
-    if (!window.SV_AUTH) return;
-    return window.SV_AUTH.onChange(setUser);
-  }, []);
-
-  // Pick up movie changes made in the admin dashboard (other tab/window).
+  // Pick up movie changes made in another tab/window.
   useEffect(function () {
     var syncMovies = function syncMovies() {
       try {
@@ -3170,10 +2922,6 @@ var App = function App() {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener("focus", syncMovies);
     };
-  }, []);
-  var handleSignOut = useCallback(function () {
-    if (window.SV_AUTH) window.SV_AUTH.logout();
-    setUser(null);
   }, []);
   var toggleWatchlist = useCallback(function (id) {
     setWatchlist(function (prev) {
@@ -3273,12 +3021,7 @@ var App = function App() {
     watchlistCount: watchlist.length,
     activeTab: activeTab,
     setActiveTab: setActiveTab,
-    scrollY: scrollY,
-    user: user,
-    onSignIn: function onSignIn() {
-      return setAuthOpen(true);
-    },
-    onSignOut: handleSignOut
+    scrollY: scrollY
   }), activeTab === "home" && !searchQuery && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Hero, {
     movie: heroMovie,
     onWatchNow: handleWatchNow,
@@ -3385,13 +3128,6 @@ var App = function App() {
   }), playingMovie && /*#__PURE__*/React.createElement(VideoPlayer, {
     movie: playingMovie,
     onClose: handleClosePlayer
-  }), authOpen && /*#__PURE__*/React.createElement(AuthModal, {
-    onClose: function onClose() {
-      return setAuthOpen(false);
-    },
-    onSuccess: function onSuccess(nextUser) {
-      return setUser(nextUser);
-    }
   }));
 };
 var root = ReactDOM.createRoot(document.getElementById("root"));

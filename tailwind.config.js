@@ -1,13 +1,6 @@
 /** Tailwind config used to build tailwind.css (run: npm run build:css). */
 module.exports = {
-  content: [
-    "./index.html",
-    "./admin.html",
-    "./login.html",
-    "./app.js",
-    "./admin.js",
-    "./auth.js",
-  ],
+  content: ["./index.html", "./app.js"],
   theme: {
     extend: {
       fontFamily: {

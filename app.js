@@ -1265,10 +1265,10 @@ const _baseMoviesData = [
 
 ];
 
-// The list is cached in localStorage so the admin panel can edit it. A browser
-// that visited before a movie was added would otherwise keep the old list
-// forever, so compare a signature of the bundled data and merge in changes
-// (new movies, updated posters/video links) while keeping admin-added movies.
+// The list is cached in localStorage so returning visitors keep their copy. A
+// browser that visited before a movie was added would otherwise keep the old
+// list forever, so compare a signature of the bundled data and merge in changes
+// (new movies, updated posters/video links) while keeping locally saved ones.
 const _baseMoviesSignature = (() => {
   const raw = JSON.stringify(_baseMoviesData);
   let hash = 5381;
@@ -1303,7 +1303,7 @@ try {
       return previous ? Object.assign({}, previous, movie) : movie;
     });
 
-    // Keep movies added through the admin panel that are not in the bundle.
+    // Keep movies saved locally that are not in the bundle.
     stored.forEach((movie) => {
       if (movie && movie.id != null && !baseIds[String(movie.id)]) {
         merged.push(movie);
@@ -2425,25 +2425,9 @@ const Navbar = ({
   activeTab,
   setActiveTab,
   scrollY,
-  user,
-  onSignIn,
-  onSignOut,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const accountRef = useRef(null);
-
-  useEffect(() => {
-    if (!isAccountOpen) return;
-    const closeOnOutsideClick = (event) => {
-      if (accountRef.current && !accountRef.current.contains(event.target)) {
-        setIsAccountOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", closeOnOutsideClick);
-    return () => document.removeEventListener("mousedown", closeOnOutsideClick);
-  }, [isAccountOpen]);
 
   const navLinks = [
     { id: "home", label: "Home" },
@@ -2520,62 +2504,6 @@ const Navbar = ({
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent-red rounded-full"></span>
             </button>
 
-            {user ? (
-              <div className="relative" ref={accountRef}>
-                <button
-                  onClick={() => setIsAccountOpen((open) => !open)}
-                  title={user.name || user.username}
-                  className="w-9 h-9 rounded-full bg-gradient-to-br from-accent-purple to-accent-pink flex items-center justify-center text-sm font-bold hover:ring-2 hover:ring-white/30 transition-all"
-                >
-                  {(user.name || user.username).charAt(0).toUpperCase()}
-                </button>
-
-                {isAccountOpen && (
-                  <div className="absolute right-0 mt-2 w-60 bg-dark-800 border border-dark-600 rounded-xl shadow-2xl overflow-hidden animate-fade-in">
-                    <div className="px-4 py-3 border-b border-dark-600">
-                      <p className="text-sm font-semibold text-white truncate">
-                        {user.name || user.username}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        @{user.username}
-                        {user.role === "admin" ? " · Admin" : ""}
-                      </p>
-                    </div>
-
-                    {user.role === "admin" && (
-                      <a
-                        href="admin.html"
-                        target="_self"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
-                      >
-                        <Icon name="film" size={16} />
-                        Admin Dashboard
-                      </a>
-                    )}
-
-                    <button
-                      onClick={() => {
-                        setIsAccountOpen(false);
-                        onSignOut();
-                      }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-accent-red hover:bg-accent-red/10 transition-colors"
-                    >
-                      <Icon name="x" size={16} />
-                      Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <button
-                onClick={onSignIn}
-                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-              >
-                <Icon name="user" size={16} />
-                Sign In
-              </button>
-            )}
-
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
@@ -2609,47 +2537,6 @@ const Navbar = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-dark-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-accent-red/50"
               />
-            </div>
-            <div className="mt-3 px-4">
-              {user ? (
-                <div className="flex flex-col gap-2">
-                  <p className="text-sm text-gray-400">
-                    Signed in as{" "}
-                    <span className="font-semibold text-white">
-                      {user.name || user.username}
-                    </span>
-                  </p>
-                  {user.role === "admin" && (
-                    <a
-                      href="admin.html"
-                      target="_self"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="px-4 py-2.5 rounded-lg bg-white/10 text-sm font-semibold text-white text-center hover:bg-white/20 transition-colors"
-                    >
-                      Admin Dashboard
-                    </a>
-                  )}
-                  <button
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      onSignOut();
-                    }}
-                    className="px-4 py-2.5 rounded-lg bg-accent-red/15 text-sm font-semibold text-accent-red hover:bg-accent-red/25 transition-colors"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    onSignIn();
-                  }}
-                  className="w-full px-4 py-2.5 rounded-lg bg-white/10 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-                >
-                  Sign In
-                </button>
-              )}
             </div>
           </div>
         )}
@@ -3245,13 +3132,6 @@ const Footer = () => (
           <span className="text-sm font-bold text-white">StreamVault</span>
         </div>
         <div className="flex items-center gap-4">
-          <a
-            href="login.html"
-            target="_self"
-            className="text-gray-600 hover:text-gray-300 text-xs transition-colors"
-          >
-            Admin
-          </a>
           <p className="text-gray-600 text-xs">
             © 2024 StreamVault. All rights reserved. This is a demo application.
           </p>
@@ -3260,160 +3140,6 @@ const Footer = () => (
     </div>
   </footer>
 );
-
-// ─── AUTH MODAL ─────────────────────────────────────────────
-const AuthModal = ({ onClose, onSuccess }) => {
-  const [mode, setMode] = useState("signin");
-  const [form, setForm] = useState({ username: "", password: "", name: "" });
-  const [error, setError] = useState("");
-  const isSignIn = mode === "signin";
-
-  const setField = (key) => (event) =>
-    setForm((prev) => ({ ...prev, [key]: event.target.value }));
-
-  const switchMode = (next) => {
-    setMode(next);
-    setError("");
-  };
-
-  const submit = (event) => {
-    event.preventDefault();
-    setError("");
-
-    if (!window.SV_AUTH) {
-      setError("Auth service failed to load. Refresh the page.");
-      return;
-    }
-
-    const result = isSignIn
-      ? SV_AUTH.login(form.username, form.password)
-      : SV_AUTH.register(form.username, form.password, form.name);
-
-    if (!result.ok) {
-      setError(result.error);
-      return;
-    }
-
-    onSuccess(result.user);
-    onClose();
-  };
-
-  const fieldClass =
-    "w-full bg-dark-700 border border-dark-500 rounded-xl px-4 py-2.5 text-sm text-white outline-none focus:border-accent-red focus:ring-2 focus:ring-accent-red/20 transition placeholder-gray-600";
-  const labelClass =
-    "block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1.5";
-
-  return (
-    <div
-      className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <div
-        className="bg-dark-800 border border-dark-600 rounded-2xl w-full max-w-md p-7 animate-scale-in"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <div className="flex items-start justify-between mb-5">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <div className="w-8 h-8 bg-gradient-to-br from-accent-red to-accent-pink rounded-lg flex items-center justify-center">
-                <Icon name="film" size={18} className="text-white" />
-              </div>
-              <span className="text-lg font-bold">
-                Stream<span className="text-accent-red">Vault</span>
-              </span>
-            </div>
-            <p className="text-gray-500 text-sm">
-              {isSignIn
-                ? "Sign in to your account"
-                : "Create an account to get started"}
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-500 hover:text-white hover:bg-dark-700 transition-colors"
-            aria-label="Close"
-          >
-            <Icon name="x" size={18} />
-          </button>
-        </div>
-
-        <div className="grid grid-cols-2 gap-1 p-1 bg-dark-700 rounded-xl mb-5">
-          {[
-            ["signin", "Sign In"],
-            ["register", "Create Account"],
-          ].map(([key, label]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => switchMode(key)}
-              className={`py-2 rounded-lg text-sm font-semibold transition-colors ${mode === key
-                ? "bg-dark-800 text-white shadow"
-                : "text-gray-400 hover:text-white"
-                }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
-        <form onSubmit={submit} className="space-y-4">
-          {!isSignIn && (
-            <div>
-              <label className={labelClass}>Display name</label>
-              <input
-                className={fieldClass}
-                placeholder="Your name"
-                value={form.name}
-                onChange={setField("name")}
-                autoComplete="name"
-              />
-            </div>
-          )}
-
-          <div>
-            <label className={labelClass}>Username</label>
-            <input
-              className={fieldClass}
-              placeholder="Enter your username"
-              value={form.username}
-              onChange={setField("username")}
-              autoComplete="username"
-              required
-            />
-          </div>
-
-          <div>
-            <label className={labelClass}>Password</label>
-            <input
-              type="password"
-              className={fieldClass}
-              placeholder={
-                isSignIn ? "Enter your password" : "At least 6 characters"
-              }
-              value={form.password}
-              onChange={setField("password")}
-              autoComplete={isSignIn ? "current-password" : "new-password"}
-              required
-            />
-          </div>
-
-          {error && (
-            <p className="bg-accent-red/10 border border-accent-red/30 text-accent-red text-sm rounded-xl px-4 py-2.5">
-              {error}
-            </p>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-accent-red hover:bg-red-700 active:scale-[0.98] transition rounded-xl py-3 font-semibold text-sm shadow-lg shadow-accent-red/20"
-          >
-            {isSignIn ? "Sign In" : "Create Account"}
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-};
 
 // ─── MAIN APP ───────────────────────────────────────────────
 const App = () => {
@@ -3424,10 +3150,6 @@ const App = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [playingMovie, setPlayingMovie] = useState(null);
   const [movies, setMovies] = useState(() => moviesData);
-  const [user, setUser] = useState(() =>
-    window.SV_AUTH ? window.SV_AUTH.getUser() : null,
-  );
-  const [authOpen, setAuthOpen] = useState(false);
   const [watchlist, setWatchlist] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("watchlist")) || [];
@@ -3446,13 +3168,7 @@ const App = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Keep the auth state in sync with login/logout from other tabs.
-  useEffect(() => {
-    if (!window.SV_AUTH) return;
-    return window.SV_AUTH.onChange(setUser);
-  }, []);
-
-  // Pick up movie changes made in the admin dashboard (other tab/window).
+  // Pick up movie changes made in another tab/window.
   useEffect(() => {
     const syncMovies = () => {
       try {
@@ -3472,11 +3188,6 @@ const App = () => {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener("focus", syncMovies);
     };
-  }, []);
-
-  const handleSignOut = useCallback(() => {
-    if (window.SV_AUTH) window.SV_AUTH.logout();
-    setUser(null);
   }, []);
 
   const toggleWatchlist = useCallback((id) => {
@@ -3570,9 +3281,6 @@ const App = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         scrollY={scrollY}
-        user={user}
-        onSignIn={() => setAuthOpen(true)}
-        onSignOut={handleSignOut}
       />
 
       {activeTab === "home" && !searchQuery && (
@@ -3732,12 +3440,6 @@ const App = () => {
         <VideoPlayer movie={playingMovie} onClose={handleClosePlayer} />
       )}
 
-      {authOpen && (
-        <AuthModal
-          onClose={() => setAuthOpen(false)}
-          onSuccess={(nextUser) => setUser(nextUser)}
-        />
-      )}
     </div>
   );
 };
