@@ -42,10 +42,20 @@ const encodeVideo = (url) => {
   return trimmed;
 };
 
+// Same signature as in app.js, so both pages agree on when the bundled movie
+// data changed and the cached list needs to be merged with it.
+const baseSignature = (base) => {
+  const raw = JSON.stringify(base);
+  let hash = 5381;
+  for (let i = 0; i < raw.length; i++) {
+    hash = ((hash << 5) + hash + raw.charCodeAt(i)) | 0;
+  }
+  return base.length + "." + (hash >>> 0).toString(36);
+};
+
 async function loadMovies() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    if (Array.isArray(stored) && stored.length) return stored;
 
     const src = await (await fetch("app.js")).text();
     const start = src.indexOf("const _baseMoviesData = [");
@@ -57,11 +67,47 @@ async function loadMovies() {
         );
         const base = extract();
         if (Array.isArray(base) && base.length) {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(base));
-          return base;
+          const signature = baseSignature(base);
+          const storedSignature = localStorage.getItem("sv_movies_signature");
+
+          if (!Array.isArray(stored) || !stored.length) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(base));
+            localStorage.setItem("sv_movies_signature", signature);
+            return base;
+          }
+
+          if (storedSignature !== signature) {
+            const storedById = {};
+            stored.forEach((movie) => {
+              if (movie && movie.id != null) storedById[String(movie.id)] = movie;
+            });
+            const baseIds = {};
+            base.forEach((movie) => {
+              baseIds[String(movie.id)] = true;
+            });
+
+            const merged = base.map((movie) => {
+              const previous = storedById[String(movie.id)];
+              return previous ? Object.assign({}, previous, movie) : movie;
+            });
+            stored.forEach((movie) => {
+              if (movie && movie.id != null && !baseIds[String(movie.id)]) {
+                merged.push(movie);
+              }
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+            localStorage.setItem("sv_movies_signature", signature);
+            return merged;
+          }
         }
       }
     }
+  } catch (e) {}
+
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if (Array.isArray(stored) && stored.length) return stored;
   } catch (e) {}
   return [];
 }

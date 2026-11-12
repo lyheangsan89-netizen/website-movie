@@ -60,29 +60,34 @@ var encodeVideo = function encodeVideo(url) {
   // Already Base64 (or another format) — keep it as entered.
   return trimmed;
 };
+
+// Same signature as in app.js, so both pages agree on when the bundled movie
+// data changed and the cached list needs to be merged with it.
+var baseSignature = function baseSignature(base) {
+  var raw = JSON.stringify(base);
+  var hash = 5381;
+  for (var i = 0; i < raw.length; i++) {
+    hash = (hash << 5) + hash + raw.charCodeAt(i) | 0;
+  }
+  return base.length + "." + (hash >>> 0).toString(36);
+};
 function loadMovies() {
   return _loadMovies.apply(this, arguments);
 }
 function _loadMovies() {
   _loadMovies = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-    var stored, src, start, end, extract, base, _t;
+    var stored, src, start, end, extract, base, signature, storedSignature, storedById, baseIds, merged, _stored, _t, _t2;
     return _regenerator().w(function (_context) {
       while (1) switch (_context.p = _context.n) {
         case 0:
           _context.p = 0;
           stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-          if (!(Array.isArray(stored) && stored.length)) {
-            _context.n = 1;
-            break;
-          }
-          return _context.a(2, stored);
+          _context.n = 1;
+          return fetch("app.js");
         case 1:
           _context.n = 2;
-          return fetch("app.js");
-        case 2:
-          _context.n = 3;
           return _context.v.text();
-        case 3:
+        case 2:
           src = _context.v;
           start = src.indexOf("const _baseMoviesData = [");
           if (!(start !== -1)) {
@@ -100,8 +105,40 @@ function _loadMovies() {
             _context.n = 4;
             break;
           }
+          signature = baseSignature(base);
+          storedSignature = localStorage.getItem("sv_movies_signature");
+          if (!(!Array.isArray(stored) || !stored.length)) {
+            _context.n = 3;
+            break;
+          }
           localStorage.setItem(STORAGE_KEY, JSON.stringify(base));
+          localStorage.setItem("sv_movies_signature", signature);
           return _context.a(2, base);
+        case 3:
+          if (!(storedSignature !== signature)) {
+            _context.n = 4;
+            break;
+          }
+          storedById = {};
+          stored.forEach(function (movie) {
+            if (movie && movie.id != null) storedById[String(movie.id)] = movie;
+          });
+          baseIds = {};
+          base.forEach(function (movie) {
+            baseIds[String(movie.id)] = true;
+          });
+          merged = base.map(function (movie) {
+            var previous = storedById[String(movie.id)];
+            return previous ? Object.assign({}, previous, movie) : movie;
+          });
+          stored.forEach(function (movie) {
+            if (movie && movie.id != null && !baseIds[String(movie.id)]) {
+              merged.push(movie);
+            }
+          });
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+          localStorage.setItem("sv_movies_signature", signature);
+          return _context.a(2, merged);
         case 4:
           _context.n = 6;
           break;
@@ -109,9 +146,23 @@ function _loadMovies() {
           _context.p = 5;
           _t = _context.v;
         case 6:
+          _context.p = 6;
+          _stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          if (!(Array.isArray(_stored) && _stored.length)) {
+            _context.n = 7;
+            break;
+          }
+          return _context.a(2, _stored);
+        case 7:
+          _context.n = 9;
+          break;
+        case 8:
+          _context.p = 8;
+          _t2 = _context.v;
+        case 9:
           return _context.a(2, []);
       }
-    }, _callee, null, [[0, 5]]);
+    }, _callee, null, [[6, 8], [0, 5]]);
   }));
   return _loadMovies.apply(this, arguments);
 }

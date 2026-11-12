@@ -1265,13 +1265,56 @@ const _baseMoviesData = [
 
 ];
 
+// The list is cached in localStorage so the admin panel can edit it. A browser
+// that visited before a movie was added would otherwise keep the old list
+// forever, so compare a signature of the bundled data and merge in changes
+// (new movies, updated posters/video links) while keeping admin-added movies.
+const _baseMoviesSignature = (() => {
+  const raw = JSON.stringify(_baseMoviesData);
+  let hash = 5381;
+  for (let i = 0; i < raw.length; i++) {
+    hash = ((hash << 5) + hash + raw.charCodeAt(i)) | 0;
+  }
+  return _baseMoviesData.length + "." + (hash >>> 0).toString(36);
+})();
+
 let moviesData = _baseMoviesData;
 try {
   const stored = JSON.parse(localStorage.getItem("sv_movies") || "null");
-  if (Array.isArray(stored) && stored.length) {
-    moviesData = stored;
-  } else {
+  const storedSignature = localStorage.getItem("sv_movies_signature");
+
+  if (!Array.isArray(stored) || !stored.length) {
     localStorage.setItem("sv_movies", JSON.stringify(_baseMoviesData));
+    localStorage.setItem("sv_movies_signature", _baseMoviesSignature);
+  } else if (storedSignature !== _baseMoviesSignature) {
+    const storedById = {};
+    stored.forEach((movie) => {
+      if (movie && movie.id != null) storedById[String(movie.id)] = movie;
+    });
+    const baseIds = {};
+    _baseMoviesData.forEach((movie) => {
+      baseIds[String(movie.id)] = true;
+    });
+
+    // Bundled data wins for movies it knows about, so new movies and fixed
+    // links appear without clearing localStorage.
+    const merged = _baseMoviesData.map((movie) => {
+      const previous = storedById[String(movie.id)];
+      return previous ? Object.assign({}, previous, movie) : movie;
+    });
+
+    // Keep movies added through the admin panel that are not in the bundle.
+    stored.forEach((movie) => {
+      if (movie && movie.id != null && !baseIds[String(movie.id)]) {
+        merged.push(movie);
+      }
+    });
+
+    moviesData = merged;
+    localStorage.setItem("sv_movies", JSON.stringify(merged));
+    localStorage.setItem("sv_movies_signature", _baseMoviesSignature);
+  } else {
+    moviesData = stored;
   }
 } catch (e) { }
 

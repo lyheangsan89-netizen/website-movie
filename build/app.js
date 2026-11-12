@@ -957,13 +957,54 @@ var _baseMoviesData = [{
   "category": "Fantasy",
   "video": "https://dash-hls-bridge.johndoesdmc.workers.dev/?url=https%3A%2F%2Fsacdn.hakunaymatata.com%2Fdash%2F6935099432833090776_0_0_1080_h265_589%2Fv2.m3u8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zYWNkbi5oYWt1bmF5bWF0YXRhLmNvbS9kYXNoLzY5MzUwOTk0MzI4MzMwOTA3NzZfMF8wXzEwODBfaDI2NV81ODkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NTA5NDIwOX19fV19&Signature=0T37wrsGkoqRJGRFADkP7dQCklqrrMuAz60nZWDBQstzz2e~L9ruPMiogzCWVu5bEE2uVdqSJrREcT0G-9UVP0~3jqWc7PU6c8uXFU3Z0mSpheGs54jVb7ZA-q3Sa55ycuDB-OO3kZ4W7hU1hvwmkWxZjyddc9uR2MKE-kotpCABkz8r2PHeoAJkPRuRnrt~c~7Bdpe3CeZpPYoBjOApp-t7mM0~MIcvU-DrebgRNhkvJL-5hat4cbziDKUJZete6k8f6YEIXSzWY~tU~mukW9AZImffTQzVqzDwxhsxx5rciXiJ1PEIKYHxhvx0U0zlfsiarp~AfWy5nv08PLwWHg__&Key-Pair-Id=KMHN1LQ1HEUPL"
 }];
+
+// The list is cached in localStorage so the admin panel can edit it. A browser
+// that visited before a movie was added would otherwise keep the old list
+// forever, so compare a signature of the bundled data and merge in changes
+// (new movies, updated posters/video links) while keeping admin-added movies.
+var _baseMoviesSignature = function () {
+  var raw = JSON.stringify(_baseMoviesData);
+  var hash = 5381;
+  for (var i = 0; i < raw.length; i++) {
+    hash = (hash << 5) + hash + raw.charCodeAt(i) | 0;
+  }
+  return _baseMoviesData.length + "." + (hash >>> 0).toString(36);
+}();
 var moviesData = _baseMoviesData;
 try {
   var stored = JSON.parse(localStorage.getItem("sv_movies") || "null");
-  if (Array.isArray(stored) && stored.length) {
-    moviesData = stored;
-  } else {
+  var storedSignature = localStorage.getItem("sv_movies_signature");
+  if (!Array.isArray(stored) || !stored.length) {
     localStorage.setItem("sv_movies", JSON.stringify(_baseMoviesData));
+    localStorage.setItem("sv_movies_signature", _baseMoviesSignature);
+  } else if (storedSignature !== _baseMoviesSignature) {
+    var storedById = {};
+    stored.forEach(function (movie) {
+      if (movie && movie.id != null) storedById[String(movie.id)] = movie;
+    });
+    var baseIds = {};
+    _baseMoviesData.forEach(function (movie) {
+      baseIds[String(movie.id)] = true;
+    });
+
+    // Bundled data wins for movies it knows about, so new movies and fixed
+    // links appear without clearing localStorage.
+    var merged = _baseMoviesData.map(function (movie) {
+      var previous = storedById[String(movie.id)];
+      return previous ? Object.assign({}, previous, movie) : movie;
+    });
+
+    // Keep movies added through the admin panel that are not in the bundle.
+    stored.forEach(function (movie) {
+      if (movie && movie.id != null && !baseIds[String(movie.id)]) {
+        merged.push(movie);
+      }
+    });
+    moviesData = merged;
+    localStorage.setItem("sv_movies", JSON.stringify(merged));
+    localStorage.setItem("sv_movies_signature", _baseMoviesSignature);
+  } else {
+    moviesData = stored;
   }
 } catch (e) {}
 var genres = ["All", "Action", "Sci-Fi", "Drama", "Thriller", "Horror", "Comedy", "Romance", "Crime"];
