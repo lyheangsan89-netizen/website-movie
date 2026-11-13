@@ -1260,7 +1260,7 @@ const _baseMoviesData = [
     "popular": true,
     "topRated": true,
     "category": "Fantasy",
-    "video": "https://dash-hls-bridge.johndoesdmc.workers.dev/?url=https%3A%2F%2Fsacdn.hakunaymatata.com%2Fdash%2F6935099432833090776_0_0_1080_h265_589%2Fv2.m3u8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zYWNkbi5oYWt1bmF5bWF0YXRhLmNvbS9kYXNoLzY5MzUwOTk0MzI4MzMwOTA3NzZfMF8wXzEwODBfaDI2NV81ODkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NTA5NDIwOX19fV19&Signature=0T37wrsGkoqRJGRFADkP7dQCklqrrMuAz60nZWDBQstzz2e~L9ruPMiogzCWVu5bEE2uVdqSJrREcT0G-9UVP0~3jqWc7PU6c8uXFU3Z0mSpheGs54jVb7ZA-q3Sa55ycuDB-OO3kZ4W7hU1hvwmkWxZjyddc9uR2MKE-kotpCABkz8r2PHeoAJkPRuRnrt~c~7Bdpe3CeZpPYoBjOApp-t7mM0~MIcvU-DrebgRNhkvJL-5hat4cbziDKUJZete6k8f6YEIXSzWY~tU~mukW9AZImffTQzVqzDwxhsxx5rciXiJ1PEIKYHxhvx0U0zlfsiarp~AfWy5nv08PLwWHg__&Key-Pair-Id=KMHN1LQ1HEUPL"
+    "video": "https://prism.surrealviews.com/api?d=3eiTUPCaKsgvNe3FqKxEbDHd4RB4lJUdgES2E4XZIR22QQZmqn0hFi3dWn5hwtTVI-vPDgXCbtx5QIKHhGr_tMG-iKwsLvz9bBBDX29SFnimjpfqcJcaQFTXtl5goowP6PHTMbQlyzZiXAGea26Ya_4RbFd54x3YZe1_J6mHfS4hTgQd9Gc40caamMAZtTJh&token=p2.sGGvySnxJz2giVyTYi0t3gu89q_SVtNrVn4HRwmbWJDhlQrJiucCyrPcvmLjJ1ybSrfuRaqGM4f6w6NZaVc3aTmKZ9eAPdCMSMOiSl59ZkpAiOExUhzMrKl-qEcUkodyRwPKXngnF7IU7pVU3_pY9DB_XOAQMRkmxg92ALA&sp=bc&vh=pl&vt=1794506400000.4290203fbf2b2333db07b4ad"
   }
 
 ];
@@ -1834,6 +1834,8 @@ const VideoPlayer = ({ movie, onClose }) => {
   const playerBoxRef = useRef(null);
   const progressBarRef = useRef(null);
   const idleTimerRef = useRef(null);
+  const centerTimerRef = useRef(null);
+  const skipTimerRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
@@ -1848,6 +1850,9 @@ const VideoPlayer = ({ movie, onClose }) => {
   const [isPseudoFullscreen, setIsPseudoFullscreen] = useState(false);
   const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
   const [playbackError, setPlaybackError] = useState("");
+  const [isScrubbing, setIsScrubbing] = useState(false);
+  const [centerPulse, setCenterPulse] = useState(false);
+  const [centerSkip, setCenterSkip] = useState(0);
 
   const isIOS = useMemo(() => {
     if (typeof navigator === "undefined") return false;
@@ -2111,20 +2116,68 @@ const VideoPlayer = ({ movie, onClose }) => {
     return () => window.removeEventListener("keydown", handleKey);
   }, [isPlaying, isMuted, isPseudoFullscreen]);
 
+  // Briefly show the big centre icon so every play/skip tap has feedback.
+  const pulseCenter = () => {
+    setCenterPulse(true);
+    clearTimeout(centerTimerRef.current);
+    centerTimerRef.current = setTimeout(() => setCenterPulse(false), 620);
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(centerTimerRef.current);
+      clearTimeout(skipTimerRef.current);
+    },
+    [],
+  );
+
   const togglePlay = () => {
     if (!videoRef.current) return;
+    setCenterSkip(0);
+    pulseCenter();
     if (videoRef.current.paused) {
       videoRef.current.play();
       setIsPlaying(true);
     } else {
       videoRef.current.pause();
       setIsPlaying(false);
+      setIsLoading(false);
       setShowControls(true);
     }
   };
 
   const skipTime = (amt) => {
-    if (videoRef.current) videoRef.current.currentTime += amt;
+    const video = videoRef.current;
+    if (!video) return;
+    const limit = video.duration || 0;
+    video.currentTime = Math.max(0, Math.min(limit, video.currentTime + amt));
+    pulseCenter();
+    setCenterSkip(amt);
+    clearTimeout(skipTimerRef.current);
+    skipTimerRef.current = setTimeout(() => setCenterSkip(0), 720);
+  };
+
+  // Seek by pointer position; used by click and by dragging the scrubber.
+  const seekToClientX = (clientX) => {
+    const bar = progressBarRef.current;
+    const video = videoRef.current;
+    if (!bar || !video) return;
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min((clientX - rect.left) / rect.width, 1));
+    const target = ratio * (video.duration || duration || 0);
+    if (isFinite(target)) {
+      video.currentTime = target;
+      setCurrentTime(target);
+    }
+  };
+
+  const updateHover = (clientX) => {
+    const bar = progressBarRef.current;
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min((clientX - rect.left) / rect.width, 1));
+    setHoverPos(clientX - rect.left);
+    setHoverTime(ratio * (duration || 0));
   };
 
   const toggleMute = () => {
@@ -2196,13 +2249,6 @@ const VideoPlayer = ({ movie, onClose }) => {
     }
   };
 
-  const handleSeek = (e) => {
-    if (!progressBarRef.current || !videoRef.current) return;
-    const rect = progressBarRef.current.getBoundingClientRect();
-    const percent = Math.max(0, Math.min((e.clientX - rect.left) / rect.width, 1));
-    videoRef.current.currentTime = percent * duration;
-  };
-
   const formatTime = (time) => {
     if (isNaN(time) || time === null) return "0:00";
     const m = Math.floor((time % 3600) / 60);
@@ -2216,43 +2262,43 @@ const VideoPlayer = ({ movie, onClose }) => {
   const bufferedPercent = duration ? (buffered / duration) * 100 : 0;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6" onClick={onClose}>
-      {/* Picture 1 Floating Close Button */}
-      <button
-        onClick={onClose}
-        className="fixed top-5 right-5 z-[210] w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center transition-all"
-        title="Close (Esc)"
-      >
-        <Icon name="x" size={22} />
-      </button>
-
-      {/* Picture 1 Centered Window Wrapper */}
-      <div className="relative w-full max-w-5xl flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="ap-stage fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+      style={{ "--ap-poster": `url("${movie.backdrop}")` }}
+      onClick={onClose}
+    >
+      <div className="ap-stage-art" aria-hidden="true" />
+      {/* Centered player window */}
+      <div className="ap-player-shell relative w-full max-w-5xl flex flex-col items-center" onClick={(e) => e.stopPropagation()}>
         {/* 16:9 Video Box */}
         <div
           ref={playerBoxRef}
-          className={`nflx-modal-box relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl ${!showControls && isPlaying ? "hide-cursor" : ""} ${isPseudoFullscreen ? "nflx-pseudo-fullscreen" : ""}`}
+          className={`nflx-modal-box ap-player relative w-full aspect-video bg-black overflow-hidden ${!showControls && isPlaying ? "hide-cursor" : ""} ${isPseudoFullscreen ? "nflx-pseudo-fullscreen" : ""}`}
           onMouseMove={wakeControls}
         >
-          {/* Loading Spinner */}
+          {/* Loading */}
           {isLoading && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20 gap-3 pointer-events-none">
-              <div className="w-12 h-12 border-4 border-white/10 border-t-[#e50914] rounded-full animate-spin" />
-              <span className="text-xs text-gray-400 font-medium">Loading video…</span>
+            <div className="ap-loading">
+              <span className="ap-spinner" aria-hidden="true" />
+              <span className="ap-loading-text">Loading</span>
             </div>
           )}
 
           {playbackError && (
-            <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/95 px-6 text-center">
-              <p className="text-sm text-gray-300 max-w-md">{playbackError}</p>
-              <a
-                href={videoInfo.src}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-semibold text-white transition-colors"
-              >
-                Open video directly
-              </a>
+            <div className="ap-error">
+              <div className="ap-error-card">
+                <p>{playbackError}</p>
+                {videoInfo.src && (
+                  <a
+                    href={videoInfo.src}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ap-error-link"
+                  >
+                    Open video directly
+                  </a>
+                )}
+              </div>
             </div>
           )}
 
@@ -2278,7 +2324,9 @@ const VideoPlayer = ({ movie, onClose }) => {
                   setIsLoading(false);
                 }}
                 onCanPlay={() => setIsLoading(false)}
-                onWaiting={() => setIsLoading(true)}
+                onWaiting={() => {
+                  if (videoRef.current && !videoRef.current.paused) setIsLoading(true);
+                }}
                 onPlaying={() => setIsLoading(false)}
                 onEnded={() => {
                   setIsPlaying(false);
@@ -2306,112 +2354,259 @@ const VideoPlayer = ({ movie, onClose }) => {
             )}
           </div>
 
-          {/* Custom Netflix Controls inside the box */}
+          {/* Top bar */}
+          <div
+            className={`ap-top ${showControls || !isVideo ? "is-visible" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={onClose}
+              className="ap-close"
+              aria-label="Close player"
+              title="Close (Esc)"
+            >
+              <Icon name="x" size={18} />
+            </button>
+            <div className="ap-heading">
+              <p className="ap-heading-title">{movie.title}</p>
+              <p className="ap-heading-meta">
+                {movie.year}
+                {movie.genre ? ` · ${movie.genre}` : ""}
+                {movie.runtime ? ` · ${movie.runtime}` : ""}
+              </p>
+            </div>
+          </div>
+
+          {/* Centre state icon */}
           {isVideo && (
             <div
-              className={`nflx-bottom-controls ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+              className={`ap-center ${centerPulse || centerSkip || (!isLoading && !isPlaying) ? "is-visible" : ""}`}
+              aria-hidden="true"
+            >
+              <div className="ap-center-disc">
+                <span className="ap-center-ring" />
+                {centerSkip !== 0 ? (
+                  <span className="ap-center-skip">{centerSkip < 0 ? "−10s" : "+10s"}</span>
+                ) : isPlaying ? (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1.5" />
+                    <rect x="14" y="4" width="4" height="16" rx="1.5" />
+                  </svg>
+                ) : (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M7.4 5.2v13.6a1 1 0 0 0 1.54.84l10.6-6.8a1 1 0 0 0 0-1.68L8.94 4.36A1 1 0 0 0 7.4 5.2Z" />
+                  </svg>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Glass control tray */}
+          {isVideo && (
+            <div
+              className={`ap-tray ${showControls ? "is-visible" : ""}`}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Row 1: Red Scrubber */}
               <div
                 ref={progressBarRef}
-                className="nflx-timeline-wrap"
-                onClick={handleSeek}
-                onMouseMove={(e) => {
-                  const rect = progressBarRef.current.getBoundingClientRect();
-                  setHoverPos(e.clientX - rect.left);
-                  setHoverTime(((e.clientX - rect.left) / rect.width) * duration);
+                className={`ap-scrub ${isScrubbing ? "is-scrubbing" : ""}`}
+                role="slider"
+                tabIndex={0}
+                aria-label="Seek"
+                aria-valuemin={0}
+                aria-valuemax={Math.round(duration) || 0}
+                aria-valuenow={Math.round(currentTime) || 0}
+                onPointerDown={(e) => {
+                  setIsScrubbing(true);
+                  if (e.currentTarget.setPointerCapture) {
+                    try {
+                      e.currentTarget.setPointerCapture(e.pointerId);
+                    } catch (err) { }
+                  }
+                  seekToClientX(e.clientX);
                 }}
-                onMouseLeave={() => setHoverTime(null)}
+                onPointerMove={(e) => {
+                  updateHover(e.clientX);
+                  if (isScrubbing) seekToClientX(e.clientX);
+                }}
+                onPointerUp={() => setIsScrubbing(false)}
+                onPointerCancel={() => setIsScrubbing(false)}
+                onPointerLeave={() => {
+                  setHoverTime(null);
+                  setIsScrubbing(false);
+                }}
+                onClick={(e) => seekToClientX(e.clientX)}
               >
-                {hoverTime !== null && (
-                  <div className="nflx-scrub-tooltip" style={{ left: `${hoverPos}px` }}>
-                    {formatTime(hoverTime)}
-                  </div>
+                {hoverTime !== null && duration > 0 && (
+                  <>
+                    <div className="ap-tip" style={{ left: `${hoverPos}px` }}>
+                      {formatTime(hoverTime)}
+                    </div>
+                    <div className="ap-ghost" style={{ left: `${hoverPos}px` }} />
+                  </>
                 )}
-                <div className="nflx-timeline-rail">
-                  <div className="nflx-timeline-buffered" style={{ width: `${bufferedPercent}%` }} />
-                  <div className="nflx-timeline-played" style={{ width: `${progressPercent}%` }} />
-                  <div className="nflx-timeline-thumb" style={{ left: `${progressPercent}%` }} />
+                <div className="ap-rail">
+                  <div className="ap-buffer" style={{ width: `${bufferedPercent}%` }} />
+                  <div className="ap-played" style={{ width: `${progressPercent}%` }} />
+                  <div className="ap-thumb" style={{ left: `${progressPercent}%` }} />
                 </div>
               </div>
 
-              {/* Row 2: Actions */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <button onClick={togglePlay} className="nflx-btn">
+              <div className="ap-row">
+                <div className="ap-cluster ap-cluster-left">
+                  <button
+                    onClick={togglePlay}
+                    className="ap-btn ap-btn-primary"
+                    aria-label={isPlaying ? "Pause" : "Play"}
+                    title={isPlaying ? "Pause (Space)" : "Play (Space)"}
+                  >
                     {isPlaying ? (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1.5" />
+                        <rect x="14" y="4" width="4" height="16" rx="1.5" />
+                      </svg>
                     ) : (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7.4 5.2v13.6a1 1 0 0 0 1.54.84l10.6-6.8a1 1 0 0 0 0-1.68L8.94 4.36A1 1 0 0 0 7.4 5.2Z" />
+                      </svg>
                     )}
                   </button>
 
-                  <button onClick={() => skipTime(-10)} className="nflx-btn nflx-btn-badge" title="Rewind 10s">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10" /></svg>
-                    <span className="nflx-badge-text">10</span>
+                  <button
+                    onClick={() => skipTime(-10)}
+                    className="ap-btn ap-btn-skip"
+                    aria-label="Back 10 seconds"
+                    title="Back 10 seconds (←)"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M3.5 4.5v5.5H9" />
+                      <path d="M3.9 13.2a8.2 8.2 0 1 0 2.1-8.3L3.5 10" />
+                    </svg>
+                    <span>10</span>
                   </button>
 
-                  <button onClick={() => skipTime(10)} className="nflx-btn nflx-btn-badge" title="Forward 10s">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 4v6h-6M20.49 15a9 9 0 1 1-2.12-9.36L23 10" /></svg>
-                    <span className="nflx-badge-text">10</span>
+                  <button
+                    onClick={() => skipTime(10)}
+                    className="ap-btn ap-btn-skip"
+                    aria-label="Forward 10 seconds"
+                    title="Forward 10 seconds (→)"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20.5 4.5v5.5H15" />
+                      <path d="M20.1 13.2a8.2 8.2 0 1 1-2.1-8.3L20.5 10" />
+                    </svg>
+                    <span>10</span>
                   </button>
+                </div>
 
-                  <div className="nflx-volume-group">
-                    <button onClick={toggleMute} className="nflx-btn">
+                <div className="ap-time" aria-hidden="true">
+                  <span className="ap-time-now">{formatTime(currentTime)}</span>
+                  <span className="ap-time-sep">/</span>
+                  <span className="ap-time-dur">{formatTime(duration)}</span>
+                </div>
+
+                <div className="ap-cluster ap-cluster-right">
+                  <div className="ap-volume">
+                    <button
+                      onClick={toggleMute}
+                      className="ap-btn"
+                      aria-label={isMuted ? "Unmute" : "Mute"}
+                      title={isMuted ? "Unmute (m)" : "Mute (m)"}
+                    >
                       {isMuted ? (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="1" y1="1" x2="23" y2="23" /><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6" /></svg>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+                          <line x1="22" y1="9" x2="16" y2="15" />
+                          <line x1="16" y1="9" x2="22" y2="15" />
+                        </svg>
                       ) : (
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" /></svg>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.7"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M11 5 6 9H2v6h4l5 4V5Z" />
+                          <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                          <path d="M18.5 5.5a9 9 0 0 1 0 13" />
+                        </svg>
                       )}
                     </button>
-                    <div className="nflx-slider-container">
+                    <div className="ap-volume-slide">
                       <input
                         type="range"
                         min="0"
                         max="1"
                         step="0.05"
                         value={isMuted ? 0 : volume}
+                        aria-label="Volume"
+                        className="ap-volume-range"
+                        style={{ "--vol": `${(isMuted ? 0 : volume) * 100}%` }}
                         onChange={(e) => {
                           const val = parseFloat(e.target.value);
                           setVolume(val);
                           videoRef.current.volume = val;
                           setIsMuted(val === 0);
                         }}
-                        className="nflx-volume-range"
                       />
                     </div>
                   </div>
 
-                  <span className="nflx-time-text">{formatTime(currentTime)} / {formatTime(duration)}</span>
+                  <button
+                    onClick={toggleFullscreen}
+                    className="ap-btn"
+                    aria-label="Fullscreen"
+                    title={
+                      isNativeFullscreen || isPseudoFullscreen
+                        ? "Exit fullscreen (f)"
+                        : "Fullscreen (f)"
+                    }
+                  >
+                    <Icon
+                      name={
+                        isNativeFullscreen || isPseudoFullscreen
+                          ? "fullscreenExit"
+                          : "fullscreen"
+                      }
+                      size={20}
+                    />
+                  </button>
                 </div>
-
-                <button
-                  onClick={toggleFullscreen}
-                  className="nflx-btn"
-                  title={isNativeFullscreen || isPseudoFullscreen ? "Exit fullscreen" : "Fullscreen"}
-                >
-                  <Icon name={isNativeFullscreen || isPseudoFullscreen ? "fullscreenExit" : "fullscreen"} size={22} />
-                </button>
               </div>
             </div>
           )}
         </div>
-
-        {/* Picture 1 Bottom Info Text */}
-        {!isPseudoFullscreen && (
-          <div className="mt-4 px-1 w-full">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-red-500 font-bold">Now playing</span>
-              <span className="h-1 w-1 rounded-full bg-gray-600" />
-              <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500">StreamVault</span>
-            </div>
-            <h3 className="text-lg sm:text-2xl font-bold text-white truncate">{movie.title}</h3>
-            <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
-              {movie.year} &middot; {movie.genre} &middot; {movie.runtime}
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );

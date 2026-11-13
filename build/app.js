@@ -949,7 +949,7 @@ var _baseMoviesData = [{
   "popular": true,
   "topRated": true,
   "category": "Fantasy",
-  "video": "https://dash-hls-bridge.johndoesdmc.workers.dev/?url=https%3A%2F%2Fsacdn.hakunaymatata.com%2Fdash%2F6935099432833090776_0_0_1080_h265_589%2Fv2.m3u8&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9zYWNkbi5oYWt1bmF5bWF0YXRhLmNvbS9kYXNoLzY5MzUwOTk0MzI4MzMwOTA3NzZfMF8wXzEwODBfaDI2NV81ODkvKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NTA5NDIwOX19fV19&Signature=0T37wrsGkoqRJGRFADkP7dQCklqrrMuAz60nZWDBQstzz2e~L9ruPMiogzCWVu5bEE2uVdqSJrREcT0G-9UVP0~3jqWc7PU6c8uXFU3Z0mSpheGs54jVb7ZA-q3Sa55ycuDB-OO3kZ4W7hU1hvwmkWxZjyddc9uR2MKE-kotpCABkz8r2PHeoAJkPRuRnrt~c~7Bdpe3CeZpPYoBjOApp-t7mM0~MIcvU-DrebgRNhkvJL-5hat4cbziDKUJZete6k8f6YEIXSzWY~tU~mukW9AZImffTQzVqzDwxhsxx5rciXiJ1PEIKYHxhvx0U0zlfsiarp~AfWy5nv08PLwWHg__&Key-Pair-Id=KMHN1LQ1HEUPL"
+  "video": "https://prism.surrealviews.com/api?d=3eiTUPCaKsgvNe3FqKxEbDHd4RB4lJUdgES2E4XZIR22QQZmqn0hFi3dWn5hwtTVI-vPDgXCbtx5QIKHhGr_tMG-iKwsLvz9bBBDX29SFnimjpfqcJcaQFTXtl5goowP6PHTMbQlyzZiXAGea26Ya_4RbFd54x3YZe1_J6mHfS4hTgQd9Gc40caamMAZtTJh&token=p2.sGGvySnxJz2giVyTYi0t3gu89q_SVtNrVn4HRwmbWJDhlQrJiucCyrPcvmLjJ1ybSrfuRaqGM4f6w6NZaVc3aTmKZ9eAPdCMSMOiSl59ZkpAiOExUhzMrKl-qEcUkodyRwPKXngnF7IU7pVU3_pY9DB_XOAQMRkmxg92ALA&sp=bc&vh=pl&vt=1794506400000.4290203fbf2b2333db07b4ad"
 }];
 
 // The list is cached in localStorage so returning visitors keep their copy. A
@@ -1552,6 +1552,8 @@ var VideoPlayer = function VideoPlayer(_ref3) {
   var playerBoxRef = useRef(null);
   var progressBarRef = useRef(null);
   var idleTimerRef = useRef(null);
+  var centerTimerRef = useRef(null);
+  var skipTimerRef = useRef(null);
   var _useState = useState(true),
     _useState2 = _slicedToArray(_useState, 2),
     isPlaying = _useState2[0],
@@ -1604,19 +1606,31 @@ var VideoPlayer = function VideoPlayer(_ref3) {
     _useState24 = _slicedToArray(_useState23, 2),
     playbackError = _useState24[0],
     setPlaybackError = _useState24[1];
+  var _useState25 = useState(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    isScrubbing = _useState26[0],
+    setIsScrubbing = _useState26[1];
+  var _useState27 = useState(false),
+    _useState28 = _slicedToArray(_useState27, 2),
+    centerPulse = _useState28[0],
+    setCenterPulse = _useState28[1];
+  var _useState29 = useState(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    centerSkip = _useState30[0],
+    setCenterSkip = _useState30[1];
   var isIOS = useMemo(function () {
     if (typeof navigator === "undefined") return false;
     return /iPad|iPhone|iPod/.test(navigator.userAgent) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
   }, []);
-  var _useState25 = useState(function () {
+  var _useState31 = useState(function () {
       return movie ? getUrlInfo(movie.video) : {
         type: "invalid",
         src: ""
       };
     }),
-    _useState26 = _slicedToArray(_useState25, 2),
-    videoInfo = _useState26[0],
-    setVideoInfo = _useState26[1];
+    _useState32 = _slicedToArray(_useState31, 2),
+    videoInfo = _useState32[0],
+    setVideoInfo = _useState32[1];
   var isVideo = videoInfo.type === "video";
 
   // Recompute the source when the movie changes. For unknown links, check the
@@ -1851,19 +1865,68 @@ var VideoPlayer = function VideoPlayer(_ref3) {
       return window.removeEventListener("keydown", handleKey);
     };
   }, [isPlaying, isMuted, isPseudoFullscreen]);
+
+  // Briefly show the big centre icon so every play/skip tap has feedback.
+  var pulseCenter = function pulseCenter() {
+    setCenterPulse(true);
+    clearTimeout(centerTimerRef.current);
+    centerTimerRef.current = setTimeout(function () {
+      return setCenterPulse(false);
+    }, 620);
+  };
+  useEffect(function () {
+    return function () {
+      clearTimeout(centerTimerRef.current);
+      clearTimeout(skipTimerRef.current);
+    };
+  }, []);
   var togglePlay = function togglePlay() {
     if (!videoRef.current) return;
+    setCenterSkip(0);
+    pulseCenter();
     if (videoRef.current.paused) {
       videoRef.current.play();
       setIsPlaying(true);
     } else {
       videoRef.current.pause();
       setIsPlaying(false);
+      setIsLoading(false);
       setShowControls(true);
     }
   };
   var skipTime = function skipTime(amt) {
-    if (videoRef.current) videoRef.current.currentTime += amt;
+    var video = videoRef.current;
+    if (!video) return;
+    var limit = video.duration || 0;
+    video.currentTime = Math.max(0, Math.min(limit, video.currentTime + amt));
+    pulseCenter();
+    setCenterSkip(amt);
+    clearTimeout(skipTimerRef.current);
+    skipTimerRef.current = setTimeout(function () {
+      return setCenterSkip(0);
+    }, 720);
+  };
+
+  // Seek by pointer position; used by click and by dragging the scrubber.
+  var seekToClientX = function seekToClientX(clientX) {
+    var bar = progressBarRef.current;
+    var video = videoRef.current;
+    if (!bar || !video) return;
+    var rect = bar.getBoundingClientRect();
+    var ratio = Math.max(0, Math.min((clientX - rect.left) / rect.width, 1));
+    var target = ratio * (video.duration || duration || 0);
+    if (isFinite(target)) {
+      video.currentTime = target;
+      setCurrentTime(target);
+    }
+  };
+  var updateHover = function updateHover(clientX) {
+    var bar = progressBarRef.current;
+    if (!bar) return;
+    var rect = bar.getBoundingClientRect();
+    var ratio = Math.max(0, Math.min((clientX - rect.left) / rect.width, 1));
+    setHoverPos(clientX - rect.left);
+    setHoverTime(ratio * (duration || 0));
   };
   var toggleMute = function toggleMute() {
     if (!videoRef.current) return;
@@ -1914,12 +1977,6 @@ var VideoPlayer = function VideoPlayer(_ref3) {
       setIsPseudoFullscreen(true);
     }
   };
-  var handleSeek = function handleSeek(e) {
-    if (!progressBarRef.current || !videoRef.current) return;
-    var rect = progressBarRef.current.getBoundingClientRect();
-    var percent = Math.max(0, Math.min((e.clientX - rect.left) / rect.width, 1));
-    videoRef.current.currentTime = percent * duration;
-  };
   var formatTime = function formatTime(time) {
     if (isNaN(time) || time === null) return "0:00";
     var m = Math.floor(time % 3600 / 60);
@@ -1931,40 +1988,40 @@ var VideoPlayer = function VideoPlayer(_ref3) {
   var progressPercent = duration ? currentTime / duration * 100 : 0;
   var bufferedPercent = duration ? buffered / duration * 100 : 0;
   return /*#__PURE__*/React.createElement("div", {
-    className: "fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-6",
+    className: "ap-stage fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6",
+    style: {
+      "--ap-poster": `url("${movie.backdrop}")`
+    },
     onClick: onClose
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: onClose,
-    className: "fixed top-5 right-5 z-[210] w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center justify-center transition-all",
-    title: "Close (Esc)"
-  }, /*#__PURE__*/React.createElement(Icon, {
-    name: "x",
-    size: 22
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "relative w-full max-w-5xl flex flex-col items-center",
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-stage-art",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ap-player-shell relative w-full max-w-5xl flex flex-col items-center",
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
   }, /*#__PURE__*/React.createElement("div", {
     ref: playerBoxRef,
-    className: `nflx-modal-box relative w-full aspect-video bg-black rounded-xl overflow-hidden border border-white/10 shadow-2xl ${!showControls && isPlaying ? "hide-cursor" : ""} ${isPseudoFullscreen ? "nflx-pseudo-fullscreen" : ""}`,
+    className: `nflx-modal-box ap-player relative w-full aspect-video bg-black overflow-hidden ${!showControls && isPlaying ? "hide-cursor" : ""} ${isPseudoFullscreen ? "nflx-pseudo-fullscreen" : ""}`,
     onMouseMove: wakeControls
   }, isLoading && /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-0 flex flex-col items-center justify-center bg-black/70 z-20 gap-3 pointer-events-none"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "w-12 h-12 border-4 border-white/10 border-t-[#e50914] rounded-full animate-spin"
+    className: "ap-loading"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ap-spinner",
+    "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("span", {
-    className: "text-xs text-gray-400 font-medium"
-  }, "Loading video\u2026")), playbackError && /*#__PURE__*/React.createElement("div", {
-    className: "absolute inset-0 z-30 flex flex-col items-center justify-center gap-3 bg-black/95 px-6 text-center"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "text-sm text-gray-300 max-w-md"
-  }, playbackError), /*#__PURE__*/React.createElement("a", {
+    className: "ap-loading-text"
+  }, "Loading")), playbackError && /*#__PURE__*/React.createElement("div", {
+    className: "ap-error"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-error-card"
+  }, /*#__PURE__*/React.createElement("p", null, playbackError), videoInfo.src && /*#__PURE__*/React.createElement("a", {
     href: videoInfo.src,
     target: "_blank",
     rel: "noopener noreferrer",
-    className: "px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-sm font-semibold text-white transition-colors"
-  }, "Open video directly")), /*#__PURE__*/React.createElement("div", {
+    className: "ap-error-link"
+  }, "Open video directly"))), /*#__PURE__*/React.createElement("div", {
     className: "w-full h-full flex items-center justify-center",
     onClick: togglePlay
   }, isVideo && /*#__PURE__*/React.createElement("video", {
@@ -1989,7 +2046,7 @@ var VideoPlayer = function VideoPlayer(_ref3) {
       return setIsLoading(false);
     },
     onWaiting: function onWaiting() {
-      return setIsLoading(true);
+      if (videoRef.current && !videoRef.current.paused) setIsLoading(true);
     },
     onPlaying: function onPlaying() {
       return setIsLoading(false);
@@ -2013,177 +2070,280 @@ var VideoPlayer = function VideoPlayer(_ref3) {
     onLoad: function onLoad() {
       return setIsLoading(false);
     }
-  })), isVideo && /*#__PURE__*/React.createElement("div", {
-    className: `nflx-bottom-controls ${showControls ? "opacity-100" : "opacity-0 pointer-events-none"}`,
+  })), /*#__PURE__*/React.createElement("div", {
+    className: `ap-top ${showControls || !isVideo ? "is-visible" : ""}`,
     onClick: function onClick(e) {
       return e.stopPropagation();
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    ref: progressBarRef,
-    className: "nflx-timeline-wrap",
-    onClick: handleSeek,
-    onMouseMove: function onMouseMove(e) {
-      var rect = progressBarRef.current.getBoundingClientRect();
-      setHoverPos(e.clientX - rect.left);
-      setHoverTime((e.clientX - rect.left) / rect.width * duration);
-    },
-    onMouseLeave: function onMouseLeave() {
-      return setHoverTime(null);
-    }
-  }, hoverTime !== null && /*#__PURE__*/React.createElement("div", {
-    className: "nflx-scrub-tooltip",
-    style: {
-      left: `${hoverPos}px`
-    }
-  }, formatTime(hoverTime)), /*#__PURE__*/React.createElement("div", {
-    className: "nflx-timeline-rail"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "nflx-timeline-buffered",
-    style: {
-      width: `${bufferedPercent}%`
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "nflx-timeline-played",
-    style: {
-      width: `${progressPercent}%`
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "nflx-timeline-thumb",
-    style: {
-      left: `${progressPercent}%`
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center justify-between"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 sm:gap-3"
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: togglePlay,
-    className: "nflx-btn"
-  }, isPlaying ? /*#__PURE__*/React.createElement("svg", {
-    width: "22",
-    height: "22",
+    onClick: onClose,
+    className: "ap-close",
+    "aria-label": "Close player",
+    title: "Close (Esc)"
+  }, /*#__PURE__*/React.createElement(Icon, {
+    name: "x",
+    size: 18
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "ap-heading"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "ap-heading-title"
+  }, movie.title), /*#__PURE__*/React.createElement("p", {
+    className: "ap-heading-meta"
+  }, movie.year, movie.genre ? ` · ${movie.genre}` : "", movie.runtime ? ` · ${movie.runtime}` : ""))), isVideo && /*#__PURE__*/React.createElement("div", {
+    className: `ap-center ${centerPulse || centerSkip || !isLoading && !isPlaying ? "is-visible" : ""}`,
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-center-disc"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ap-center-ring"
+  }), centerSkip !== 0 ? /*#__PURE__*/React.createElement("span", {
+    className: "ap-center-skip"
+  }, centerSkip < 0 ? "−10s" : "+10s") : isPlaying ? /*#__PURE__*/React.createElement("svg", {
+    width: "32",
+    height: "32",
     viewBox: "0 0 24 24",
     fill: "currentColor"
   }, /*#__PURE__*/React.createElement("rect", {
     x: "6",
     y: "4",
     width: "4",
-    height: "16"
+    height: "16",
+    rx: "1.5"
   }), /*#__PURE__*/React.createElement("rect", {
     x: "14",
     y: "4",
     width: "4",
-    height: "16"
+    height: "16",
+    rx: "1.5"
   })) : /*#__PURE__*/React.createElement("svg", {
-    width: "22",
-    height: "22",
+    width: "32",
+    height: "32",
     viewBox: "0 0 24 24",
     fill: "currentColor"
-  }, /*#__PURE__*/React.createElement("polygon", {
-    points: "5 3 19 12 5 21 5 3"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M7.4 5.2v13.6a1 1 0 0 0 1.54.84l10.6-6.8a1 1 0 0 0 0-1.68L8.94 4.36A1 1 0 0 0 7.4 5.2Z"
+  })))), isVideo && /*#__PURE__*/React.createElement("div", {
+    className: `ap-tray ${showControls ? "is-visible" : ""}`,
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: progressBarRef,
+    className: `ap-scrub ${isScrubbing ? "is-scrubbing" : ""}`,
+    role: "slider",
+    tabIndex: 0,
+    "aria-label": "Seek",
+    "aria-valuemin": 0,
+    "aria-valuemax": Math.round(duration) || 0,
+    "aria-valuenow": Math.round(currentTime) || 0,
+    onPointerDown: function onPointerDown(e) {
+      setIsScrubbing(true);
+      if (e.currentTarget.setPointerCapture) {
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+        } catch (err) {}
+      }
+      seekToClientX(e.clientX);
+    },
+    onPointerMove: function onPointerMove(e) {
+      updateHover(e.clientX);
+      if (isScrubbing) seekToClientX(e.clientX);
+    },
+    onPointerUp: function onPointerUp() {
+      return setIsScrubbing(false);
+    },
+    onPointerCancel: function onPointerCancel() {
+      return setIsScrubbing(false);
+    },
+    onPointerLeave: function onPointerLeave() {
+      setHoverTime(null);
+      setIsScrubbing(false);
+    },
+    onClick: function onClick(e) {
+      return seekToClientX(e.clientX);
+    }
+  }, hoverTime !== null && duration > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "ap-tip",
+    style: {
+      left: `${hoverPos}px`
+    }
+  }, formatTime(hoverTime)), /*#__PURE__*/React.createElement("div", {
+    className: "ap-ghost",
+    style: {
+      left: `${hoverPos}px`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "ap-rail"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-buffer",
+    style: {
+      width: `${bufferedPercent}%`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ap-played",
+    style: {
+      width: `${progressPercent}%`
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ap-thumb",
+    style: {
+      left: `${progressPercent}%`
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "ap-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-cluster ap-cluster-left"
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: togglePlay,
+    className: "ap-btn ap-btn-primary",
+    "aria-label": isPlaying ? "Pause" : "Play",
+    title: isPlaying ? "Pause (Space)" : "Play (Space)"
+  }, isPlaying ? /*#__PURE__*/React.createElement("svg", {
+    width: "19",
+    height: "19",
+    viewBox: "0 0 24 24",
+    fill: "currentColor"
+  }, /*#__PURE__*/React.createElement("rect", {
+    x: "6",
+    y: "4",
+    width: "4",
+    height: "16",
+    rx: "1.5"
+  }), /*#__PURE__*/React.createElement("rect", {
+    x: "14",
+    y: "4",
+    width: "4",
+    height: "16",
+    rx: "1.5"
+  })) : /*#__PURE__*/React.createElement("svg", {
+    width: "19",
+    height: "19",
+    viewBox: "0 0 24 24",
+    fill: "currentColor"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M7.4 5.2v13.6a1 1 0 0 0 1.54.84l10.6-6.8a1 1 0 0 0 0-1.68L8.94 4.36A1 1 0 0 0 7.4 5.2Z"
   }))), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return skipTime(-10);
     },
-    className: "nflx-btn nflx-btn-badge",
-    title: "Rewind 10s"
+    className: "ap-btn ap-btn-skip",
+    "aria-label": "Back 10 seconds",
+    title: "Back 10 seconds (\u2190)"
   }, /*#__PURE__*/React.createElement("svg", {
     width: "22",
     height: "22",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: "2"
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
   }, /*#__PURE__*/React.createElement("path", {
-    d: "M1 4v6h6M3.51 15a9 9 0 1 0 2.13-9.36L1 10"
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "nflx-badge-text"
-  }, "10")), /*#__PURE__*/React.createElement("button", {
+    d: "M3.5 4.5v5.5H9"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M3.9 13.2a8.2 8.2 0 1 0 2.1-8.3L3.5 10"
+  })), /*#__PURE__*/React.createElement("span", null, "10")), /*#__PURE__*/React.createElement("button", {
     onClick: function onClick() {
       return skipTime(10);
     },
-    className: "nflx-btn nflx-btn-badge",
-    title: "Forward 10s"
+    className: "ap-btn ap-btn-skip",
+    "aria-label": "Forward 10 seconds",
+    title: "Forward 10 seconds (\u2192)"
   }, /*#__PURE__*/React.createElement("svg", {
     width: "22",
     height: "22",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: "2"
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
   }, /*#__PURE__*/React.createElement("path", {
-    d: "M23 4v6h-6M20.49 15a9 9 0 1 1-2.12-9.36L23 10"
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "nflx-badge-text"
-  }, "10")), /*#__PURE__*/React.createElement("div", {
-    className: "nflx-volume-group"
+    d: "M20.5 4.5v5.5H15"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M20.1 13.2a8.2 8.2 0 1 1-2.1-8.3L20.5 10"
+  })), /*#__PURE__*/React.createElement("span", null, "10"))), /*#__PURE__*/React.createElement("div", {
+    className: "ap-time",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ap-time-now"
+  }, formatTime(currentTime)), /*#__PURE__*/React.createElement("span", {
+    className: "ap-time-sep"
+  }, "/"), /*#__PURE__*/React.createElement("span", {
+    className: "ap-time-dur"
+  }, formatTime(duration))), /*#__PURE__*/React.createElement("div", {
+    className: "ap-cluster ap-cluster-right"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ap-volume"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: toggleMute,
-    className: "nflx-btn"
+    className: "ap-btn",
+    "aria-label": isMuted ? "Unmute" : "Mute",
+    title: isMuted ? "Unmute (m)" : "Mute (m)"
   }, isMuted ? /*#__PURE__*/React.createElement("svg", {
-    width: "22",
-    height: "22",
+    width: "20",
+    height: "20",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: "2"
-  }, /*#__PURE__*/React.createElement("line", {
-    x1: "1",
-    y1: "1",
-    x2: "23",
-    y2: "23"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M11 5 6 9H2v6h4l5 4V5Z"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "22",
+    y1: "9",
+    x2: "16",
+    y2: "15"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "16",
+    y1: "9",
+    x2: "22",
+    y2: "15"
   })) : /*#__PURE__*/React.createElement("svg", {
-    width: "22",
-    height: "22",
+    width: "20",
+    height: "20",
     viewBox: "0 0 24 24",
     fill: "none",
     stroke: "currentColor",
-    strokeWidth: "2"
-  }, /*#__PURE__*/React.createElement("polygon", {
-    points: "11 5 6 9 2 9 2 15 6 15 11 19 11 5"
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M11 5 6 9H2v6h4l5 4V5Z"
   }), /*#__PURE__*/React.createElement("path", {
-    d: "M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+    d: "M15.5 8.5a5 5 0 0 1 0 7"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M18.5 5.5a9 9 0 0 1 0 13"
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "nflx-slider-container"
+    className: "ap-volume-slide"
   }, /*#__PURE__*/React.createElement("input", {
     type: "range",
     min: "0",
     max: "1",
     step: "0.05",
     value: isMuted ? 0 : volume,
+    "aria-label": "Volume",
+    className: "ap-volume-range",
+    style: {
+      "--vol": `${(isMuted ? 0 : volume) * 100}%`
+    },
     onChange: function onChange(e) {
       var val = parseFloat(e.target.value);
       setVolume(val);
       videoRef.current.volume = val;
       setIsMuted(val === 0);
-    },
-    className: "nflx-volume-range"
-  }))), /*#__PURE__*/React.createElement("span", {
-    className: "nflx-time-text"
-  }, formatTime(currentTime), " / ", formatTime(duration))), /*#__PURE__*/React.createElement("button", {
+    }
+  }))), /*#__PURE__*/React.createElement("button", {
     onClick: toggleFullscreen,
-    className: "nflx-btn",
-    title: isNativeFullscreen || isPseudoFullscreen ? "Exit fullscreen" : "Fullscreen"
+    className: "ap-btn",
+    "aria-label": "Fullscreen",
+    title: isNativeFullscreen || isPseudoFullscreen ? "Exit fullscreen (f)" : "Fullscreen (f)"
   }, /*#__PURE__*/React.createElement(Icon, {
     name: isNativeFullscreen || isPseudoFullscreen ? "fullscreenExit" : "fullscreen",
-    size: 22
-  }))))), !isPseudoFullscreen && /*#__PURE__*/React.createElement("div", {
-    className: "mt-4 px-1 w-full"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "flex items-center gap-2 mb-1"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] uppercase tracking-[0.2em] text-red-500 font-bold"
-  }, "Now playing"), /*#__PURE__*/React.createElement("span", {
-    className: "h-1 w-1 rounded-full bg-gray-600"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "text-[10px] uppercase tracking-[0.2em] text-gray-500"
-  }, "StreamVault")), /*#__PURE__*/React.createElement("h3", {
-    className: "text-lg sm:text-2xl font-bold text-white truncate"
-  }, movie.title), /*#__PURE__*/React.createElement("p", {
-    className: "text-xs sm:text-sm text-gray-400 mt-0.5"
-  }, movie.year, " \xB7 ", movie.genre, " \xB7 ", movie.runtime))));
+    size: 20
+  }))))))));
 };
 
 // ─── NAVBAR COMPONENT ───────────────────────────────────────
@@ -2194,14 +2354,14 @@ var Navbar = function Navbar(_ref4) {
     activeTab = _ref4.activeTab,
     setActiveTab = _ref4.setActiveTab,
     scrollY = _ref4.scrollY;
-  var _useState27 = useState(false),
-    _useState28 = _slicedToArray(_useState27, 2),
-    isMenuOpen = _useState28[0],
-    setIsMenuOpen = _useState28[1];
-  var _useState29 = useState(false),
-    _useState30 = _slicedToArray(_useState29, 2),
-    isSearchFocused = _useState30[0],
-    setIsSearchFocused = _useState30[1];
+  var _useState33 = useState(false),
+    _useState34 = _slicedToArray(_useState33, 2),
+    isMenuOpen = _useState34[0],
+    setIsMenuOpen = _useState34[1];
+  var _useState35 = useState(false),
+    _useState36 = _slicedToArray(_useState35, 2),
+    isSearchFocused = _useState36[0],
+    setIsSearchFocused = _useState36[1];
   var navLinks = [{
     id: "home",
     label: "Home"
@@ -2461,14 +2621,14 @@ var MovieRow = memo(function (_ref7) {
     onToggleWatchlist = _ref7.onToggleWatchlist,
     watchlist = _ref7.watchlist;
   var scrollRef = useRef(null);
-  var _useState31 = useState(false),
-    _useState32 = _slicedToArray(_useState31, 2),
-    canScrollLeft = _useState32[0],
-    setCanScrollLeft = _useState32[1];
-  var _useState33 = useState(true),
-    _useState34 = _slicedToArray(_useState33, 2),
-    canScrollRight = _useState34[0],
-    setCanScrollRight = _useState34[1];
+  var _useState37 = useState(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    canScrollLeft = _useState38[0],
+    setCanScrollLeft = _useState38[1];
+  var _useState39 = useState(true),
+    _useState40 = _slicedToArray(_useState39, 2),
+    canScrollRight = _useState40[0],
+    setCanScrollRight = _useState40[1];
   var checkScroll = function checkScroll() {
     if (scrollRef.current) {
       var _scrollRef$current = scrollRef.current,
@@ -2553,10 +2713,10 @@ var MovieModal = function MovieModal(_ref8) {
     onWatchNow = _ref8.onWatchNow,
     relatedMovies = _ref8.relatedMovies,
     onMovieClick = _ref8.onMovieClick;
-  var _useState35 = useState("overview"),
-    _useState36 = _slicedToArray(_useState35, 2),
-    activeTab = _useState36[0],
-    setActiveTab = _useState36[1];
+  var _useState41 = useState("overview"),
+    _useState42 = _slicedToArray(_useState41, 2),
+    activeTab = _useState42[0],
+    setActiveTab = _useState42[1];
   useEffect(function () {
     document.body.style.overflow = "hidden";
     var handleEsc = function handleEsc(e) {
@@ -2847,46 +3007,46 @@ var Footer = function Footer() {
 
 // ─── MAIN APP ───────────────────────────────────────────────
 var App = function App() {
-  var _useState37 = useState(0),
-    _useState38 = _slicedToArray(_useState37, 2),
-    scrollY = _useState38[0],
-    setScrollY = _useState38[1];
-  var _useState39 = useState(""),
-    _useState40 = _slicedToArray(_useState39, 2),
-    searchQuery = _useState40[0],
-    setSearchQuery = _useState40[1];
-  var _useState41 = useState("home"),
-    _useState42 = _slicedToArray(_useState41, 2),
-    activeTab = _useState42[0],
-    setActiveTab = _useState42[1];
-  var _useState43 = useState("All"),
+  var _useState43 = useState(0),
     _useState44 = _slicedToArray(_useState43, 2),
-    activeGenre = _useState44[0],
-    setActiveGenre = _useState44[1];
-  var _useState45 = useState(null),
+    scrollY = _useState44[0],
+    setScrollY = _useState44[1];
+  var _useState45 = useState(""),
     _useState46 = _slicedToArray(_useState45, 2),
-    selectedMovie = _useState46[0],
-    setSelectedMovie = _useState46[1];
-  var _useState47 = useState(null),
+    searchQuery = _useState46[0],
+    setSearchQuery = _useState46[1];
+  var _useState47 = useState("home"),
     _useState48 = _slicedToArray(_useState47, 2),
-    playingMovie = _useState48[0],
-    setPlayingMovie = _useState48[1];
-  var _useState49 = useState(function () {
+    activeTab = _useState48[0],
+    setActiveTab = _useState48[1];
+  var _useState49 = useState("All"),
+    _useState50 = _slicedToArray(_useState49, 2),
+    activeGenre = _useState50[0],
+    setActiveGenre = _useState50[1];
+  var _useState51 = useState(null),
+    _useState52 = _slicedToArray(_useState51, 2),
+    selectedMovie = _useState52[0],
+    setSelectedMovie = _useState52[1];
+  var _useState53 = useState(null),
+    _useState54 = _slicedToArray(_useState53, 2),
+    playingMovie = _useState54[0],
+    setPlayingMovie = _useState54[1];
+  var _useState55 = useState(function () {
       return moviesData;
     }),
-    _useState50 = _slicedToArray(_useState49, 2),
-    movies = _useState50[0],
-    setMovies = _useState50[1];
-  var _useState51 = useState(function () {
+    _useState56 = _slicedToArray(_useState55, 2),
+    movies = _useState56[0],
+    setMovies = _useState56[1];
+  var _useState57 = useState(function () {
       try {
         return JSON.parse(localStorage.getItem("watchlist")) || [];
       } catch (_unused) {
         return [];
       }
     }),
-    _useState52 = _slicedToArray(_useState51, 2),
-    watchlist = _useState52[0],
-    setWatchlist = _useState52[1];
+    _useState58 = _slicedToArray(_useState57, 2),
+    watchlist = _useState58[0],
+    setWatchlist = _useState58[1];
   useEffect(function () {
     localStorage.setItem("watchlist", JSON.stringify(watchlist));
   }, [watchlist]);
