@@ -1260,7 +1260,7 @@ const _baseMoviesData = [
     "popular": true,
     "topRated": true,
     "category": "Fantasy",
-    "video": "https://prism.surrealviews.com/api?d=3eiTUPCaKsgvNe3FqKxEbDHd4RB4lJUdgES2E4XZIR22QQZmqn0hFi3dWn5hwtTVI-vPDgXCbtx5QIKHhGr_tMG-iKwsLvz9bBBDX29SFnimjpfqcJcaQFTXtl5goowP6PHTMbQlyzZiXAGea26Ya_4RbFd54x3YZe1_J6mHfS4hTgQd9Gc40caamMAZtTJh&token=p2.sGGvySnxJz2giVyTYi0t3gu89q_SVtNrVn4HRwmbWJDhlQrJiucCyrPcvmLjJ1ybSrfuRaqGM4f6w6NZaVc3aTmKZ9eAPdCMSMOiSl59ZkpAiOExUhzMrKl-qEcUkodyRwPKXngnF7IU7pVU3_pY9DB_XOAQMRkmxg92ALA&sp=bc&vh=pl&vt=1794506400000.4290203fbf2b2333db07b4ad"
+    "video": "https://lizer123.site/stream/bTN1OC80MS9kODA1YjM5NzdjMDE4ZTRmOGQzMGM1ZTZiMGU1OWI0Mi8xMDgwcC8xMDgwcC5tM3U4P2lkPQ=="
   }
 
 ];
